@@ -1,0 +1,167 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Actualizar el flujo de trabajo del proyecto para que el repositorio GitHub se actualice automáticamente cuando el Agent Manager considere que existe un cambio relevante y digno de subir.
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+El proyecto NebriPop utiliza Antigravity, OpenCode y agentes especializados. Ya existe o se va a crear un agente GitHubAgent con la skill github-version-control, encargado de gestionar Git y GitHub.
+
+Queremos que el flujo de GitHub sea más automático, pero siempre bajo supervisión del Agent Manager.
+
+Regla principal:
+GitHubAgent NO puede decidir por sí solo cuándo subir cambios.
+
+El Agent Manager será quien determine si un cambio es suficientemente importante para actualizar el repositorio.
+
+Cuando el Agent Manager detecte un cambio relevante, debe activar automáticamente a GitHubAgent para revisar, preparar commit y subir los cambios al repositorio oficial.
+
+Repositorio:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Tareas a realizar:
+
+1. Actualizar la documentación del flujo de trabajo en AGENTS.md sin borrar contenido existente.
+
+2. Añadir una sección o actualizar la sección de GitHubAgent indicando que:
+
+- GitHubAgent puede realizar commits y push al repositorio oficial cuando el Agent Manager lo autorice.
+- GitHubAgent debe revisar siempre los cambios antes de subirlos.
+- GitHubAgent debe comprobar que no se suben archivos sensibles.
+- GitHubAgent debe comprobar que el remoto apunta a:
+  https://github.com/DavidCabrerizo/NebriPop/
+- GitHubAgent debe preparar mensajes de commit claros.
+- GitHubAgent debe hacer push únicamente si la validación previa es correcta.
+- GitHubAgent debe preparar un resumen para DocumentationAgent después de cada subida.
+
+3. Actualizar las reglas del Agent Manager indicando que:
+
+El Agent Manager debe activar automáticamente a GitHubAgent cuando detecte alguno de estos cambios relevantes:
+
+- Se completa una fase del proyecto.
+- Se crea o actualiza una skill.
+- Se crea o actualiza un agente.
+- Se añade una prueba técnica importante.
+- Se corrige un error relevante.
+- Se implementa una funcionalidad nueva.
+- Se modifica backend.
+- Se modifica frontend.
+- Se modifica base de datos.
+- Se actualiza documentación importante.
+- Se completa una validación de QA.
+- Se completa una revisión de ReviewerAgent.
+- Se realiza una prueba pre-MVP o una prueba de integración.
+- Se avanza en el MVP real de NebriPop.
+
+4. Añadir el siguiente flujo automático:
+
+## Flujo automático de actualización de GitHub
+
+Cuando el Agent Manager considere que hay cambios relevantes:
+
+1. Activar @GitHubAgent.
+2. Solicitar revisión del repositorio.
+3. Ejecutar:
+   - git status
+   - git diff
+   - git remote -v
+   - git branch
+4. Comprobar que el remoto apunta a:
+   https://github.com/DavidCabrerizo/NebriPop/
+5. Comprobar que no se van a subir:
+   - .env
+   - credenciales
+   - tokens
+   - claves privadas
+   - target/
+   - archivos temporales
+   - bases de datos con datos sensibles
+6. Preparar mensaje de commit.
+7. Si todo es correcto, autorizar a GitHubAgent a ejecutar:
+   - git add
+   - git commit
+   - git push
+8. Preparar resumen para @DocumentationAgent.
+9. Solicitar a @DocumentationAgent que registre el cambio en docs/Logs.md.
+
+5. Añadir restricciones de seguridad:
+
+GitHubAgent debe detener el proceso y pedir revisión del Agent Manager si detecta:
+
+- Archivos .env.
+- Tokens.
+- Credenciales.
+- Claves privadas.
+- Base de datos con datos sensibles.
+- Archivos target/.
+- Archivos enormes o innecesarios.
+- Conflictos Git.
+- Remoto incorrecto.
+- Rama incorrecta.
+- Errores de compilación conocidos.
+- Cambios fuera del alcance.
+
+6. Añadir comportamiento de commit automático controlado:
+
+Cuando el Agent Manager active GitHubAgent para actualizar el repositorio, GitHubAgent debe:
+
+- Revisar los cambios.
+- Agruparlos correctamente.
+- Crear un mensaje de commit profesional.
+- Hacer commit.
+- Hacer push al repositorio oficial.
+- No pedir confirmación adicional si el Agent Manager ya ha autorizado explícitamente la subida.
+- Detenerse si encuentra riesgos de seguridad.
+
+7. Formato de commit recomendado:
+
+Usar mensajes como:
+
+- feat: implementa prueba pre-MVP con Leptos Axum y SQLite
+- feat: añade estructura inicial del MVP
+- fix: corrige integración frontend-backend
+- docs: actualiza documentación de agentes
+- docs: añade prompts de pruebas técnicas
+- test: añade checklist QA de integración
+- chore: configura flujo GitHub automático
+- refactor: mejora estructura del backend Rust
+
+8. Resumen para DocumentationAgent:
+
+Después de cada commit y push, GitHubAgent debe preparar un resumen para @DocumentationAgent con:
+
+- Fecha.
+- Agente responsable.
+- Rama utilizada.
+- Commit realizado.
+- Archivos subidos.
+- Motivo del commit.
+- Resumen de cambios.
+- Repositorio actualizado.
+- Próximo paso recomendado.
+
+9. DocumentationAgent será quien actualice docs/Logs.md.
+
+GitHubAgent no debe modificar docs/Logs.md directamente salvo autorización explícita del Agent Manager.
+
+10. Guardar este prompt completo en:
+
+docs/Prompts/PromptGitHubAutoUpdateFlow.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+11. No modificar código fuente.
+12. No hacer commit todavía.
+13. No hacer push todavía.
+14. Solo actualizar documentación y reglas de flujo de trabajo.
+
+Al finalizar, devuelve:
+
+1. Archivos modificados.
+2. Sección añadida o actualizada en AGENTS.md.
+3. Prompt guardado en docs/Prompts/PromptGitHubAutoUpdateFlow.txt.
+4. Nuevo flujo automático definido.
+5. Riesgos de seguridad considerados.
+6. Próximo paso recomendado.

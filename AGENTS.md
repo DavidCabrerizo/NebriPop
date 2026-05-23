@@ -35,6 +35,23 @@ Su papel es especialmente importante porque el proyecto se desarrolla con ayuda 
     * Verificar que los prompts relevantes se registren en `PROMPTS_LOG.md`.
     * Asegurar que el proyecto avance de forma incremental, controlada y revisable.
 
+* **Activación automática de GitHubAgent:**
+    El Agent Manager debe activar automáticamente a GitHubAgent cuando detecte alguno de estos cambios relevantes:
+    - Se completa una fase del proyecto.
+    - Se crea o actualiza una skill.
+    - Se crea o actualiza un agente.
+    - Se añade una prueba técnica importante.
+    - Se corrige un error relevante.
+    - Se implementa una funcionalidad nueva.
+    - Se modifica backend.
+    - Se modifica frontend.
+    - Se modifica base de datos.
+    - Se actualiza documentación importante.
+    - Se completa una validación de QA.
+    - Se completa una revisión de ReviewerAgent.
+    - Se realiza una prueba pre-MVP o una prueba de integración.
+    - Se avanza en el MVP real de NebriPop.
+
 * **Tareas que puede realizar:**
     * Crear checklists de validación por fase.
     * Revisar el estado general del proyecto.
@@ -1709,3 +1726,89 @@ Se consideran cambios relevantes:
 10. Ejecuta push si se autoriza.
 11. Prepara resumen para DocumentationAgent.
 
+### Flujo automático de actualización de GitHub
+
+Cuando el Agent Manager considere que hay cambios relevantes:
+
+1. Activar @GitHubAgent.
+2. Solicitar revisión del repositorio.
+3. Ejecutar:
+   - git status
+   - git diff
+   - git remote -v
+   - git branch
+4. Comprobar que el remoto apunta a:
+   https://github.com/DavidCabrerizo/NebriPop/
+5. Comprobar que no se van a subir:
+   - .env
+   - credenciales
+   - tokens
+   - claves privadas
+   - target/
+   - archivos temporales
+   - bases de datos con datos sensibles
+6. Preparar mensaje de commit.
+7. Si todo es correcto, autorizar a GitHubAgent a ejecutar:
+   - git add
+   - git commit
+   - git push
+8. Preparar resumen para @DocumentationAgent.
+9. Solicitar a @DocumentationAgent que registre el cambio en docs/Logs.md.
+
+### Restricciones de seguridad
+
+GitHubAgent debe detener el proceso y pedir revisión del Agent Manager si detecta:
+
+- Archivos .env.
+- Tokens.
+- Credenciales.
+- Claves privadas.
+- Base de datos con datos sensibles.
+- Archivos target/.
+- Archivos enormes o innecesarios.
+- Conflictos Git.
+- Remoto incorrecto.
+- Rama incorrecta.
+- Errores de compilación conocidos.
+- Cambios fuera del alcance.
+
+### Comportamiento de commit automático controlado
+
+Cuando el Agent Manager active GitHubAgent para actualizar el repositorio, GitHubAgent debe:
+
+- Revisar los cambios.
+- Agruparlos correctamente.
+- Crear un mensaje de commit profesional.
+- Hacer commit.
+- Hacer push al repositorio oficial.
+- No pedir confirmación adicional si el Agent Manager ya ha autorizado explícitamente la subida.
+- Detenerse si encuentra riesgos de seguridad.
+
+### Formato de commit recomendado
+
+Usar mensajes como:
+
+- feat: implementa prueba pre-MVP con Leptos Axum y SQLite
+- feat: añade estructura inicial del MVP
+- fix: corrige integración frontend-backend
+- docs: actualiza documentación de agentes
+- docs: añade prompts de pruebas técnicas
+- test: añade checklist QA de integración
+- chore: configura flujo GitHub automático
+- refactor: mejora estructura del backend Rust
+
+### Resumen para DocumentationAgent
+
+Después de cada commit y push, GitHubAgent debe preparar un resumen para @DocumentationAgent con:
+
+- Fecha.
+- Agente responsable.
+- Rama utilizada.
+- Commit realizado.
+- Archivos subidos.
+- Motivo del commit.
+- Resumen de cambios.
+- Repositorio actualizado.
+- Próximo paso recomendado.
+
+**Nota importante:** GitHubAgent no debe modificar `docs/Logs.md` directamente salvo autorización explícita del Agent Manager. La actualización de dicho archivo corresponde a DocumentationAgent.
