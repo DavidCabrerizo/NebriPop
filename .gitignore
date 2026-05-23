@@ -1,7 +1,10 @@
 /target
 /dist
 **/*.rs.bk
-Cargo.lock
+# Database files
+*.db
+*.sqlite
+*.sqlite-journal
 .env
 *.log
 .DS_Store
