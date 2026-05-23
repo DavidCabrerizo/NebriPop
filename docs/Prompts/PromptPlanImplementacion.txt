@@ -1,0 +1,253 @@
+Aquí tienes un **prompt para Antigravity** para que lea el archivo `PRD.md` y genere un **plan de implementación completo** para NebriPop.
+
+Actúa como un arquitecto senior de software especializado en Rust, desarrollo full-stack, IA aplicada al desarrollo y planificación técnica de proyectos con agentes.
+
+Contexto del proyecto:
+Estamos desarrollando una aplicación llamada NebriPop, una especie de Wallapop académico para compraventa/intercambio de productos entre estudiantes. El proyecto debe desarrollarse con Rust tanto en el frontend como en el backend, utilizando una arquitectura limpia, escalable y mantenible. El desarrollo se realizará apoyándose en IA, principalmente con Antigravity y OpenCode.
+
+Tu tarea:
+Lee detenidamente el archivo PRD.md que se encuentra en este proyecto y, basándote únicamente en sus requisitos, genera un PLAN DE IMPLEMENTACIÓN completo, ordenado y realista.
+
+Objetivo del plan:
+Convertir el PRD.md en una hoja de ruta técnica clara para que después pueda ser ejecutada por agentes de desarrollo y por OpenCode.
+
+Debes generar un archivo llamado IMPLEMENTATION_PLAN.md en la raíz del proyecto.
+
+El plan debe incluir obligatoriamente los siguientes apartados:
+
+1. Resumen técnico del producto
+- Qué se va a construir.
+- Usuarios principales.
+- Funcionalidades principales.
+- Alcance del MVP.
+- Funcionalidades futuras fuera del MVP.
+
+2. Stack tecnológico propuesto
+Indica y justifica las tecnologías recomendadas:
+- Backend en Rust.
+- Frontend en Rust.
+- Base de datos.
+- ORM o capa de acceso a datos.
+- Autenticación.
+- Gestión de imágenes.
+- Testing.
+- Documentación API.
+- Despliegue.
+- CI/CD.
+
+3. Arquitectura del sistema
+Define una arquitectura clara para el proyecto:
+- Separación frontend/backend.
+- Capas del backend.
+- Estructura recomendada de carpetas.
+- Patrón arquitectónico recomendado.
+- Comunicación entre frontend y backend.
+- Gestión de errores.
+- Seguridad básica.
+- Escalabilidad futura.
+
+4. Modelo de datos
+A partir del PRD.md, diseña las entidades principales:
+- Usuario.
+- Producto.
+- Categoría.
+- Imagen.
+- Favorito.
+- Mensaje o chat.
+- Reporte si aplica.
+- Cualquier otra entidad necesaria.
+
+Para cada entidad indica:
+- Campos principales.
+- Tipo de dato recomendado.
+- Relaciones.
+- Validaciones básicas.
+
+5. Endpoints de la API
+Define una propuesta inicial de endpoints REST:
+- Autenticación.
+- Usuarios.
+- Productos.
+- Categorías.
+- Imágenes.
+- Favoritos.
+- Mensajes.
+- Administración o moderación si aplica.
+
+Para cada endpoint indica:
+- Método HTTP.
+- Ruta.
+- Descripción.
+- Body esperado si aplica.
+- Respuesta esperada.
+- Nivel de prioridad: MVP, importante o futuro.
+
+6. Plan de implementación por fases
+Divide el desarrollo en fases claras y ordenadas:
+
+Fase 0: Preparación del repositorio.
+Fase 1: Backend base.
+Fase 2: Base de datos y modelos.
+Fase 3: Autenticación.
+Fase 4: CRUD de productos.
+Fase 5: Frontend base.
+Fase 6: Integración frontend-backend.
+Fase 7: Favoritos, búsqueda y filtros.
+Fase 8: Chat o mensajería.
+Fase 9: Testing y QA.
+Fase 10: Despliegue.
+Fase 11: Documentación final.
+
+Para cada fase incluye:
+- Objetivo.
+- Tareas concretas.
+- Archivos o carpetas implicadas.
+- Agente recomendado para ejecutarla.
+- Herramienta recomendada: Antigravity, OpenCode o ambas.
+- Criterios de aceptación.
+- Riesgos técnicos.
+
+7. Agentes necesarios
+Propón los agentes de IA necesarios dentro de Antigravity para desarrollar el proyecto.
+
+Incluye como mínimo:
+- Product Manager Agent.
+- Rust Backend Architect Agent.
+- Rust Frontend Agent.
+- Database Agent.
+- QA & Testing Agent.
+- Security Agent.
+- DevOps Agent.
+- Documentation Agent.
+- Code Review Agent.
+
+Para cada agente indica:
+- Nombre.
+- Rol.
+- Responsabilidades.
+- Entradas que necesita.
+- Salidas que debe generar.
+- Cuándo interviene en el flujo.
+- Qué modelo de IA sería más adecuado para ese agente.
+- Relación con OpenCode si aplica.
+
+8. Flujo de trabajo entre Antigravity y OpenCode
+Explica cómo debe utilizarse cada herramienta:
+- Antigravity para planificación, arquitectura, validación y coordinación.
+- OpenCode para generación de código, refactorización, pruebas y revisión de errores.
+- Cuándo debe intervenir cada una.
+- Cómo se deben documentar las interacciones.
+- Cómo evitar generación de código innecesario o descontrolado.
+
+9. Prompts base para ejecutar el proyecto
+Genera prompts reutilizables para:
+- Crear estructura inicial del proyecto.
+- Implementar backend base.
+- Crear modelos de base de datos.
+- Crear endpoints.
+- Crear frontend.
+- Integrar frontend con backend.
+- Crear tests.
+- Revisar código.
+- Documentar decisiones técnicas.
+- Preparar despliegue.
+
+Cada prompt debe estar listo para copiar y pegar en Antigravity u OpenCode.
+
+10. Reglas de desarrollo
+Define reglas claras que deberán seguir todos los agentes:
+- No modificar archivos fuera del alcance indicado.
+- No borrar código existente sin justificarlo.
+- Seguir Clean Code.
+- Aplicar principios SOLID cuando proceda.
+- Mantener bajo acoplamiento.
+- Escribir código modular.
+- Crear tests para funcionalidades importantes.
+- Documentar cambios relevantes.
+- Mantener coherencia con el PRD.md.
+- Antes de implementar, explicar brevemente el plan.
+- Después de implementar, resumir cambios y archivos modificados.
+
+11. Testing y QA
+Propón una estrategia de pruebas:
+- Unit tests.
+- Integration tests.
+- Tests de API.
+- Tests de frontend.
+- Tests de seguridad básicos.
+- Pruebas manuales de usuario.
+- Checklist de aceptación del MVP.
+
+12. CI/CD y despliegue
+Propón una estrategia simple pero profesional:
+- GitHub como repositorio.
+- Ramas recomendadas.
+- Pull requests.
+- GitHub Actions.
+- Ejecución automática de tests.
+- Build del frontend y backend.
+- Despliegue recomendado.
+- Variables de entorno.
+- Gestión de secretos.
+
+13. Documentación obligatoria del proyecto
+Indica qué documentos deben generarse:
+- README.md.
+- PRD.md.
+- IMPLEMENTATION_PLAN.md.
+- ARCHITECTURE.md.
+- API_DOCS.md.
+- DATABASE_SCHEMA.md.
+- AI_WORKFLOW.md.
+- PROMPTS_LOG.md.
+- TESTING_REPORT.md.
+- DEPLOYMENT_GUIDE.md.
+
+14. Roadmap final
+Crea una tabla final con:
+- Fase.
+- Prioridad.
+- Duración estimada.
+- Responsable/agente.
+- Resultado esperado.
+
+Restricciones importantes:
+- No inventes funcionalidades que no estén alineadas con PRD.md.
+- Si falta información en PRD.md, indícalo en un apartado llamado “Preguntas abiertas”.
+- El plan debe estar pensado para un proyecto académico pero con calidad profesional.
+- Prioriza un MVP funcional antes que una aplicación demasiado grande.
+- El resultado debe ser claro, ordenado y directamente ejecutable.
+- No escribas código todavía, solo planificación técnica.
+- Genera el contenido en español.
+- Usa formato Markdown profesional.
+
+Resultado esperado:
+Crea o actualiza el archivo IMPLEMENTATION_PLAN.md con todo el plan de implementación.
+```
+
+También puedes usar esta versión más corta si quieres algo directo:
+
+```text
+Lee el archivo PRD.md del proyecto NebriPop y genera un archivo IMPLEMENTATION_PLAN.md con un plan técnico completo para implementar la aplicación.
+
+NebriPop es una app tipo Wallapop para estudiantes, desarrollada con Rust en frontend y backend, usando Antigravity para planificación/arquitectura y OpenCode para implementación de código.
+
+El plan debe incluir:
+1. Resumen del producto.
+2. Stack tecnológico recomendado.
+3. Arquitectura del sistema.
+4. Estructura de carpetas.
+5. Modelo de datos.
+6. Endpoints REST.
+7. Fases de implementación.
+8. Agentes necesarios en Antigravity.
+9. Flujo de trabajo Antigravity + OpenCode.
+10. Prompts reutilizables para cada fase.
+11. Reglas de desarrollo.
+12. Testing y QA.
+13. CI/CD y despliegue.
+14. Documentación obligatoria.
+15. Roadmap final.
+
+No implementes código todavía. Solo genera el plan de implementación en Markdown. Si falta información en PRD.md, añade una sección de preguntas abiertas. Prioriza un MVP realista, limpio y escalable.
+```

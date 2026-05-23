@@ -1,0 +1,181 @@
+Actúa como un arquitecto senior de software, experto en Rust full-stack, metodologías ágiles, arquitectura limpia, testing, documentación técnica y desarrollo asistido por IA con Antigravity y OpenCode.
+
+Contexto:
+Estamos desarrollando NebriPop, una aplicación tipo Wallapop académico para estudiantes. El proyecto debe utilizar Rust tanto en frontend como en backend. El desarrollo se realizará apoyándose en herramientas de IA, principalmente Antigravity para planificación, arquitectura y coordinación, y OpenCode para implementación técnica, revisión de código, testing y refactorización.
+
+Archivos que debes leer:
+- PRD.md
+- IMPLEMENTATION_PLAN.md
+- IMPLEMENTATION_PLAN_REVIEW.md, si existe
+
+Tu tarea:
+Validar si el archivo IMPLEMENTATION_PLAN.md está suficientemente completo, coherente y preparado para comenzar la implementación del proyecto.
+
+No implementes código.
+No crees todavía estructura de carpetas del proyecto.
+No modifiques código fuente.
+Tu trabajo es únicamente revisar, validar y documentar el estado del plan.
+
+Debes crear un archivo llamado IMPLEMENTATION_PLAN_VALIDATION.md en la raíz del proyecto.
+
+La validación debe incluir los siguientes apartados:
+
+1. Resumen ejecutivo de la validación
+- Indica si el plan está listo para iniciar la implementación.
+- Explica brevemente el nivel de alineación con el PRD.md.
+- Indica si el alcance del MVP está correctamente delimitado.
+- Indica si el plan es realista para un proyecto académico realizado con ayuda de IA.
+
+2. Verificación de alineación con el PRD
+Crea una tabla con:
+- Requisito principal detectado en PRD.md.
+- Está cubierto en IMPLEMENTATION_PLAN.md: Sí / Parcial / No.
+- Evidencia dentro del plan.
+- Comentario de validación.
+
+3. Revisión del alcance del MVP
+Analiza:
+- Qué funcionalidades forman parte del MVP.
+- Qué funcionalidades deberían quedar como futuras.
+- Si el MVP es demasiado grande o demasiado pequeño.
+- Si hay funcionalidades que podrían complicar demasiado el desarrollo inicial.
+
+4. Revisión de arquitectura
+Valida:
+- Si la arquitectura propuesta es adecuada para Rust en backend y Rust en frontend.
+- Si hay una separación clara entre frontend, backend y base de datos.
+- Si las capas del backend están bien definidas.
+- Si el patrón arquitectónico elegido es razonable.
+- Si la arquitectura permite mantenimiento, escalabilidad y testing.
+
+5. Revisión del stack tecnológico
+Comprueba si las tecnologías propuestas son adecuadas para:
+- Backend Rust.
+- Frontend Rust.
+- Base de datos.
+- ORM o acceso a datos.
+- Autenticación.
+- Gestión de imágenes.
+- Testing.
+- Documentación API.
+- CI/CD.
+- Despliegue.
+
+Indica si alguna tecnología debería cambiarse, simplificarse o justificarse mejor.
+
+6. Revisión del modelo de datos
+Valida las entidades propuestas:
+- Usuario.
+- Producto.
+- Categoría.
+- Imagen.
+- Favorito.
+- Mensaje o chat.
+- Reporte si aplica.
+- Otras entidades detectadas.
+
+Para cada una indica:
+- Si es necesaria para el MVP.
+- Si sus campos son suficientes.
+- Si las relaciones están bien planteadas.
+- Si existen riesgos de complejidad.
+
+7. Revisión de endpoints API
+Valida:
+- Si los endpoints cubren las funcionalidades principales.
+- Si los métodos HTTP son correctos.
+- Si las rutas son coherentes.
+- Si las respuestas esperadas están claras.
+- Si hay endpoints que deberían moverse a fases futuras.
+- Si hay problemas de autorización o seguridad.
+
+8. Revisión de fases de implementación
+Comprueba:
+- Si las fases están en el orden correcto.
+- Si cada fase tiene un objetivo claro.
+- Si las tareas son ejecutables por OpenCode.
+- Si los criterios de aceptación son verificables.
+- Si existen dependencias mal ordenadas.
+- Si alguna fase debería dividirse o simplificarse.
+
+9. Revisión de uso de IA
+Valida:
+- Si el plan explica correctamente el uso de Antigravity.
+- Si el plan explica correctamente el uso de OpenCode.
+- Si está clara la diferencia entre planificación y ejecución.
+- Si los agentes propuestos tienen sentido.
+- Si los prompts incluidos son reutilizables y seguros.
+- Si se contempla documentación de prompts y resultados.
+
+10. Revisión de agentes
+Evalúa los agentes propuestos:
+- Project Manager Agent.
+- Rust Backend Architect Agent.
+- Rust Frontend Agent.
+- Database Agent.
+- QA & Testing Agent.
+- Security Agent.
+- DevOps Agent.
+- Documentation Agent.
+- Code Review Agent.
+
+Para cada agente indica:
+- Si es necesario.
+- En qué fase debería intervenir.
+- Si sus responsabilidades están claras.
+- Si puede ser inicial o futuro.
+
+11. Revisión de reglas de desarrollo
+Comprueba si el plan incluye reglas suficientes sobre:
+- Clean Code.
+- SOLID.
+- Patrones de diseño.
+- Separación de responsabilidades.
+- Testing.
+- QA.
+- Seguridad.
+- Documentación.
+- Control de cambios.
+- Revisión antes de avanzar de fase.
+
+12. Riesgos detectados
+Crea una tabla con:
+- Riesgo.
+- Tipo: técnico / IA / planificación / testing / despliegue.
+- Impacto: bajo / medio / alto.
+- Probabilidad: baja / media / alta.
+- Mitigación recomendada.
+
+13. Cambios recomendados antes de implementar
+Divide las recomendaciones en:
+- Cambios obligatorios.
+- Cambios recomendados.
+- Cambios opcionales.
+- Elementos que pueden dejarse para fases futuras.
+
+14. Veredicto final
+Termina con uno de estos estados:
+
+- Validado: el plan está listo para comenzar la implementación.
+- Validado con cambios menores: se puede empezar, pero conviene ajustar algunos puntos.
+- No validado: el plan necesita cambios importantes antes de implementar.
+
+Justifica claramente el veredicto.
+
+15. Próximos pasos recomendados
+Indica qué se debería hacer justo después de esta validación:
+- Qué documento crear o actualizar.
+- Si se deben crear AGENTS.md, RULES.md o AI_WORKFLOW.md.
+- Si se puede comenzar la Fase 0.
+- Si debe intervenir OpenCode o Antigravity.
+
+Restricciones:
+- No implementes código.
+- No generes estructura del proyecto todavía.
+- No modifiques PRD.md.
+- No modifiques IMPLEMENTATION_PLAN.md.
+- Crea únicamente IMPLEMENTATION_PLAN_VALIDATION.md.
+- Escribe en español.
+- Usa formato Markdown.
+- Sé crítico, concreto y útil.
+- Cualquier problema detectado debe incluir una recomendación concreta.
