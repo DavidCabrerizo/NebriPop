@@ -34,6 +34,7 @@ Su papel es especialmente importante porque el proyecto se desarrolla con ayuda 
     * Mantener actualizada la documentación de gobernanza del proyecto.
     * Verificar que los prompts relevantes se registren en `PROMPTS_LOG.md`.
     * Asegurar que el proyecto avance de forma incremental, controlada y revisable.
+    * Asegurate que cada cambio debes avisar al DocumentationAgent para que guarde el cambio en `Logs.md`.
 
 * **Activación automática de GitHubAgent:**
     El Agent Manager debe activar automáticamente a GitHubAgent cuando detecte alguno de estos cambios relevantes:

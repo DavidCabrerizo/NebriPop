@@ -1,0 +1,293 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 0 del MVP real de NebriPop.
+
+La Fase 0 consiste en validar todas las decisiones finales del proyecto antes de empezar a implementar código real del MVP. Esta fase es de revisión, organización y preparación. No se debe programar todavía ninguna funcionalidad real.
+
+Nombre de la fase:
+Fase 0 — Validación final antes de implementar el MVP
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Control de versiones: Git + GitHub
+- Coordinación: Antigravity
+- Implementación técnica: OpenCode cuando sea autorizado
+
+Contexto:
+NebriPop será una aplicación tipo Wallapop académico para estudiantes. El objetivo del MVP es permitir publicar productos académicos de segunda mano, listarlos, ver detalles, gestionar usuarios básicos y añadir funcionalidades progresivas como búsqueda, favoritos y mensajes.
+
+Antes de comenzar a implementar el MVP real, se han realizado pruebas técnicas con:
+- Leptos para frontend.
+- Axum para backend.
+- SQLite como base de datos.
+- Integración frontend-backend.
+- Pruebas pre-MVP aisladas dentro de la carpeta experiments/.
+
+Ahora se debe validar que el proyecto está preparado para pasar de pruebas técnicas a implementación real.
+
+Agentes que deben intervenir en esta fase:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. DocumentationAgent
+4. ReviewerAgent
+5. DevopsAgent
+6. GitHubAgent
+7. QAAgent
+8. SequrityAgent
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar código real, crear funcionalidades del MVP, hacer commit, hacer push o cambiar decisiones importantes sin autorización explícita del Agent Manager.
+
+Archivos que se deben revisar si existen:
+
+- PRD.md
+- IMPLEMENTATION_PLAN.md
+- IMPLEMENTATION_PLAN_VALIDATION.md
+- AGENTS.md
+- RULES.md
+- AI_WORKFLOW.md
+- README.md
+- .gitignore
+- .env.example
+- docs/Logs.md
+- docs/Prompts/
+- docs/ARCHITECTURE.md
+- docs/DATABASE_SCHEMA.md
+- docs/DEVOPS_GUIDE.md
+- docs/SECURITY.md
+- docs/TESTING_PLAN.md
+- experiments/
+
+Objetivos concretos de la Fase 0:
+
+1. Validar que el PRD está claro y alineado con el MVP.
+2. Validar que el plan de implementación está dividido en fases correctas.
+3. Confirmar que el stack tecnológico definitivo es Leptos + Axum + SQLite.
+4. Confirmar que las pruebas técnicas previas han sido útiles y están aisladas en experiments/.
+5. Confirmar que los agentes están correctamente creados y documentados.
+6. Confirmar que las skills están correctamente asociadas.
+7. Confirmar que GitHubAgent está preparado para trabajar con el repositorio:
+   https://github.com/DavidCabrerizo/NebriPop/
+8. Confirmar que no hay que modificar todavía código principal.
+9. Confirmar que la estructura real del MVP todavía no debe implementarse hasta la Fase 1.
+10. Detectar riesgos antes de empezar a programar.
+11. Definir si el proyecto está listo para comenzar la Fase 1.
+
+Tareas por agente:
+
+## 1. Agent Manager
+Debe coordinar toda la Fase 0.
+Debe devolver:
+- Estado general del proyecto.
+- Decisiones técnicas finales.
+- Agentes que deben intervenir.
+- Documentos que se deben revisar.
+- Riesgos iniciales.
+- Criterios para aprobar la Fase 0.
+- Si se autoriza o no pasar a Fase 1.
+No debe implementar código.
+
+## 2. RustArchitectAgent
+Debe revisar la preparación arquitectónica del proyecto.
+Debe comprobar:
+- Si la arquitectura propuesta es coherente.
+- Si la separación frontend/backend/database/docs es adecuada.
+- Si Leptos, Axum y SQLite encajan correctamente.
+- Si las pruebas en experiments/ ayudan a validar la arquitectura.
+- Qué estructura recomienda para la Fase 1.
+- Qué riesgos técnicos existen antes de implementar.
+No debe crear código.
+No debe modificar backend ni frontend.
+Debe preparar una recomendación arquitectónica para la Fase 1.
+
+## 3. DocumentationAgent
+Debe revisar la documentación actual.
+Debe comprobar:
+- Si AGENTS.md está actualizado.
+- Si los prompts están guardados en docs/Prompts/.
+- Si docs/Logs.md existe.
+- Si README.md necesita mejoras.
+- Si falta documentación antes de empezar el MVP.
+- Si las pruebas técnicas previas están documentadas.
+- Si la memoria puede justificar correctamente el paso al MVP.
+Puede crear o actualizar, si el Agent Manager lo autoriza:
+- docs/PHASE_0_VALIDATION.md
+No debe modificar docs/Logs.md directamente salvo autorización expresa del Agent Manager.
+Debe preparar un resumen para registrar esta fase en docs/Logs.md.
+
+## 4. ReviewerAgent
+Debe revisar la preparación general antes del MVP.
+Debe comprobar:
+- Si la Fase 0 cumple su objetivo.
+- Si los agentes han respetado sus roles.
+- Si no se ha implementado código indebidamente.
+- Si el proyecto está preparado para Fase 1.
+- Si existen riesgos graves.
+- Si falta algún documento importante.
+- Si recomienda aprobar la Fase 0.
+Debe emitir un veredicto:
+- Fase 0 aprobada.
+- Fase 0 aprobada con ajustes menores.
+- Fase 0 no aprobada.
+Puede crear o actualizar:
+- docs/REVIEW_PHASE_0.md
+
+## 5. DevopsAgent
+Debe revisar la preparación del entorno.
+Debe comprobar:
+- Si Rust está instalado.
+- Si Trunk está instalado.
+- Si el target wasm32-unknown-unknown está documentado.
+- Si se conocen los comandos para ejecutar Leptos.
+- Si se conocen los comandos para ejecutar Axum.
+- Si hay puertos recomendados:
+  - Backend: 3000
+  - Frontend: 8081
+- Si .env.example debe crearse o revisarse.
+- Si .gitignore protege target/ y archivos sensibles.
+No debe crear workflows todavía.
+No debe modificar código.
+Puede proponer mejoras para la Fase 1.
+
+## 6. GitHubAgent
+Debe auditar el estado del repositorio.
+Repositorio esperado:
+https://github.com/DavidCabrerizo/NebriPop/
+Debe comprobar:
+- Si Git está inicializado.
+- Si existe remoto.
+- Si el remoto apunta al repositorio correcto.
+- Rama actual.
+- Estado del repositorio.
+- Archivos modificados.
+- Archivos sin seguimiento.
+- Archivos que no deberían subirse.
+- Estado de .gitignore.
+- Riesgos antes de hacer commit o push.
+No debe hacer commit.
+No debe hacer push.
+No debe modificar archivos.
+Solo debe revisar y recomendar.
+
+## 7. QAAgent
+Debe revisar si existen criterios de aceptación para empezar el MVP.
+Debe comprobar:
+- Si las pruebas técnicas previas validan el stack.
+- Si hay checklist para Fase 1.
+- Qué pruebas mínimas deben realizarse al crear la estructura real.
+- Qué riesgos deben vigilarse en la primera implementación.
+Puede proponer un checklist para Fase 1.
+No debe crear tests todavía salvo autorización expresa.
+
+## 8. SequrityAgent
+Debe revisar riesgos de seguridad antes de empezar el MVP.
+Debe comprobar:
+- Si existe riesgo de subir .env o credenciales.
+- Si SQLite debe tener datos de prueba sin información sensible.
+- Si las futuras validaciones de usuarios y productos están previstas.
+- Si las pruebas en experiments/ contienen datos sensibles.
+- Si .gitignore debe proteger archivos concretos.
+- Qué riesgos deben considerarse al implementar usuarios.
+No debe modificar código.
+
+Archivos permitidos en esta fase:
+- docs/PHASE_0_VALIDATION.md
+- docs/REVIEW_PHASE_0.md
+- docs/Prompts/PromptFase0ValidacionMVP.txt
+- AGENTS.md solo si se necesita una pequeña nota documental y el Agent Manager lo autoriza.
+- README.md solo si se necesita una pequeña aclaración y el Agent Manager lo autoriza.
+
+Archivos prohibidos en esta fase:
+- backend/
+- frontend/
+- database/
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- docs/Logs.md directamente, salvo autorización expresa.
+- Código fuente del MVP.
+- Migraciones reales.
+- Funcionalidades reales.
+- Autenticación.
+- Favoritos.
+- Mensajes.
+- Subida de imágenes.
+- Configuración de despliegue avanzada.
+
+Restricciones importantes:
+- No implementar código.
+- No crear endpoints.
+- No crear componentes frontend.
+- No crear base de datos real del MVP.
+- No crear migraciones reales.
+- No hacer commit.
+- No hacer push.
+- No modificar docs/Logs.md directamente.
+- No borrar contenido existente.
+- No cambiar tecnologías.
+- No saltarse la jerarquía del Agent Manager.
+- Mantener esta fase como validación previa.
+
+Resultado esperado:
+Crear un documento:
+docs/PHASE_0_VALIDATION.md
+con la siguiente estructura:
+# Fase 0 — Validación final antes de implementar el MVP
+## 1. Objetivo de la fase
+## 2. Stack tecnológico validado
+## 3. Estado de las pruebas técnicas previas
+## 4. Estado de los agentes
+## 5. Estado de la documentación
+## 6. Estado del repositorio GitHub
+## 7. Estado del entorno de desarrollo
+## 8. Riesgos detectados
+## 9. Recomendaciones antes de Fase 1
+## 10. Criterios de aceptación de Fase 0
+## 11. Veredicto final
+
+El veredicto final debe ser uno de estos:
+- Fase 0 aprobada. Se puede comenzar Fase 1.
+- Fase 0 aprobada con ajustes menores.
+- Fase 0 no aprobada. Se requieren correcciones antes de continuar.
+
+También crear o actualizar:
+docs/REVIEW_PHASE_0.md
+con la revisión del ReviewerAgent.
+
+Guardar este prompt completo en:
+docs/Prompts/PromptFase0ValidacionMVP.txt
+Si la carpeta docs/Prompts no existe, créala.
+
+Resumen para DocumentationAgent:
+Al finalizar, prepara un resumen para que @DocumentationAgent registre la Fase 0 en docs/Logs.md.
+El resumen debe incluir:
+- Fecha.
+- Fase: Fase 0 — Validación final antes de implementar el MVP.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Motivo de la fase.
+- Resultado de la validación.
+- Veredicto final.
+- Próximo paso recomendado.
+
+Al finalizar, devuelve:
+1. Estado de la Fase 0.
+2. Agentes que han intervenido.
+3. Archivos creados.
+4. Archivos modificados.
+5. Riesgos detectados.
+6. Decisiones finales validadas.
+7. Estado del repositorio.
+8. Estado de la documentación.
+9. Veredicto de ReviewerAgent.
+10. Si se puede comenzar Fase 1.
+11. Resumen preparado para DocumentationAgent.
+12. Próximo prompt recomendado para Fase 1.

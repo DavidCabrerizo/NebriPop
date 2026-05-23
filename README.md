@@ -6,7 +6,7 @@ NebriPop es una aplicación web tipo Wallapop orientada a la compraventa de prod
 
 Este proyecto destaca por el uso de **Rust de extremo a extremo**:
 
-*   **Backend:** [Axum](https://github.com/tokio-rs/axum) + [SQLx](https://github.com/launchbadge/sqlx) + [PostgreSQL](https://www.postgresql.org/).
+*   **Backend:** [Axum](https://github.com/tokio-rs/axum) + [SQLx](https://github.com/launchbadge/sqlx) + [SQLite](https://www.sqlite.org/).
 *   **Frontend:** [Leptos](https://leptos.dev/) (Rust Full-stack).
 *   **Infraestructura:** [Docker](https://www.docker.com/) + Docker Compose.
 *   **Desarrollo:** Asistido por Inteligencia Artificial (**Antigravity** como arquitecto/PM y **OpenCode** como implementador).
@@ -15,7 +15,7 @@ Este proyecto destaca por el uso de **Rust de extremo a extremo**:
 
 *   `backend/`: API REST desarrollada con Axum.
 *   `frontend/`: Interfaz de usuario reactiva con Leptos.
-*   `database/`: Scripts de inicialización y configuración de PostgreSQL.
+*   `database/`: Scripts de inicialización y configuración de SQLite.
 *   `docs/`: Documentación técnica, PRD y planes de implementación.
 
 ## 📜 Documentación de Gobernanza
