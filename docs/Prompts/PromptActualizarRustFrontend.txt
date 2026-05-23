@@ -1,0 +1,141 @@
+Tu tarea es actualizar el agente existente llamado RustFrontend sin borrar, eliminar ni sobrescribir sus funcionalidades actuales.
+
+Objetivo de la actualización:
+Cambiar la skill vinculada actualmente al agente RustFrontend de:
+
+- rust-best-practices
+
+por la nueva skill:
+
+- clean-rust-skill
+
+Además, debes actualizar la descripción del agente para indicar claramente que ahora combina:
+
+- Clean Code.
+- Buenas prácticas de Rust.
+- Código limpio, mantenible, modular y seguro.
+
+Contexto del proyecto:
+NebriPop es una aplicación tipo Wallapop académico para estudiantes. El proyecto utiliza Rust tanto en frontend como en backend, SQLite como base de datos, Antigravity para coordinación y OpenCode para implementación técnica.
+
+El agente RustFrontend está subordinado al Agent Manager / Product Manager Agent, tiene un rango inferior y debe obedecer siempre sus instrucciones.
+
+Archivos que debes revisar antes de actuar:
+
+- AGENTS.md
+- RULES.md, si existe
+- AI_WORKFLOW.md, si existe
+- docs/Prompts/PromptAgenteFrontendRust.txt, si existe
+
+Tareas concretas:
+
+1. Actualiza la configuración/documentación del agente RustFrontend para que use la skill:
+
+   clean-rust-skill
+
+2. No elimines las funcionalidades actuales del agente RustFrontend.
+
+3. Mantén todas sus responsabilidades actuales relacionadas con:
+
+   - Desarrollo frontend en Rust.
+   - Implementación de pantallas.
+   - Componentes reutilizables.
+   - Navegación entre vistas.
+   - Formularios.
+   - Validaciones de cliente.
+   - Gestión de estados de carga, error y éxito.
+   - Consumo de API REST.
+   - Integración con el backend.
+   - Testing frontend.
+   - Coordinación con UXDesigner.
+   - Coordinación con RustArchitectAgent.
+   - Coordinación con BackendRust cuando afecte a la API.
+   - Coordinación con QAAgent.
+   - Coordinación con SequrityAgent cuando afecte a sesión, tokens o exposición de datos.
+   - Respeto a la arquitectura definida por RustArchitectAgent.
+   - Subordinación al Agent Manager.
+
+4. Actualiza la descripción del agente para indicar que RustFrontend ahora utiliza una skill fusionada que combina Clean Code y buenas prácticas de Rust.
+
+Texto recomendado para añadir o adaptar en la descripción:
+
+“El agente RustFrontend utiliza la skill clean-rust-skill, una skill fusionada que combina principios de Clean Code y buenas prácticas específicas de Rust. Gracias a esta skill, el agente debe generar y revisar código frontend limpio, modular, mantenible, seguro, idiomático y alineado con la arquitectura y la experiencia de usuario del proyecto.”
+
+5. Actualiza todas las referencias donde aparezca:
+
+   rust-best-practices
+
+   y sustitúyelas por:
+
+   clean-rust-skill
+
+   Solo dentro de la sección correspondiente al agente RustFrontend.
+
+6. No modifiques otras secciones de otros agentes salvo que sea estrictamente necesario.
+
+7. No borres contenido existente en AGENTS.md.
+
+8. Si existe el archivo docs/Prompts/PromptAgenteFrontendRust.txt, actualízalo también para reflejar que la skill actual del agente RustFrontend es clean-rust-skill.
+
+9. No modifiques docs/Logs.md directamente.
+
+10. Una vez finalizada la actualización, prepara un resumen para que @DocumentationAgent registre el cambio en docs/Logs.md.
+
+El resumen para @DocumentationAgent debe incluir:
+
+- Fecha.
+- Agente actualizado.
+- Skill anterior.
+- Skill nueva.
+- Archivos modificados.
+- Motivo del cambio.
+- Funcionalidades mantenidas.
+- Próximo paso recomendado.
+
+Datos que debe incluir el resumen:
+
+- Agente actualizado: RustFrontend.
+- Skill anterior: rust-best-practices.
+- Skill nueva: clean-rust-skill.
+- Motivo del cambio: Sustituir rust-best-practices por clean-rust-skill para combinar Clean Code y buenas prácticas de Rust en el desarrollo frontend.
+- Funcionalidades mantenidas: Todas las responsabilidades actuales del agente RustFrontend relacionadas con frontend Rust, pantallas, componentes, navegación, formularios, validaciones, consumo de API, integración con backend, testing frontend, coordinación con otros agentes y subordinación al Agent Manager.
+- Próximo paso recomendado: Solicitar a @DocumentationAgent que registre el cambio en docs/Logs.md y validar que RustFrontend trabaja correctamente con clean-rust-skill antes de nuevas tareas frontend.
+
+Restricciones importantes:
+
+- No implementes código.
+- No modifiques backend/.
+- No modifiques frontend/.
+- No modifiques docs/Logs.md directamente.
+- No modifiques PRD.md.
+- No modifiques IMPLEMENTATION_PLAN.md.
+- No elimines funcionalidades actuales del agente.
+- No cambies la jerarquía del agente.
+- No cambies su subordinación al Agent Manager.
+- No modifiques otros agentes.
+- No borres contenido existente.
+- Mantén todo en español.
+- Usa formato Markdown profesional.
+
+Antes de modificar archivos, explica:
+
+1. Qué vas a cambiar.
+2. Qué archivos vas a tocar.
+3. Qué archivos no vas a tocar.
+4. Por qué el cambio es necesario.
+5. Cómo vas a garantizar que no se pierdan funcionalidades actuales.
+6. Cómo prepararás el resumen para @DocumentationAgent.
+
+Después de modificar archivos, resume:
+
+1. Archivos modificados.
+2. Cambios realizados.
+3. Skill anterior.
+4. Skill nueva.
+5. Funcionalidades mantenidas.
+6. Confirmación de que no se ha modificado docs/Logs.md directamente.
+7. Resumen preparado para que @DocumentationAgent registre el cambio en docs/Logs.md.
+8. Próximo paso recomendado.
+
+
+Receurda guardar este promtp dentro de la carpeta docs/prompts con el nombre PromptActualizarRustFrontend.txt

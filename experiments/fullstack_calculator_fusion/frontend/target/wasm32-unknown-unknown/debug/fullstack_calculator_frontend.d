@@ -1,0 +1,1 @@
+C:\Nebrija\NebriPop\experiments\fullstack_calculator_fusion\frontend\target\wasm32-unknown-unknown\debug\fullstack_calculator_frontend.wasm: C:\Nebrija\NebriPop\experiments\fullstack_calculator_fusion\frontend\src\main.rs

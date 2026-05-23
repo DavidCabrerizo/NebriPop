@@ -1,0 +1,198 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Hemos validado manualmente que el backend Axum de la prueba de calculadora funciona correctamente.
+
+Prueba realizada en PowerShell:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/operations `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"left_value":10.0,"operator":"+","right_value":5.0,"result":15.0}'
+
+Resultado:
+El backend guarda correctamente la operación y se puede consultar en:
+
+http://127.0.0.1:3000/operations
+
+Problema detectado:
+Cuando realizamos operaciones desde el frontend Leptos, las operaciones no se guardan automáticamente en el backend.
+
+Objetivo:
+Corregir la integración del frontend Leptos para que cada operación realizada desde la calculadora se envíe correctamente al backend Axum y se actualice el historial.
+
+Carpeta de trabajo:
+experiments/fullstack_calculator_fusion/frontend/
+
+Backend esperado:
+http://127.0.0.1:3000
+
+Endpoint para guardar operaciones:
+POST http://127.0.0.1:3000/operations
+
+Endpoint para consultar historial:
+GET http://127.0.0.1:3000/operations
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent.
+2. RustFrontend.
+3. QAAgent.
+4. ReviewerAgent.
+5. DocumentationAgent.
+
+Instrucciones para RustFrontend:
+
+Revisar el código del frontend Leptos y comprobar:
+
+1. Que al pulsar suma, resta, multiplicación o división se calcula correctamente el resultado.
+2. Que después de calcular el resultado se envía una petición POST a:
+
+http://127.0.0.1:3000/operations
+
+3. Que el body enviado tiene este formato exacto:
+
+{
+  "left_value": 10.0,
+  "operator": "+",
+  "right_value": 5.0,
+  "result": 15.0
+}
+
+4. Que no se está usando una ruta relativa incorrecta como:
+
+/operations
+
+porque eso apuntaría al puerto del frontend y no al backend.
+
+5. Que después de guardar la operación, el frontend hace una petición GET a:
+
+http://127.0.0.1:3000/operations
+
+para actualizar el historial mostrado en pantalla.
+
+6. Que si el backend no está activo, el frontend muestra un mensaje de error claro.
+
+7. Que si se intenta dividir entre cero, no se envía la operación al backend y se muestra un error al usuario.
+
+8. Que el historial se actualiza automáticamente después de cada operación guardada.
+
+Requisitos técnicos:
+
+- Mantener Leptos como framework frontend.
+- Mantener Axum como backend.
+- No modificar el backend si no es estrictamente necesario.
+- No modificar el backend principal de NebriPop.
+- No modificar el frontend principal de NebriPop.
+- No usar SQLite todavía.
+- No implementar autenticación.
+- No modificar docs/Logs.md directamente.
+- Mantener la prueba aislada.
+- Usar código simple, limpio y mantenible.
+- Usar clean-rust-skill si está disponible.
+
+Instrucciones para QAAgent:
+
+Validar manualmente:
+
+1. Arrancar backend:
+
+cd experiments/fullstack_calculator_fusion/backend
+cargo run
+
+2. Arrancar frontend:
+
+cd experiments/fullstack_calculator_fusion/frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+3. Abrir frontend:
+
+http://127.0.0.1:8081
+
+4. Realizar una suma desde el frontend.
+
+5. Comprobar que aparece el resultado en pantalla.
+
+6. Comprobar que el historial del frontend se actualiza.
+
+7. Abrir o recargar:
+
+http://127.0.0.1:3000/operations
+
+8. Confirmar que la operación aparece guardada en el backend.
+
+9. Repetir con resta, multiplicación y división.
+
+10. Comprobar que la división entre cero muestra error y no se guarda.
+
+QAAgent debe crear o actualizar:
+
+docs/QA_FULLSTACK_CALCULADORA_FUSION.md
+
+Instrucciones para ReviewerAgent:
+
+Revisar que:
+
+- El frontend llama a la URL correcta del backend.
+- El POST /operations se ejecuta después de cada operación.
+- El GET /operations actualiza el historial.
+- El manejo de errores es claro.
+- No se han tocado archivos fuera del alcance.
+- La prueba sigue aislada.
+- El código es limpio y entendible.
+
+ReviewerAgent debe crear o actualizar:
+
+docs/REVIEW_FULLSTACK_CALCULADORA_FUSION.md
+
+Instrucciones para DocumentationAgent:
+
+Actualizar la documentación de la prueba en:
+
+docs/FULLSTACK_CALCULADORA_FUSION_TEST.md
+
+Añadir un apartado llamado:
+
+Corrección de integración frontend-backend
+
+Debe explicar:
+
+- Que el backend fue validado manualmente con PowerShell.
+- Que el problema estaba en que el frontend no guardaba automáticamente las operaciones.
+- Que se corrigió el envío de operaciones desde Leptos hacia Axum.
+- Que ahora cada operación se envía mediante POST /operations.
+- Que el historial se actualiza mediante GET /operations.
+- Que los datos se siguen guardando temporalmente en memoria.
+- Que si el backend se reinicia, el historial se borra.
+
+No modifiques docs/Logs.md directamente.
+
+Al finalizar, prepara un resumen para que @DocumentationAgent registre el cambio en docs/Logs.md con:
+
+- Fecha.
+- Problema detectado.
+- Causa probable.
+- Archivos modificados.
+- Solución aplicada.
+- Pruebas realizadas.
+- Resultado final.
+- Próximo paso recomendado.
+
+Resultado esperado:
+Después de la corrección, al realizar una operación desde el frontend Leptos:
+
+1. Se calcula el resultado.
+2. Se muestra el resultado en pantalla.
+3. Se envía la operación al backend Axum.
+4. El backend guarda la operación en memoria.
+5. El frontend actualiza el historial.
+6. Al abrir http://127.0.0.1:3000/operations aparece la operación guardada.
+
+Devuelve al finalizar:
+
+1. Archivos modificados.
+2. Explicación del problema encontrado.
+3. Solución aplicada.
+4. Cómo probarlo.
+5. Resultado de QAAgent.
+6. Resultado de ReviewerAgent.
+7. Resumen para @DocumentationAgent.

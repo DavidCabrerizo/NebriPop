@@ -42,7 +42,8 @@ Este documento establece las reglas obligatorias para todo el desarrollo del pro
 
 ## 5. Gestión de IA (Antigravity & OpenCode)
 1.  **Trazabilidad:** Los prompts más relevantes deben registrarse en `PROMPTS_LOG.md`.
-2.  **Validación PM:** Antes de iniciar una nueva fase, el Project Manager Agent debe validar que la fase anterior cumple con los criterios de aceptación.
+2.  **Registro de Logs (Automático):** Es obligatorio que cualquier cambio o tarea finalizada quede reflejada en `docs/Logs.md`. Esta actualización se realizará de forma automática tras cada modificación, sin necesidad de solicitar autorización previa al usuario.
+3.  **Validación PM:** Antes de iniciar una nueva fase, el Project Manager Agent debe validar que la fase anterior cumple con los criterios de aceptación.
 3.  **Task Management:** El archivo `task.md` debe ser la única fuente de verdad sobre el estado actual de las tareas.
 
 ---

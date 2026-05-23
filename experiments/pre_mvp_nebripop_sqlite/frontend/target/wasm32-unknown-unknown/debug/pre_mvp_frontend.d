@@ -1,0 +1,1 @@
+C:\Nebrija\NebriPop\experiments\pre_mvp_nebripop_sqlite\frontend\target\wasm32-unknown-unknown\debug\pre_mvp_frontend.wasm: C:\Nebrija\NebriPop\experiments\pre_mvp_nebripop_sqlite\frontend\src\main.rs

@@ -1,0 +1,133 @@
+Tu tarea es actualizar el agente existente llamado RustBackend sin borrar, eliminar ni sobrescribir sus funcionalidades actuales.
+
+Objetivo de la actualización:
+Cambiar la skill vinculada actualmente al agente RustBackend de:
+
+- rust-best-practices
+
+por la nueva skill:
+
+- clean-rust-skill
+
+Además, debes actualizar la descripción del agente para indicar claramente que ahora combina:
+
+- Clean Code.
+- Buenas prácticas de Rust.
+- Código limpio, mantenible, modular y seguro.
+
+Contexto del proyecto:
+NebriPop es una aplicación tipo Wallapop académico para estudiantes. El proyecto utiliza Rust tanto en frontend como en backend, SQLite como base de datos, Antigravity para coordinación y OpenCode para implementación técnica.
+
+El agente RustBackend está subordinado al Agent Manager / Product Manager Agent, tiene un rango inferior y debe obedecer siempre sus instrucciones.
+
+Archivos que debes revisar antes de actuar:
+
+- AGENTS.md
+- RULES.md, si existe
+- AI_WORKFLOW.md, si existe
+- docs/Logs.md, si existe
+- docs/Prompts/PromptAgenteBackendRust.txt, si existe
+
+Tareas concretas:
+
+1. Actualiza la configuración/documentación del agente RustBackend para que use la skill:
+
+   clean-rust-skill
+
+2. No elimines las funcionalidades actuales del agente RustBackend.
+
+3. Mantén todas sus responsabilidades actuales relacionadas con:
+
+   - Desarrollo backend en Rust.
+   - API REST.
+   - Servicios.
+   - Repositorios.
+   - Modelos.
+   - DTOs.
+   - Validaciones.
+   - Gestión de errores.
+   - Autenticación.
+   - Integración con SQLite.
+   - Testing backend.
+   - Coordinación con DatabaseAgent.
+   - Coordinación con QAAgent.
+   - Coordinación con SequrityAgent.
+   - Respeto a la arquitectura definida por RustArchitectAgent.
+   - Subordinación al Agent Manager.
+
+4. Actualiza la descripción del agente para indicar que RustBackend ahora utiliza una skill fusionada que combina Clean Code y buenas prácticas de Rust.
+
+Texto recomendado para añadir o adaptar en la descripción:
+
+“El agente RustBackend utiliza la skill clean-rust-skill, una skill fusionada que combina principios de Clean Code y buenas prácticas específicas de Rust. Gracias a esta skill, el agente debe generar y revisar código backend limpio, modular, mantenible, seguro, idiomático y alineado con la arquitectura del proyecto.”
+
+5. Actualiza todas las referencias donde aparezca:
+
+   rust-best-practices
+
+   y sustitúyelas por:
+
+   clean-rust-skill
+
+   Solo dentro de la sección correspondiente al agente RustBackend.
+
+6. No modifiques otras secciones de otros agentes salvo que sea estrictamente necesario.
+
+7. No borres contenido existente en AGENTS.md.
+
+8. Si existe el archivo docs/Prompts/PromptAgenteBackendRust.txt, actualízalo también para reflejar que la skill actual del agente RustBackend es clean-rust-skill.
+
+9. Si existe docs/Logs.md, registra el cambio realizado.
+
+10. Si docs/Logs.md no existe, créalo dentro de la carpeta docs.
+
+Formato de entrada en docs/Logs.md:
+
+## Registro de cambios del proyecto NebriPop
+
+| Fecha | Agente | Skill | Acción | Archivos afectados | Motivo | Resumen | Próximo paso |
+|---|---|---|---|---|---|---|---|
+
+Añade una nueva fila indicando:
+
+- Fecha actual.
+- Agente: Agent Manager / Product Manager Agent.
+- Skill: clean-rust-skill.
+- Acción: Actualización del agente RustBackend.
+- Archivos afectados: AGENTS.md, docs/Prompts/PromptAgenteBackendRust.txt si existe, docs/Logs.md.
+- Motivo: Sustituir rust-best-practices por clean-rust-skill para combinar Clean Code y buenas prácticas de Rust.
+- Resumen: Se actualizó la skill del agente RustBackend manteniendo sus funcionalidades actuales.
+- Próximo paso: Validar que RustBackend trabaja correctamente con clean-rust-skill antes de nuevas tareas backend.
+
+Restricciones importantes:
+
+- No implementes código.
+- No modifiques backend/.
+- No modifiques frontend/.
+- No modifiques PRD.md.
+- No modifiques IMPLEMENTATION_PLAN.md.
+- No elimines funcionalidades actuales del agente.
+- No cambies la jerarquía del agente.
+- No cambies su subordinación al Agent Manager.
+- No modifiques otros agentes.
+- No borres contenido existente.
+- Mantén todo en español.
+- Usa formato Markdown profesional.
+
+Antes de modificar archivos, explica:
+
+1. Qué vas a cambiar.
+2. Qué archivos vas a tocar.
+3. Qué archivos no vas a tocar.
+4. Por qué el cambio es necesario.
+5. Cómo vas a garantizar que no se pierdan funcionalidades actuales.
+
+Después de modificar archivos, resume:
+
+1. Archivos modificados.
+2. Cambios realizados.
+3. Skill anterior.
+4. Skill nueva.
+5. Funcionalidades mantenidas.
+6. Entrada registrada en docs/Logs.md.
+7. Próximo paso recomendado.

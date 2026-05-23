@@ -21,6 +21,7 @@ Este documento define cómo colaboran Antigravity y OpenCode para asegurar un de
 4.  **Cierre de Tarea:**
     *   Antigravity marca la tarea como completada en `task.md`.
     *   Se documenta el cambio relevante en `PROMPTS_LOG.md`.
+    *   Se debe registrar el resumen de la tarea y los archivos modificados en `docs/Logs.md` de forma automática tras finalizar.
 
 ---
 

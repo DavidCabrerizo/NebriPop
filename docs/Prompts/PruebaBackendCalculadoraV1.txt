@@ -1,0 +1,138 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Realizar una prueba técnica controlada del backend antes de comenzar la implementación real de NebriPop.
+
+La prueba consistirá en crear un backend en Rust usando Axum que permita guardar operaciones realizadas por una calculadora básica.
+
+Esta prueba debe servir para validar:
+
+- Que Axum funciona correctamente como framework backend.
+- Que podemos levantar un servidor local en Rust.
+- Que podemos crear endpoints REST.
+- Que podemos recibir y devolver JSON.
+- Que podemos guardar datos temporalmente en memoria.
+- Que el backend está preparado para evolucionar hacia funcionalidades reales de NebriPop.
+
+Nombre de la prueba:
+PruebaBackendCalculadoraV1
+
+Guarda este prompt completo en:
+
+docs/Prompts/PruebaBackendCalculadoraV1.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+No modifiques docs/Logs.md directamente.
+
+Una vez finalizada la prueba, prepara un resumen para que @DocumentationAgent registre el cambio en docs/Logs.md.
+
+El resumen debe incluir:
+
+- Fecha.
+- Agente responsable.
+- Acción realizada.
+- Archivos creados o modificados.
+- Motivo del cambio.
+- Funcionalidades implementadas.
+- Próximo paso recomendado.
+
+Contexto:
+NebriPop será una aplicación tipo Wallapop académico para estudiantes. Antes de implementar su backend real, queremos validar Axum mediante una API sencilla que almacene operaciones matemáticas y sus resultados.
+
+Esta prueba no forma parte de la funcionalidad final de NebriPop. Es una prueba técnica aislada para validar el backend Rust.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent.
+2. RustArchitectAgent.
+3. RustBackend.
+4. QAAgent.
+5. ReviewerAgent.
+6. DocumentationAgent.
+
+Flujo obligatorio:
+
+## 1. Agent Manager
+Debe iniciar la prueba y definir claramente el alcance.
+
+## 2. RustArchitectAgent
+Debe planificar la arquitectura mínima de la prueba backend.
+
+## 3. RustBackend
+Debe implementar un backend mínimo con Rust y Axum.
+La prueba debe crearse en una carpeta aislada: experiments/backend_calculator_test/
+No debe modificarse el backend principal de NebriPop.
+
+El backend debe incluir:
+- Servidor local en puerto 3000.
+- Endpoint GET /health.
+- Endpoint POST /operations.
+- Endpoint GET /operations.
+- Respuestas en JSON.
+- Almacenamiento temporal en memoria del historial de operaciones.
+- CORS opcional, solo si se considera necesario para futuras pruebas con frontend.
+- Código simple y limpio usando la skill clean-rust-skill, si está disponible.
+
+No debe usar SQLite todavía.
+No debe implementar autenticación.
+No debe implementar lógica real de NebriPop.
+
+Estructuras esperadas:
+Operation:
+- id
+- left_value
+- operator
+- right_value
+- result
+
+NewOperation:
+- left_value
+- operator
+- right_value
+- result
+
+Operadores permitidos:
+- "+"
+- "-"
+- "*"
+- "/"
+
+Validaciones obligatorias:
+- El operador solo puede ser "+", "-", "*" o "/".
+- No se debe aceptar división entre cero.
+- Los valores deben ser numéricos.
+- El resultado debe corresponder con la operación enviada.
+- Si los datos no son válidos, devolver un error claro en JSON.
+
+Endpoints esperados:
+GET /health
+POST /operations
+GET /operations
+
+## 4. QAAgent
+Debe definir una estrategia de prueba para el backend.
+
+## 5. ReviewerAgent
+Debe revisar el resultado técnico.
+
+## 6. DocumentationAgent
+Debe documentar la prueba realizada.
+
+Archivos permitidos para esta prueba:
+- docs/Prompts/PruebaBackendCalculadoraV1.txt
+- docs/BACKEND_CALCULADORA_TEST.md
+- docs/QA_BACKEND_CALCULADORA.md
+- docs/REVIEW_BACKEND_CALCULADORA.md
+- experiments/backend_calculator_test/
+
+Archivos prohibidos:
+- PRD.md
+- IMPLEMENTATION_PLAN.md
+- docs/Logs.md directamente
+- backend/ principal de NebriPop
+- frontend/ principal de NebriPop
+- base de datos real
+- migraciones reales
+- autenticación real
+- lógica real de NebriPop

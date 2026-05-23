@@ -1,0 +1,292 @@
+Actúa como Skill Creator dentro de Antigravity utilizando la skill `skill-creator`.
+
+Contexto del proyecto:
+Estamos desarrollando NebriPop, una aplicación tipo Wallapop académico para estudiantes. El proyecto utiliza Rust tanto en frontend como en backend, SQLite como base de datos y se desarrolla con una metodología asistida por IA usando Antigravity y OpenCode.
+
+Queremos crear una skill específica que pueda utilizar posteriormente el agente DevopsAgent para encargarse de tareas relacionadas con DevOps, CI/CD, automatización, despliegue, configuración de entornos y documentación de ejecución del proyecto.
+
+Tu tarea:
+Crear una nueva skill llamada:
+
+DevopsSkill
+
+Además, guarda este prompt completo en el archivo:
+
+docs/Prompts/PromptSkillCreatorDevops.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+Nombre de la skill:
+DevopsSkill
+
+Skill base utilizada para crearla:
+skill-creator
+
+Objetivo principal de la skill:
+La skill DevopsSkill debe servir para que un futuro DevopsAgent pueda planificar, revisar, implementar y documentar tareas relacionadas con DevOps en el proyecto NebriPop, especialmente:
+
+- Preparación del entorno de desarrollo.
+- Automatización de comandos.
+- Configuración de scripts.
+- Gestión de variables de entorno.
+- Configuración de CI/CD.
+- GitHub Actions.
+- Build del backend Rust.
+- Build del frontend Rust.
+- Ejecución automática de tests.
+- Validación de formato y calidad del código.
+- Preparación de despliegue.
+- Documentación de ejecución y despliegue.
+- Revisión de riesgos de entorno.
+
+Descripción de la skill:
+DevopsSkill es una skill especializada en automatización, integración continua, despliegue y configuración de entornos para proyectos full-stack desarrollados con Rust. Su objetivo es ayudar a que NebriPop pueda ejecutarse, probarse y desplegarse de forma ordenada, reproducible y documentada.
+
+La skill debe estar pensada para un proyecto académico, pero con buenas prácticas profesionales. Debe priorizar soluciones simples, mantenibles y fáciles de explicar en la memoria del proyecto.
+
+Ámbito de aplicación:
+La skill DevopsSkill se aplicará principalmente sobre:
+
+- Repositorio del proyecto.
+- Configuración de entorno.
+- Archivos `.env.example`.
+- Scripts de ejecución.
+- GitHub Actions.
+- Workflows de CI/CD.
+- Comandos de build.
+- Comandos de test.
+- Documentación de despliegue.
+- Docker, solo si está justificado.
+- SQLite en entorno local.
+- Backend Rust.
+- Frontend Rust.
+
+Jerarquía de uso:
+Esta skill será utilizada por el futuro agente DevopsAgent.
+
+El DevopsAgent estará subordinado al Agent Manager / Product Manager Agent, por lo que la skill debe reforzar estas reglas:
+
+- No realizar tareas fuera del alcance aprobado.
+- No modificar archivos críticos sin justificarlo.
+- No cambiar la arquitectura sin autorización.
+- No cambiar tecnologías principales del proyecto.
+- No añadir complejidad innecesaria.
+- Priorizar el MVP.
+- Documentar todos los cambios importantes.
+- Coordinarse con otros agentes cuando sea necesario.
+
+Funciones principales que debe permitir la skill:
+
+1. Preparación del entorno
+
+La skill debe ayudar a definir:
+
+- Requisitos previos del sistema.
+- Instalación de Rust.
+- Instalación de herramientas necesarias.
+- Configuración de SQLite.
+- Variables de entorno.
+- Comandos para iniciar backend.
+- Comandos para iniciar frontend.
+- Comandos para ejecutar tests.
+- Comandos para compilar el proyecto.
+
+2. Automatización de comandos
+
+La skill debe poder proponer o crear, cuando se autorice:
+
+- Scripts de arranque.
+- Scripts de build.
+- Scripts de test.
+- Scripts de limpieza.
+- Scripts de inicialización de base de datos.
+- Scripts de ejecución local.
+
+Los scripts deben ser simples, claros y multiplataforma cuando sea posible.
+
+3. CI/CD
+
+La skill debe ayudar a definir y crear workflows de GitHub Actions para:
+
+- Comprobar formato del código Rust.
+- Ejecutar `cargo check`.
+- Ejecutar `cargo test`.
+- Compilar backend.
+- Compilar frontend.
+- Validar que no faltan archivos importantes.
+- Ejecutar comprobaciones básicas antes de aceptar cambios.
+
+4. Despliegue
+
+La skill debe ayudar a planificar el despliegue del proyecto:
+
+- Despliegue local.
+- Despliegue académico sencillo.
+- Posible despliegue en Render, Railway, Fly.io, Shuttle, VPS o similar si el Agent Manager lo autoriza.
+- Documentación de variables de entorno.
+- Estrategia de build.
+- Estrategia de ejecución.
+- Riesgos de despliegue.
+
+5. Documentación DevOps
+
+La skill debe ayudar a crear documentación como:
+
+- `docs/DEPLOYMENT_GUIDE.md`
+- `docs/DEVOPS_GUIDE.md`
+- `docs/CI_CD.md`
+- `docs/ENVIRONMENT_SETUP.md`
+- `docs/LOCAL_RUN_GUIDE.md`
+- `README.md`, solo en secciones relacionadas con ejecución y despliegue.
+
+6. Gestión de variables de entorno
+
+La skill debe revisar y proponer:
+
+- `.env.example`
+- Variables necesarias para backend.
+- Ruta de SQLite.
+- Puerto del backend.
+- URL de API usada por el frontend.
+- Secretos de autenticación.
+- Buenas prácticas para no subir secretos reales al repositorio.
+
+7. Seguridad básica DevOps
+
+La skill debe evitar:
+
+- Subir `.env` real.
+- Exponer claves privadas.
+- Exponer tokens.
+- Hardcodear secretos.
+- Publicar rutas sensibles.
+- Dejar credenciales en workflows.
+
+8. Coordinación con otros agentes
+
+La skill debe estar diseñada para trabajar con:
+
+- Agent Manager / Product Manager Agent.
+- RustArchitectAgent.
+- RustBackend.
+- RustFrontend.
+- DatabaseAgent.
+- QAAgent.
+- SequrityAgent.
+- DocumentationAgent, si existe.
+
+Reglas de coordinación:
+
+- Si la tarea afecta a backend, coordinar con RustBackend.
+- Si la tarea afecta a frontend, coordinar con RustFrontend.
+- Si la tarea afecta a SQLite o migraciones, coordinar con DatabaseAgent.
+- Si la tarea afecta a tests, coordinar con QAAgent.
+- Si la tarea afecta a secretos o seguridad, coordinar con SequrityAgent.
+- Si la tarea afecta a arquitectura, elevar al Agent Manager y coordinar con RustArchitectAgent.
+
+Principios que debe aplicar la skill:
+
+- Simplicidad.
+- Reproducibilidad.
+- Automatización razonable.
+- Documentación clara.
+- Separación de entornos.
+- No subir secretos.
+- No sobrecomplicar el MVP.
+- Priorizar ejecución local estable antes que despliegue avanzado.
+- Validar antes de automatizar.
+- Scripts claros y mantenibles.
+- CI/CD sencillo pero profesional.
+- Compatibilidad con Rust.
+- Compatibilidad con SQLite.
+- Respeto a la arquitectura definida.
+
+Archivos que la skill puede ayudar a crear o modificar cuando el Agent Manager lo autorice:
+
+- `.github/workflows/ci.yml`
+- `.env.example`
+- `.gitignore`
+- `README.md`
+- `docs/DEPLOYMENT_GUIDE.md`
+- `docs/DEVOPS_GUIDE.md`
+- `docs/CI_CD.md`
+- `docs/ENVIRONMENT_SETUP.md`
+- `docs/LOCAL_RUN_GUIDE.md`
+- `docs/Prompts/PromptSkillCreatorDevops.txt`
+- `scripts/`
+- `docker-compose.yml`, solo si está justificado.
+- `Dockerfile`, solo si está justificado.
+
+Archivos que la skill debe evitar modificar salvo autorización explícita:
+
+- `PRD.md`
+- `IMPLEMENTATION_PLAN.md`
+- Código funcional del backend.
+- Código funcional del frontend.
+- Migraciones de base de datos.
+- Archivos de autenticación.
+- Archivos de seguridad.
+- Cualquier archivo fuera del alcance de la tarea DevOps.
+
+Comportamiento esperado de la skill:
+
+Cuando se use DevopsSkill, debe ayudar al agente a responder siempre con esta estructura antes de modificar archivos:
+
+1. Objetivo de la tarea DevOps.
+2. Documentos revisados.
+3. Archivos que se van a crear o modificar.
+4. Archivos que no se van a tocar.
+5. Riesgos detectados.
+6. Coordinación necesaria con otros agentes.
+7. Confirmación de que no se introducirán cambios fuera del alcance.
+
+Después de modificar archivos, debe ayudar al agente a responder con:
+
+1. Archivos creados o modificados.
+2. Cambios realizados.
+3. Comandos disponibles.
+4. Cómo probar los cambios.
+5. Riesgos pendientes.
+6. Próximo paso recomendado.
+
+Casos de uso principales de la skill:
+
+- Preparar entorno local de NebriPop.
+- Crear `.env.example`.
+- Crear `.gitignore`.
+- Crear scripts de ejecución.
+- Crear workflow básico de GitHub Actions.
+- Crear documentación de ejecución local.
+- Crear documentación de despliegue.
+- Revisar que el proyecto pueda compilarse.
+- Revisar que los tests puedan ejecutarse.
+- Revisar que no se suban secretos.
+- Preparar checklist DevOps para la entrega.
+
+Resultado esperado:
+Crea la skill DevopsSkill dentro del sistema de skills de Antigravity, lista para ser utilizada posteriormente por el agente DevopsAgent.
+
+Además, crea o actualiza el archivo:
+
+docs/Prompts/PromptSkillCreatorDevops.txt
+
+con este prompt completo.
+
+Restricciones finales:
+
+- No crees todavía el agente DevopsAgent.
+- No implementes código funcional del proyecto.
+- No modifiques backend.
+- No modifiques frontend.
+- No cambies SQLite por otra tecnología.
+- No añadas Docker si no está justificado.
+- No crees workflows de CI/CD todavía, solo define la skill.
+- No borres contenido existente.
+- Escribe todo en español.
+- Mantén la skill orientada a un MVP académico pero profesional.
+- Al finalizar, resume:
+  1. Nombre de la skill creada.
+  2. Archivo donde se ha guardado el prompt.
+  3. Capacidades principales de la skill.
+  4. Qué agente podrá utilizarla posteriormente.
+  5. Próximo paso recomendado.

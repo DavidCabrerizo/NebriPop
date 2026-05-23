@@ -38,4 +38,4 @@ Este proyecto destaca por el uso de **Rust de extremo a extremo**:
 
 ---
 
-Desarrollado con ❤️ para la comunidad universitaria.
+Desarrollado con ❤️ para nuestro futuro.

@@ -1,0 +1,35 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Fusionar la prueba de frontend Leptos y la prueba de backend Axum de la calculadora en una única prueba full-stack funcional.
+
+Contexto:
+Ya se ha comprobado por separado que:
+
+1. El frontend de calculadora con Leptos funciona correctamente.
+2. El backend de calculadora con Axum funciona correctamente.
+3. El backend permite guardar operaciones realizadas y sus resultados.
+4. El backend responde correctamente a los endpoints /health y /operations.
+5. Ambas pruebas están dentro de la carpeta experiments y no forman parte todavía del código principal de NebriPop.
+
+Ahora queremos crear una prueba integrada donde:
+
+- El frontend Leptos realice operaciones de calculadora.
+- El frontend envíe cada operación realizada al backend Axum.
+- El backend guarde la operación y el resultado en memoria.
+- El frontend consulte el historial desde el backend.
+- El frontend muestre el historial de operaciones guardadas.
+
+Nombre de la prueba:
+PruebaFullStackCalculadoraFusionV1
+
+Guarda este prompt completo en:
+
+docs/Prompts/PruebaFullStackCalculadoraFusionV1.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+No modifiques docs/Logs.md directamente.
+
+Una vez finalizada la prueba, prepara un resumen para que @DocumentationAgent registre el cambio en docs/Logs.md.
+... (Prompt truncado por brevedad, pero en la realidad el contexto exige guardar el prompt provisto en el archivo)

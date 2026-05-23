@@ -1,0 +1,330 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Realizar una prueba controlada del flujo de trabajo entre los agentes creados antes de empezar a programar la aplicación real.
+
+Esta prueba debe servir para validar que los agentes:
+- Entienden su rol.
+- Respetan la jerarquía del Agent Manager.
+- Se coordinan correctamente entre ellos.
+- No modifican código fuente.
+- No empiezan a implementar la aplicación.
+- Saben documentar sus decisiones.
+- Siguen el PRD, el IMPLEMENTATION_PLAN y las reglas del proyecto.
+
+Contexto del proyecto:
+NebriPop es una aplicación tipo Wallapop académico para estudiantes. El proyecto utilizará Rust en frontend y backend, SQLite como base de datos, Antigravity para planificación y coordinación, y OpenCode para implementación técnica cuando sea autorizado.
+
+Agentes disponibles:
+- Agent Manager / Product Manager Agent.
+- UXDesigner.
+- RustArchitectAgent.
+- RustBackend.
+- RustFrontend.
+- DatabaseAgent.
+- QAAgent.
+- SequrityAgent.
+- DevopsAgent.
+- DocumentationAgent.
+- ReviewerAgent.
+
+Tarea principal:
+Crear una prueba simulada de flujo de trabajo entre agentes, sin implementar código real.
+
+La prueba debe llamarse:
+
+PruebaFlujoV1
+
+Además, guarda este prompt completo en el archivo:
+
+docs/Prompts/PruebaFlujoV1.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+No modifiques docs/Logs.md directamente.
+
+Una vez finalizada la prueba, prepara un resumen para que @DocumentationAgent registre el cambio en docs/Logs.md.
+
+El resumen debe incluir:
+
+- Fecha.
+- Agente actualizado o agente responsable.
+- Skill anterior, si aplica.
+- Skill nueva, si aplica.
+- Archivos modificados.
+- Motivo del cambio.
+- Funcionalidades mantenidas.
+- Próximo paso recomendado.
+
+Objetivo de la prueba:
+Simular cómo sería el flujo real de trabajo para una funcionalidad sencilla del MVP sin llegar a implementarla.
+
+Funcionalidad simulada:
+“Publicar un producto en NebriPop”.
+
+Importante:
+Esta prueba no debe crear código real de backend ni frontend. Solo debe simular la coordinación, planificación, validación y documentación del flujo.
+
+Flujo que debes probar:
+
+1. Agent Manager
+Debe iniciar la prueba, definir el alcance y dejar claro que no se va a implementar código.
+
+Debe indicar:
+- Objetivo de la prueba.
+- Funcionalidad simulada.
+- Agentes que intervendrán.
+- Archivos que pueden crearse o modificarse.
+- Archivos que no deben tocarse.
+- Criterios de éxito de la prueba.
+
+2. UXDesigner
+Debe simular su intervención sobre la funcionalidad “Publicar producto”.
+
+Debe devolver:
+- Flujo de usuario para publicar un producto.
+- Pantallas necesarias.
+- Campos del formulario.
+- Validaciones visuales básicas.
+- Estados de error, carga y éxito.
+- Recomendaciones para RustFrontend.
+- Dudas que elevaría al Agent Manager.
+
+No debe implementar pantallas reales.
+
+3. RustArchitectAgent
+Debe simular su intervención arquitectónica.
+
+Debe devolver:
+- Qué capas del sistema estarían implicadas.
+- Qué módulos participarían.
+- Cómo se separaría frontend, backend y base de datos.
+- Qué documentación técnica habría que revisar.
+- Recomendaciones para RustBackend, RustFrontend y DatabaseAgent.
+- Riesgos arquitectónicos.
+
+No debe crear código.
+
+4. DatabaseAgent
+Debe simular su intervención para esta funcionalidad.
+
+Debe devolver:
+- Tablas SQLite implicadas.
+- Campos necesarios para productos.
+- Relaciones con usuarios, categorías e imágenes.
+- Validaciones de datos.
+- Posibles índices.
+- Coordinación necesaria con RustBackend.
+
+No debe crear migraciones reales salvo autorización explícita.
+
+5. RustBackend
+Debe simular qué tendría que implementar en backend.
+
+Debe devolver:
+- Endpoint o endpoints necesarios.
+- Servicios implicados.
+- DTOs o estructuras de entrada/salida.
+- Validaciones backend.
+- Gestión de errores.
+- Coordinación con DatabaseAgent.
+- Tests backend recomendados.
+
+No debe implementar código.
+
+6. RustFrontend
+Debe simular qué tendría que implementar en frontend.
+
+Debe devolver:
+- Pantalla o componente necesario.
+- Formulario de publicación.
+- Campos.
+- Validaciones cliente.
+- Estados de carga, error y éxito.
+- Llamada a API que consumiría.
+- Coordinación con UXDesigner y RustBackend.
+
+No debe implementar código.
+
+7. QAAgent
+Debe simular la estrategia de pruebas.
+
+Debe devolver:
+- Casos de prueba funcionales.
+- Casos de prueba backend.
+- Casos de prueba frontend.
+- Casos de prueba de base de datos.
+- Casos de error.
+- Checklist de aceptación de la funcionalidad.
+
+No debe crear tests reales.
+
+8. SequrityAgent
+Debe simular una revisión de seguridad.
+
+Debe devolver:
+- Riesgos de seguridad.
+- Permisos necesarios.
+- Validación de que solo usuarios autenticados puedan publicar.
+- Revisión de datos enviados.
+- Riesgos sobre imágenes.
+- Recomendaciones para BackendRust y FrontendRust.
+
+No debe implementar seguridad real.
+
+9. DevopsAgent
+Debe simular si esta funcionalidad requeriría cambios de entorno.
+
+Debe devolver:
+- Si se necesitan variables de entorno.
+- Si se necesitan scripts.
+- Si afecta a CI/CD.
+- Si requiere cambios en ejecución local.
+- Riesgos DevOps.
+
+No debe crear workflows ni scripts reales.
+
+10. DocumentationAgent
+Debe simular cómo documentaría esta funcionalidad.
+
+Debe devolver:
+- Documentos que habría que actualizar.
+- Qué debería añadirse a README o documentación técnica.
+- Qué debería registrarse en Logs.md.
+- Qué evidencias serían útiles para la memoria.
+- Resumen preparado para el registro documental.
+
+No debe modificar docs/Logs.md directamente salvo que el Agent Manager lo autorice después.
+
+11. ReviewerAgent
+Debe revisar toda la prueba de flujo.
+
+Debe devolver:
+- Si los agentes han respetado su rol.
+- Si se ha respetado la jerarquía.
+- Si alguien ha intentado implementar código sin autorización.
+- Si el flujo es correcto.
+- Riesgos detectados.
+- Recomendación final:
+  - Flujo válido.
+  - Flujo válido con ajustes.
+  - Flujo no válido.
+
+Archivos permitidos durante esta prueba:
+- docs/Prompts/PruebaFlujoV1.txt
+- docs/AGENT_FLOW_TEST.md, si decides documentar el resultado de la prueba.
+- AGENTS.md solo si es necesario añadir una nota de flujo, sin borrar contenido existente.
+
+Archivos prohibidos durante esta prueba:
+- backend/
+- frontend/
+- PRD.md
+- IMPLEMENTATION_PLAN.md
+- docs/Logs.md directamente
+- Migraciones
+- Endpoints reales
+- Componentes reales
+- Tests reales
+- Archivos de despliegue reales
+
+Reglas obligatorias:
+- No implementar código.
+- No crear backend real.
+- No crear frontend real.
+- No crear migraciones reales.
+- No crear endpoints reales.
+- No crear componentes reales.
+- No modificar docs/Logs.md directamente.
+- No borrar contenido existente.
+- No ampliar el MVP.
+- No cambiar tecnologías.
+- No saltarse la jerarquía del Agent Manager.
+- Cada agente debe actuar solo dentro de su rol.
+- Si un agente detecta una duda de alcance, debe elevarla al Agent Manager.
+
+Resultado esperado:
+Genera un documento llamado:
+
+docs/AGENT_FLOW_TEST.md
+
+con la simulación completa del flujo de trabajo.
+
+El documento debe incluir:
+
+# Prueba de Flujo de Agentes - PruebaFlujoV1
+
+## 1. Objetivo de la prueba
+
+## 2. Funcionalidad simulada
+
+## 3. Agentes participantes
+
+## 4. Flujo de intervención
+
+## 5. Resultado de cada agente
+
+### Agent Manager
+
+### UXDesigner
+
+### RustArchitectAgent
+
+### DatabaseAgent
+
+### RustBackend
+
+### RustFrontend
+
+### QAAgent
+
+### SequrityAgent
+
+### DevopsAgent
+
+### DocumentationAgent
+
+### ReviewerAgent
+
+## 6. Riesgos detectados
+
+## 7. Problemas de coordinación detectados
+
+## 8. Conclusiones de la prueba
+
+## 9. Veredicto final del flujo
+
+El veredicto final debe ser una de estas opciones:
+- Flujo válido para comenzar Fase 0.
+- Flujo válido con ajustes menores.
+- Flujo no válido, requiere correcciones antes de implementar.
+
+## 10. Resumen para DocumentationAgent
+
+Incluye un resumen final preparado para que @DocumentationAgent registre la prueba en docs/Logs.md.
+
+El resumen debe incluir:
+
+- Fecha.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Acción realizada: Prueba de flujo de agentes PruebaFlujoV1.
+- Archivos creados o modificados.
+- Motivo: Validar la coordinación entre agentes antes de comenzar a programar.
+- Funcionalidades mantenidas: No se modifican funcionalidades reales, solo se prueba el flujo.
+- Próximo paso recomendado.
+
+Restricciones finales:
+- Guarda este prompt completo en docs/Prompts/PruebaFlujoV1.txt.
+- Crea docs/AGENT_FLOW_TEST.md con el resultado de la prueba.
+- No modifiques docs/Logs.md directamente.
+- No modifiques backend.
+- No modifiques frontend.
+- No implementes código.
+- No borres contenido existente.
+- Al finalizar, resume:
+  1. Archivos creados.
+  2. Archivos modificados.
+  3. Resultado de la prueba.
+  4. Agentes que han intervenido.
+  5. Riesgos detectados.
+  6. Resumen preparado para @DocumentationAgent.
+  7. Próximo paso recomendado.

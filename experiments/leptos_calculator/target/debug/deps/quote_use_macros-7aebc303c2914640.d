@@ -1,0 +1,10 @@
+C:\Nebrija\NebriPop\experiments\leptos_calculator\target\debug\deps\quote_use_macros-7aebc303c2914640.d: C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\lib.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\use_parser.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/core.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/std.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/2021.rs
+
+C:\Nebrija\NebriPop\experiments\leptos_calculator\target\debug\deps\quote_use_macros-7aebc303c2914640.dll: C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\lib.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\use_parser.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/core.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/std.rs C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/2021.rs
+
+C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\lib.rs:
+C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude.rs:
+C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\use_parser.rs:
+C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/core.rs:
+C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/std.rs:
+C:\Users\visua\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\quote-use-macros-0.8.4\src\prelude/2021.rs:

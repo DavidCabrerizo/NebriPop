@@ -1,0 +1,722 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Crear una mini aplicación pre-MVP visible y funcional antes de implementar el MVP real de NebriPop.
+
+Esta prueba debe permitir ver funcionando juntos:
+
+- Frontend en Leptos.
+- Backend en Axum.
+- Base de datos SQLite.
+- Comunicación frontend-backend mediante API REST.
+- Persistencia real de datos en SQLite.
+
+Nombre de la prueba:
+PreMVPNebriPopSQLiteV1
+
+Guarda este prompt completo en:
+
+docs/Prompts/PreMVPNebriPopSQLiteV1.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+Contexto:
+NebriPop será una aplicación tipo Wallapop académico para estudiantes. Antes de construir el MVP real, queremos realizar una prueba aislada que permita publicar productos académicos de segunda mano, guardarlos en SQLite y visualizarlos desde una interfaz Leptos.
+
+Esta prueba NO es todavía el MVP real.
+Esta prueba debe estar completamente aislada.
+No debe modificar el backend principal.
+No debe modificar el frontend principal.
+No debe modificar PRD.md.
+No debe modificar IMPLEMENTATION_PLAN.md.
+No debe modificar docs/Logs.md directamente.
+
+Una vez finalizada la prueba, prepara un resumen para que @DocumentationAgent registre el cambio en docs/Logs.md.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. UXDesigner
+3. RustArchitectAgent
+4. RustBackend
+5. RustFrontend
+6. DatabaseAgent
+7. QAAgent
+8. SequrityAgent
+9. DevopsAgent
+10. DocumentationAgent
+11. ReviewerAgent
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager / Product Manager Agent. Ningún agente puede tomar decisiones fuera de su rol sin autorización del Agent Manager.
+
+Carpeta obligatoria de la prueba:
+
+experiments/pre_mvp_nebripop_sqlite/
+
+Estructura recomendada:
+
+experiments/pre_mvp_nebripop_sqlite/
+  backend/
+  frontend/
+  database/
+
+Backend:
+
+experiments/pre_mvp_nebripop_sqlite/backend/
+
+Frontend:
+
+experiments/pre_mvp_nebripop_sqlite/frontend/
+
+Base de datos:
+
+experiments/pre_mvp_nebripop_sqlite/database/nebripop_pre_mvp.db
+
+Funcionalidad de la mini app:
+Crear una aplicación sencilla donde un estudiante pueda publicar un producto académico de segunda mano y verlo en un listado.
+
+La app debe permitir:
+
+1. Crear un producto.
+2. Guardar el producto en SQLite.
+3. Consultar productos guardados.
+4. Mostrar los productos en el frontend.
+5. Ver que los datos permanecen aunque se reinicie el backend.
+
+Campos del producto:
+
+- id
+- title
+- description
+- price
+- category
+- condition
+- location
+- contact
+- created_at
+
+Ejemplo de producto:
+
+{
+  "title": "Libro de Programación en Rust",
+  "description": "Libro usado para aprender Rust desde cero",
+  "price": 20.0,
+  "category": "Libros",
+  "condition": "Usado",
+  "location": "Campus Nebrija",
+  "contact": "usuario_prueba"
+}
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la prueba.
+
+Debe definir:
+
+- Objetivo de la prueba.
+- Alcance.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Qué agentes pueden crear código.
+- Qué agentes pueden crear documentación.
+- Qué partes deben mantenerse aisladas del MVP real.
+
+Debe comprobar que ningún agente modifica:
+
+- backend/ principal
+- frontend/ principal
+- PRD.md
+- IMPLEMENTATION_PLAN.md
+- docs/Logs.md directamente
+- código principal del MVP
+
+## 2. UXDesigner
+
+Debe diseñar la experiencia de usuario de esta mini app.
+
+Debe definir:
+
+- Pantalla principal.
+- Formulario de publicación.
+- Listado de productos.
+- Campos obligatorios.
+- Mensajes de error.
+- Mensaje de éxito.
+- Diseño visual sencillo.
+- Flujo de usuario.
+
+La interfaz debe ser simple y clara:
+
+Pantalla esperada:
+
+Título:
+NebriPop Pre-MVP
+
+Sección 1:
+Formulario para publicar producto
+
+Campos:
+- Título
+- Descripción
+- Precio
+- Categoría
+- Estado
+- Ubicación
+- Contacto
+
+Botón:
+Publicar producto
+
+Sección 2:
+Listado de productos publicados
+
+Cada producto debe mostrar:
+- Título
+- Descripción
+- Precio
+- Categoría
+- Estado
+- Ubicación
+- Contacto
+- Fecha de creación
+
+UXDesigner no debe implementar código directamente salvo autorización del Agent Manager.
+
+## 3. RustArchitectAgent
+
+Debe diseñar la arquitectura técnica de la prueba.
+
+Debe definir:
+
+- Separación frontend/backend/database.
+- Flujo de datos.
+- Endpoints REST.
+- Estructura de modelos.
+- Estructura de carpetas.
+- Dependencias recomendadas.
+- Riesgos técnicos.
+- Cómo debe integrarse SQLite.
+- Cómo debe comunicarse Leptos con Axum.
+
+Debe proponer una arquitectura simple:
+
+Frontend Leptos:
+- Formulario
+- Estado local
+- Llamadas HTTP
+- Listado de productos
+
+Backend Axum:
+- Rutas
+- Handlers
+- Modelos
+- Repositorio SQLite
+- Estado de aplicación
+- Manejo de errores
+- CORS
+
+Database SQLite:
+- Tabla products
+- Archivo .db dentro de experiments/pre_mvp_nebripop_sqlite/database/
+
+RustArchitectAgent no debe implementar código. Solo debe planificar.
+
+## 4. DatabaseAgent
+
+Debe crear la base de datos SQLite de la prueba.
+
+Ubicación obligatoria:
+
+experiments/pre_mvp_nebripop_sqlite/database/nebripop_pre_mvp.db
+
+Debe crear la tabla products con estos campos:
+
+products:
+- id INTEGER PRIMARY KEY AUTOINCREMENT
+- title TEXT NOT NULL
+- description TEXT NOT NULL
+- price REAL NOT NULL
+- category TEXT NOT NULL
+- condition TEXT NOT NULL
+- location TEXT NOT NULL
+- contact TEXT NOT NULL
+- created_at TEXT NOT NULL
+
+Debe crear también un archivo SQL documentado:
+
+experiments/pre_mvp_nebripop_sqlite/database/schema.sql
+
+Contenido esperado:
+
+CREATE TABLE IF NOT EXISTS products (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  price REAL NOT NULL,
+  category TEXT NOT NULL,
+  condition TEXT NOT NULL,
+  location TEXT NOT NULL,
+  contact TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+Debe insertar opcionalmente 2 productos de ejemplo para validar la carga inicial:
+
+Producto 1:
+Libro de Programación en Rust
+
+Producto 2:
+Calculadora científica
+
+DatabaseAgent debe documentar cómo verificar la base de datos.
+
+No debe modificar ninguna base de datos real del MVP.
+No debe tocar migraciones reales.
+No debe modificar archivos fuera de experiments/pre_mvp_nebripop_sqlite/database/.
+
+## 5. RustBackend
+
+Debe implementar el backend con Rust + Axum.
+
+Carpeta:
+
+experiments/pre_mvp_nebripop_sqlite/backend/
+
+El backend debe usar SQLite como persistencia real.
+
+Tecnologías recomendadas:
+
+- Rust
+- Axum
+- Tokio
+- Serde
+- SQLx o rusqlite
+- tower-http para CORS
+
+Preferencia:
+Usar SQLx con SQLite si es sencillo.
+Si SQLx complica demasiado la prueba, usar rusqlite.
+
+El backend debe incluir:
+
+- Servidor en http://127.0.0.1:3000
+- CORS habilitado para http://127.0.0.1:8081
+- Conexión a SQLite
+- Endpoint GET /health
+- Endpoint GET /products
+- Endpoint POST /products
+- Manejo de errores en JSON
+- Validaciones básicas
+- Código limpio usando clean-rust-skill si está disponible
+
+Endpoints obligatorios:
+
+GET /health
+
+Respuesta esperada:
+
+{
+  "status": "ok",
+  "message": "Pre-MVP NebriPop backend funcionando"
+}
+
+GET /products
+
+Debe devolver todos los productos guardados en SQLite.
+
+Respuesta esperada:
+
+[
+  {
+    "id": 1,
+    "title": "Libro de Programación en Rust",
+    "description": "Libro usado para aprender Rust desde cero",
+    "price": 20.0,
+    "category": "Libros",
+    "condition": "Usado",
+    "location": "Campus Nebrija",
+    "contact": "usuario_prueba",
+    "created_at": "2026-05-22T10:00:00"
+  }
+]
+
+POST /products
+
+Body esperado:
+
+{
+  "title": "Libro de Programación en Rust",
+  "description": "Libro usado para aprender Rust desde cero",
+  "price": 20.0,
+  "category": "Libros",
+  "condition": "Usado",
+  "location": "Campus Nebrija",
+  "contact": "usuario_prueba"
+}
+
+Respuesta esperada:
+
+{
+  "id": 1,
+  "title": "Libro de Programación en Rust",
+  "description": "Libro usado para aprender Rust desde cero",
+  "price": 20.0,
+  "category": "Libros",
+  "condition": "Usado",
+  "location": "Campus Nebrija",
+  "contact": "usuario_prueba",
+  "created_at": "2026-05-22T10:00:00"
+}
+
+Validaciones obligatorias:
+
+- title no puede estar vacío.
+- description no puede estar vacía.
+- price debe ser mayor que 0.
+- category no puede estar vacía.
+- condition no puede estar vacío.
+- location no puede estar vacía.
+- contact no puede estar vacío.
+- Si falla una validación, devolver error JSON claro.
+
+No debe implementar:
+
+- login
+- autenticación
+- favoritos
+- chat
+- subida de imágenes
+- roles de usuario
+- lógica real completa de NebriPop
+
+## 6. RustFrontend
+
+Debe implementar el frontend con Rust + Leptos.
+
+Carpeta:
+
+experiments/pre_mvp_nebripop_sqlite/frontend/
+
+Debe ejecutarse con Trunk en:
+
+http://127.0.0.1:8081
+
+Debe consumir el backend en:
+
+http://127.0.0.1:3000
+
+El frontend debe incluir:
+
+- Título: NebriPop Pre-MVP
+- Formulario para publicar producto
+- Campos:
+  - title
+  - description
+  - price
+  - category
+  - condition
+  - location
+  - contact
+- Botón: Publicar producto
+- Listado de productos publicados
+- Carga inicial de productos desde GET /products
+- Envío de productos con POST /products
+- Actualización del listado después de publicar
+- Mensaje de éxito
+- Mensaje de error
+- Validación básica en cliente
+- Diseño sencillo y claro
+- Código limpio usando clean-rust-skill si está disponible
+
+Flujo esperado:
+
+1. El usuario abre http://127.0.0.1:8081.
+2. El frontend llama a GET http://127.0.0.1:3000/products.
+3. El frontend muestra los productos guardados en SQLite.
+4. El usuario rellena el formulario.
+5. El frontend envía POST http://127.0.0.1:3000/products.
+6. El backend guarda el producto en SQLite.
+7. El frontend vuelve a cargar el listado.
+8. El producto aparece en pantalla.
+9. Si se reinicia el backend, el producto sigue guardado en SQLite.
+
+## 7. SequrityAgent
+
+Debe revisar riesgos de seguridad de esta prueba pre-MVP.
+
+Debe analizar:
+
+- Validación de entradas.
+- Riesgo de campos vacíos.
+- Riesgo de precio negativo.
+- Riesgo de texto excesivamente largo.
+- Riesgo de inyección SQL.
+- Uso correcto de consultas parametrizadas.
+- Ausencia de autenticación en esta prueba.
+- Recomendaciones para el MVP real.
+
+Debe crear o añadir sección en:
+
+docs/SECURITY_PRE_MVP_SQLITE.md
+
+No debe crear reglas de Firestore.
+No debe cambiar la base de datos.
+No debe modificar código salvo autorización.
+
+## 8. QAAgent
+
+Debe crear una estrategia de pruebas.
+
+Debe crear o actualizar:
+
+docs/QA_PRE_MVP_SQLITE.md
+
+Debe comprobar:
+
+Backend:
+- GET /health funciona.
+- GET /products devuelve productos.
+- POST /products crea un producto.
+- POST /products rechaza title vacío.
+- POST /products rechaza description vacía.
+- POST /products rechaza price <= 0.
+- Los datos se guardan en SQLite.
+- Los datos persisten tras reiniciar backend.
+
+Frontend:
+- La app carga en http://127.0.0.1:8081.
+- El formulario aparece correctamente.
+- El listado aparece correctamente.
+- El producto se puede publicar.
+- El producto aparece en el listado.
+- Los errores se muestran en pantalla.
+- Si el backend está apagado, aparece error claro.
+
+Integración:
+- Leptos llama a Axum correctamente.
+- Axum guarda en SQLite correctamente.
+- SQLite conserva los datos correctamente.
+
+Debe incluir comandos de prueba con PowerShell:
+
+GET /health:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/health -Method GET
+
+GET /products:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products -Method GET
+
+POST /products:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"title":"Libro de Programación en Rust","description":"Libro usado para aprender Rust desde cero","price":20.0,"category":"Libros","condition":"Usado","location":"Campus Nebrija","contact":"usuario_prueba"}'
+
+## 9. DevopsAgent
+
+Debe documentar cómo ejecutar la prueba en local.
+
+Debe crear o añadir sección en:
+
+docs/DEVOPS_PRE_MVP_SQLITE.md
+
+Debe incluir:
+
+Backend:
+
+cd experiments/pre_mvp_nebripop_sqlite/backend
+cargo run
+
+Frontend:
+
+cd experiments/pre_mvp_nebripop_sqlite/frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+URLs:
+
+Backend:
+http://127.0.0.1:3000/health
+http://127.0.0.1:3000/products
+
+Frontend:
+http://127.0.0.1:8081
+
+Debe incluir recomendaciones:
+
+- Ejecutar backend antes que frontend.
+- No cerrar la terminal del backend.
+- No cerrar la terminal del frontend.
+- Usar puertos 3000 y 8081.
+- Si hay conflicto de puertos, cambiar el puerto del frontend.
+- Mantener la base de datos dentro de experiments/pre_mvp_nebripop_sqlite/database/.
+
+## 10. DocumentationAgent
+
+Debe documentar toda la prueba.
+
+Debe crear o actualizar:
+
+docs/PRE_MVP_NEBRIPOP_SQLITE_TEST.md
+
+El documento debe incluir:
+
+- Objetivo de la prueba.
+- Por qué se hace antes del MVP.
+- Stack utilizado:
+  - Leptos
+  - Axum
+  - SQLite
+- Agentes participantes.
+- Funcionalidad implementada.
+- Estructura de carpetas.
+- Endpoints disponibles.
+- Diseño de base de datos.
+- Cómo ejecutar backend.
+- Cómo ejecutar frontend.
+- Cómo probar la persistencia.
+- Problemas detectados.
+- Conclusiones.
+- Recomendaciones para el MVP real.
+- Resumen preparado para docs/Logs.md.
+
+No debe modificar docs/Logs.md directamente.
+
+## 11. ReviewerAgent
+
+Debe revisar la prueba completa.
+
+Debe crear o actualizar:
+
+docs/REVIEW_PRE_MVP_SQLITE.md
+
+Debe comprobar:
+
+- Que la prueba está aislada.
+- Que se usa Leptos en frontend.
+- Que se usa Axum en backend.
+- Que se usa SQLite como persistencia.
+- Que los productos se guardan realmente.
+- Que los productos se muestran en el frontend.
+- Que la app se puede ver en navegador.
+- Que el backend se puede probar con PowerShell.
+- Que no se ha modificado el código principal.
+- Que no se han tocado archivos prohibidos.
+- Que QA, seguridad, DevOps y documentación están cubiertos.
+
+Debe emitir un veredicto:
+
+- Prueba válida para avanzar al MVP.
+- Prueba válida con ajustes menores.
+- Prueba no válida.
+
+Archivos permitidos:
+
+- docs/Prompts/PreMVPNebriPopSQLiteV1.txt
+- docs/PRE_MVP_NEBRIPOP_SQLITE_TEST.md
+- docs/QA_PRE_MVP_SQLITE.md
+- docs/SECURITY_PRE_MVP_SQLITE.md
+- docs/DEVOPS_PRE_MVP_SQLITE.md
+- docs/REVIEW_PRE_MVP_SQLITE.md
+- experiments/pre_mvp_nebripop_sqlite/backend/
+- experiments/pre_mvp_nebripop_sqlite/frontend/
+- experiments/pre_mvp_nebripop_sqlite/database/
+
+Archivos prohibidos:
+
+- PRD.md
+- IMPLEMENTATION_PLAN.md
+- docs/Logs.md directamente
+- backend/ principal
+- frontend/ principal
+- base de datos real del MVP
+- migraciones reales del MVP
+- archivos principales de configuración
+- código real del MVP
+
+Restricciones importantes:
+
+- Mantener la prueba aislada.
+- No modificar el MVP real.
+- No modificar docs/Logs.md directamente.
+- No implementar login.
+- No implementar favoritos.
+- No implementar chat.
+- No implementar imágenes.
+- No implementar pagos.
+- No borrar contenido existente.
+- Usar Rust.
+- Usar Leptos.
+- Usar Axum.
+- Usar SQLite.
+- Usar código simple y claro.
+- Añadir CORS en backend.
+- Usar consultas parametrizadas para evitar inyección SQL.
+- Documentar todo.
+- Preparar resumen para DocumentationAgent.
+
+Criterios de aceptación:
+
+- La app se puede abrir en http://127.0.0.1:8081.
+- El backend funciona en http://127.0.0.1:3000.
+- GET /health funciona.
+- GET /products funciona.
+- POST /products funciona.
+- La base de datos SQLite se crea correctamente.
+- Los productos se guardan en SQLite.
+- Los productos se muestran en el frontend.
+- Los productos siguen existiendo al reiniciar el backend.
+- Hay validaciones básicas.
+- Hay mensajes de error.
+- QAAgent documenta pruebas.
+- SequrityAgent documenta riesgos.
+- DevopsAgent documenta ejecución local.
+- DocumentationAgent documenta la prueba.
+- ReviewerAgent emite veredicto.
+- No se modifica el código principal de NebriPop.
+
+Comandos finales esperados:
+
+Backend:
+
+cd experiments/pre_mvp_nebripop_sqlite/backend
+cargo run
+
+Frontend:
+
+cd experiments/pre_mvp_nebripop_sqlite/frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+Comprobación manual en navegador:
+
+http://127.0.0.1:8081
+
+Comprobación backend:
+
+http://127.0.0.1:3000/health
+http://127.0.0.1:3000/products
+
+Al finalizar, devuelve:
+
+1. Estado de la prueba.
+2. Agentes que han intervenido.
+3. Archivos creados.
+4. Archivos modificados.
+5. Estructura final de carpetas.
+6. Cómo ejecutar el backend.
+7. Cómo ejecutar el frontend.
+8. Cómo comprobar SQLite.
+9. Endpoints disponibles.
+10. Resultado de QAAgent.
+11. Resultado de SequrityAgent.
+12. Resultado de DevopsAgent.
+13. Resultado de ReviewerAgent.
+14. Veredicto final.
+15. Problemas encontrados.
+16. Próximo paso recomendado antes del MVP.
+17. Resumen para @DocumentationAgent.
