@@ -1,0 +1,31 @@
+Objetivo:
+Añadir soporte para imágenes de productos en NebriPop.
+
+Nombre de la tarea:
+Fase 5B — Gestión de imágenes de productos
+
+Contexto:
+NebriPop es una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. Necesitamos que al publicar un producto se puedan añadir una o varias imágenes desde el dispositivo local o mediante una URL externa.
+
+Regla principal de persistencia:
+Las imágenes locales deben guardarse físicamente en una carpeta del proyecto y la ruta debe guardarse en SQLite.
+Queda prohibido guardar imágenes o rutas principales en archivos `.json`.
+
+Tecnologías:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Carpeta de imágenes: backend/uploads/products/
+- Endpoint público para imágenes: http://127.0.0.1:3000/uploads/...
+
+Requisitos funcionales:
+1. El formulario de publicar producto debe permitir añadir imágenes de dos formas: subir archivo local o URL.
+2. Formatos: JPEG, JPG, PNG.
+3. Imágenes locales a `backend/uploads/products/{product_id}/`.
+4. URL externa se guarda en SQLite.
+5. Listado muestra imagen principal o placeholder.
+6. Detalle muestra imagen principal grande y miniaturas.
+
+Agentes participantes: Agent Manager, RustArchitectAgent, DatabaseAgent, RustBackend, RustFrontend, QAAgent, SequrityAgent, DocumentationAgent, ReviewerAgent, GitHubAgent.
+
+Autorización final: Actualizar docs/Logs.md mediante DocumentationAgent al finalizar.

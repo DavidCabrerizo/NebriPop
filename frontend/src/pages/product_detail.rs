@@ -41,10 +41,40 @@ pub fn ProductDetail() -> impl IntoView {
                 {move || {
                     product_resource.get().map(|result| match result {
                         Ok(product) => {
-                            let img_src = product.main_image_url.clone().unwrap_or_else(|| "https://via.placeholder.com/600x400".to_string());
+                            let img_src_raw = product.main_image_url.clone().unwrap_or_default();
+                            let img_src = if img_src_raw.is_empty() {
+                                "https://via.placeholder.com/600x400?text=Sin+imagen".to_string()
+                            } else if img_src_raw.starts_with("http") {
+                                img_src_raw
+                            } else {
+                                format!("http://127.0.0.1:3000/{}", img_src_raw)
+                            };
+
+                            let thumbnails = product.images.clone().unwrap_or_default();
+
                             view! {
                                 <div class="detail-view">
-                                    <img src=img_src alt=product.title.clone() class="detail-img"/>
+                                    <div class="detail-image-container">
+                                        <img src=img_src alt=product.title.clone() class="detail-img"/>
+                                        {if !thumbnails.is_empty() {
+                                            view! {
+                                                <div class="thumbnails" style="display: flex; gap: 10px; margin-top: 10px; overflow-x: auto;">
+                                                    {thumbnails.into_iter().map(|img| {
+                                                        let t_src = if img.image_url.starts_with("http") {
+                                                            img.image_url.clone()
+                                                        } else {
+                                                            format!("http://127.0.0.1:3000/{}", img.image_url)
+                                                        };
+                                                        view! {
+                                                            <img src=t_src alt="thumbnail" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;"/>
+                                                        }
+                                                    }).collect_view()}
+                                                </div>
+                                            }.into_view()
+                                        } else {
+                                            view! { <div></div> }.into_view()
+                                        }}
+                                    </div>
                                     <div class="detail-content">
                                         <h1 style="margin-top:0;">{product.title}</h1>
                                         <h2 style="color: var(--primary-color);">{format!("{} €", product.price)}</h2>

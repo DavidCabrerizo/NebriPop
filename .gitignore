@@ -17,3 +17,5 @@ Thumbs.db
 backend/target/
 frontend/target/
 frontend/dist/
+backend/uploads/*
+!backend/uploads/.gitkeep

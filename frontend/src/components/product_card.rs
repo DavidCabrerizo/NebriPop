@@ -4,7 +4,15 @@ use leptos_router::A;
 
 #[component]
 pub fn ProductCard(product: Product) -> impl IntoView {
-    let img_src = product.main_image_url.unwrap_or_else(|| "https://via.placeholder.com/300".to_string());
+    let img_src = product.main_image_url.clone().unwrap_or_default();
+    let img_src = if img_src.is_empty() {
+        "https://via.placeholder.com/300?text=Sin+imagen".to_string()
+    } else if img_src.starts_with("http") {
+        img_src
+    } else {
+        format!("http://127.0.0.1:3000/{}", img_src)
+    };
+
     let detail_url = format!("/products/{}", product.id);
 
     view! {

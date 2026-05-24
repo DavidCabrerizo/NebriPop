@@ -14,6 +14,16 @@ pub struct Product {
     pub main_image_url: Option<String>,
     pub created_at: String,
     pub updated_at: String,
+    pub images: Option<Vec<ProductImage>>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
+pub struct ProductImage {
+    pub id: i64,
+    pub product_id: i64,
+    pub image_url: String,
+    pub position: i64,
+    pub created_at: String,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

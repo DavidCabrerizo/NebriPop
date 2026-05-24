@@ -1,8 +1,9 @@
 use crate::api::categories_api::fetch_categories;
-use crate::api::products_api::create_product;
+use crate::api::products_api::{create_product, upload_product_images};
 use crate::models::product::CreateProductDto;
 use leptos::*;
 use leptos_router::*;
+use web_sys::HtmlInputElement;
 
 #[component]
 pub fn CreateProduct() -> impl IntoView {
@@ -15,6 +16,8 @@ pub fn CreateProduct() -> impl IntoView {
     let (condition, set_condition) = create_signal("good".to_string());
     let (location, set_location) = create_signal("".to_string());
     let (image_url, set_image_url) = create_signal("".to_string());
+    
+    let file_input_ref = create_node_ref::<html::Input>();
     
     let (error_msg, set_error_msg) = create_signal(None::<String>);
     let (success_msg, set_success_msg) = create_signal(None::<String>);
@@ -47,33 +50,54 @@ pub fn CreateProduct() -> impl IntoView {
         }
 
         let img = image_url.get();
-        let main_image_url = if img.is_empty() { None } else { Some(img) };
+        // Extract files from input
+        let mut upload_files = Vec::new();
+        if let Some(input) = file_input_ref.get() {
+            if let Some(files) = input.files() {
+                for i in 0..files.length() {
+                    if let Some(file) = files.item(i) {
+                        upload_files.push(file);
+                    }
+                }
+            }
+        }
 
         let dto = CreateProductDto {
-            user_id: 1, // TEMPORAL PARA MVP (hasta implementar login)
+            user_id: 1, // TEMPORAL PARA MVP
             category_id: cat,
             title: t,
             description: d,
             price: p,
             condition: cond,
             location: loc,
-            main_image_url,
+            main_image_url: None, // Will be set by backend upon image upload
         };
 
         spawn_local(async move {
             match create_product(dto).await {
-                Ok(_) => {
-                    set_success_msg.set(Some("¡Producto publicado correctamente!".to_string()));
-                    // Limpiar formulario
-                    set_title.set("".to_string());
-                    set_description.set("".to_string());
-                    set_price.set(0.0);
-                    set_location.set("".to_string());
-                    set_image_url.set("".to_string());
+                Ok(product) => {
+                    // Si hay imágenes o URL, subirlas
+                    let has_images = !upload_files.is_empty();
+                    let has_url = !img.is_empty();
                     
-                    // Pequeña pausa y redirigir
-                    let navigate = use_navigate();
-                    navigate("/", Default::default());
+                    if has_images || has_url {
+                        let url_opt = if has_url { Some(img) } else { None };
+                        match upload_product_images(product.id, upload_files, url_opt).await {
+                            Ok(_) => {
+                                set_success_msg.set(Some("¡Producto publicado con imágenes correctamente!".to_string()));
+                            }
+                            Err(e) => {
+                                set_error_msg.set(Some(format!("Producto creado, pero falló la subida de imágenes: {}", e)));
+                            }
+                        }
+                    } else {
+                        set_success_msg.set(Some("¡Producto publicado correctamente!".to_string()));
+                    }
+
+                    if error_msg.get().is_none() {
+                        let navigate = use_navigate();
+                        navigate("/", Default::default());
+                    }
                 }
                 Err(e) => {
                     set_error_msg.set(Some(e));
@@ -144,8 +168,13 @@ pub fn CreateProduct() -> impl IntoView {
                 </div>
                 
                 <div class="form-group">
-                    <label>"URL de la Imagen (opcional)"</label>
-                    <input type="url" prop:value=image_url on:input=move |ev| set_image_url.set(event_target_value(&ev))/>
+                    <label>"Subir Imágenes (Local)"</label>
+                    <input type="file" _ref=file_input_ref accept="image/jpeg,image/png" multiple/>
+                </div>
+                
+                <div class="form-group">
+                    <label>"URL de la Imagen (externa, opcional)"</label>
+                    <input type="url" prop:value=image_url on:input=move |ev| set_image_url.set(event_target_value(&ev)) placeholder="https://..."/>
                 </div>
                 
                 <div class="form-group">
