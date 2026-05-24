@@ -6,7 +6,7 @@ use leptos_router::*;
 
 #[derive(Params, PartialEq, Clone)]
 struct ProductParams {
-    id: i64,
+    id: Option<String>,
 }
 
 #[component]
@@ -14,8 +14,13 @@ pub fn ProductDetail() -> impl IntoView {
     let params = use_params::<ProductParams>();
     
     let product_id = move || {
-        params.with(|p| {
-            p.as_ref().map(|p| p.id).unwrap_or(0)
+        params.with(|params_res| {
+            params_res
+                .as_ref()
+                .ok()
+                .and_then(|p| p.id.clone())
+                .and_then(|id_str| id_str.parse::<i64>().ok())
+                .unwrap_or(0)
         })
     };
 

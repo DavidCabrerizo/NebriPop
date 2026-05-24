@@ -33,7 +33,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cors = CorsLayer::new()
         .allow_origin(Any) // En producción limitar a http://127.0.0.1:8081
         .allow_methods([Method::GET, Method::POST, Method::OPTIONS, Method::PUT, Method::DELETE])
-        .allow_headers(Any);
+        .allow_headers([axum::http::header::CONTENT_TYPE]);
 
     // Crear la aplicación (router)
     let app = routes::app_router(pool).layer(cors);

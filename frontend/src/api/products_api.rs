@@ -1,4 +1,4 @@
-use crate::api::client::get_url;
+use crate::api::client::{get_url, handle_error, handle_network_error};
 use crate::models::product::{CreateProductDto, Product};
 use reqwest::Client;
 
@@ -8,12 +8,12 @@ pub async fn fetch_products() -> Result<Vec<Product>, String> {
         .get(&get_url("/products"))
         .send()
         .await
-        .map_err(|e| e.to_string())?;
+        .map_err(handle_network_error)?;
 
     if res.status().is_success() {
         res.json::<Vec<Product>>().await.map_err(|e| e.to_string())
     } else {
-        Err(format!("Error del servidor: {}", res.status()))
+        Err(handle_error(res).await)
     }
 }
 
@@ -23,12 +23,12 @@ pub async fn fetch_product_by_id(id: i64) -> Result<Product, String> {
         .get(&get_url(&format!("/products/{}", id)))
         .send()
         .await
-        .map_err(|e| e.to_string())?;
+        .map_err(handle_network_error)?;
 
     if res.status().is_success() {
         res.json::<Product>().await.map_err(|e| e.to_string())
     } else {
-        Err(format!("Error del servidor: {}", res.status()))
+        Err(handle_error(res).await)
     }
 }
 
@@ -39,12 +39,11 @@ pub async fn create_product(dto: CreateProductDto) -> Result<Product, String> {
         .json(&dto)
         .send()
         .await
-        .map_err(|e| e.to_string())?;
+        .map_err(handle_network_error)?;
 
     if res.status().is_success() {
         res.json::<Product>().await.map_err(|e| e.to_string())
     } else {
-        let err_text = res.text().await.unwrap_or_default();
-        Err(format!("Error al crear producto: {}", err_text))
+        Err(handle_error(res).await)
     }
 }

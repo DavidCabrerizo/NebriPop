@@ -1,0 +1,760 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 5 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 5 — Integración completa Frontend + Backend + SQLite
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se han completado las fases anteriores del MVP de NebriPop:
+
+- Fase 1: estructura real del proyecto.
+- Fase 2: diseño de la base de datos SQLite.
+- Fase 3: backend base con Axum conectado a SQLite.
+- Fase 4: frontend base con Leptos conectado al backend.
+
+Actualmente ya podemos visualizar la interfaz en navegador, pero necesitamos consolidar la integración completa para que todo el flujo funcione correctamente:
+
+Leptos → Axum → SQLite → Axum → Leptos
+
+NebriPop será una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. En esta fase queremos asegurar que todos los productos, categorías y cambios realizados desde el frontend se guardan realmente en SQLite y no en archivos temporales, JSON ni memoria.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Base de datos real esperada: database/nebripop.db
+- Esquema SQL: database/schema.sql
+- Datos iniciales: database/seeds.sql
+- Backend local: http://127.0.0.1:3000
+- Frontend local: http://127.0.0.1:8081
+- Control de versiones: Git + GitHub
+
+Objetivo principal de la Fase 5:
+Validar y consolidar la integración completa entre frontend, backend y base de datos, asegurando que la app permite listar productos, ver detalles, crear productos y mantener los datos persistidos en SQLite.
+
+Regla crítica de persistencia:
+A partir de esta fase, cualquier cambio de datos realizado desde el backend debe guardarse en la base de datos SQLite `database/nebripop.db`.
+
+Queda prohibido guardar productos, categorías, usuarios, favoritos, mensajes o cualquier dato del MVP en archivos `.json`.
+
+No se deben usar archivos como:
+
+- products.json
+- categories.json
+- users.json
+- db.json
+- data.json
+- mock.json
+
+Tampoco se debe usar almacenamiento temporal en memoria para datos principales del MVP, salvo casos estrictamente justificados como estados internos no persistentes.
+
+Si algún agente detecta que el backend guarda o lee datos desde un `.json`, debe corregirlo para que use SQLite.
+
+Base de datos:
+Si `database/nebripop.db` no existe, debe generarse usando:
+
+database/schema.sql
+database/seeds.sql
+
+La base de datos debe crearse dentro de:
+
+database/nebripop.db
+
+No se debe crear en otra carpeta salvo autorización explícita del Agent Manager.
+
+Comandos esperados para generar la base de datos, si sqlite3 está disponible:
+
+sqlite3 database/nebripop.db < database/schema.sql
+sqlite3 database/nebripop.db < database/seeds.sql
+
+Si sqlite3 no está instalado, DatabaseAgent debe documentar una alternativa o indicar cómo instalarlo, pero la fuente de verdad seguirá siendo `schema.sql` y `seeds.sql`.
+
+Importante:
+En esta fase SÍ se permite corregir backend y frontend para que la integración funcione correctamente.
+
+En esta fase NO se debe implementar todavía:
+- Login completo.
+- Registro completo.
+- JWT.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Subida real de imágenes.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+La Fase 5 se centra en integración, persistencia real, estabilidad del flujo principal y corrección de errores.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. DatabaseAgent
+4. RustBackend
+5. RustFrontend
+6. QAAgent
+7. SequrityAgent
+8. DocumentationAgent
+9. ReviewerAgent
+10. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 5 sin autorización explícita.
+
+Regla obligatoria sobre docs/Logs.md:
+Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+
+Al finalizar la Fase 5, el Agent Manager / Product Manager Agent debe autorizar automáticamente a @DocumentationAgent para actualizar docs/Logs.md.
+
+La instrucción obligatoria del Agent Manager será:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 5.”
+
+Después de esta autorización automática, @DocumentationAgent debe actualizar docs/Logs.md obligatoriamente con el resumen de la Fase 5.
+
+La Fase 5 no podrá darse por finalizada hasta que docs/Logs.md haya sido actualizado correctamente.
+
+Si ocurre un error al actualizar docs/Logs.md, DocumentationAgent debe informar del error, corregirlo si está dentro de su alcance y volver a intentar la actualización.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con el código real del MVP.
+
+Archivos principales que deben revisarse antes de actuar:
+
+database/schema.sql
+database/seeds.sql
+database/README.md
+database/nebripop.db, si existe
+backend/Cargo.toml
+backend/src/
+frontend/Cargo.toml
+frontend/index.html
+frontend/src/
+frontend/styles.css
+docs/API_DOCS.md
+docs/DATABASE_SCHEMA.md
+docs/PHASE_3_BACKEND.md
+docs/PHASE_4_FRONTEND.md
+docs/REVIEW_PHASE_4.md
+.env.example
+.gitignore
+
+Archivos principales que pueden crearse o actualizarse:
+
+database/nebripop.db
+database/README.md
+backend/src/
+frontend/src/
+frontend/styles.css
+frontend/README.md
+backend/README.md
+docs/PHASE_5_INTEGRATION.md
+docs/QA_PHASE_5_INTEGRATION.md
+docs/SECURITY_PHASE_5_INTEGRATION.md
+docs/REVIEW_PHASE_5.md
+docs/API_DOCS.md
+docs/Prompts/PromptFase5IntegrationMVP.txt
+docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 5.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 6.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+Debe controlar especialmente que:
+
+- Los datos principales se guarden en SQLite.
+- No se usen archivos `.json` para persistencia del MVP.
+- DatabaseAgent genere o valide `database/nebripop.db`.
+- RustBackend use SQLite como fuente de verdad.
+- RustFrontend consuma el backend y no datos mock.
+- DocumentationAgent actualice docs/Logs.md al finalizar.
+- GitHubAgent no haga commit ni push sin autorización.
+
+## 2. RustArchitectAgent
+
+Debe revisar la arquitectura de integración.
+
+Debe comprobar:
+
+- Que el flujo Leptos → Axum → SQLite funciona correctamente.
+- Que el frontend no consume datos mock ni JSON locales.
+- Que el backend no lee ni escribe datos del MVP en `.json`.
+- Que SQLite es la fuente de verdad.
+- Que la estructura backend/frontend/database sigue siendo coherente.
+- Que la integración puede crecer en Fase 6 para usuarios.
+
+Debe crear o actualizar:
+
+docs/PHASE_5_INTEGRATION.md
+
+Debe añadir recomendaciones técnicas antes de que RustBackend y RustFrontend modifiquen código.
+
+No debe implementar código.
+
+## 3. DatabaseAgent
+
+Debe validar y preparar la base de datos SQLite real del MVP.
+
+Debe comprobar:
+
+- Si existe `database/nebripop.db`.
+- Si no existe, crearla a partir de `database/schema.sql` y `database/seeds.sql`.
+- Que `schema.sql` se ejecuta correctamente.
+- Que `seeds.sql` se ejecuta correctamente.
+- Que existen las tablas:
+  - users
+  - categories
+  - products
+  - product_images
+  - favorites
+  - messages
+- Que existen categorías iniciales tipo Wallapop.
+- Que existen productos de ejemplo.
+- Que no hay datos personales reales.
+- Que los datos persisten al reiniciar backend.
+- Que `.gitignore` no sube bases de datos sensibles si así está definido.
+
+Debe usar como ubicación oficial:
+
+database/nebripop.db
+
+Debe actualizar `database/README.md` con:
+
+- Cómo crear `nebripop.db`.
+- Cómo regenerar la base de datos.
+- Cómo cargar seeds.
+- Cómo comprobar tablas.
+- Cómo comprobar productos.
+
+Comandos recomendados:
+
+sqlite3 database/nebripop.db < database/schema.sql
+sqlite3 database/nebripop.db < database/seeds.sql
+sqlite3 database/nebripop.db ".tables"
+sqlite3 database/nebripop.db "SELECT * FROM categories;"
+sqlite3 database/nebripop.db "SELECT id, title, price, location FROM products;"
+
+DatabaseAgent no debe modificar frontend/.
+
+DatabaseAgent solo debe modificar backend/ si el Agent Manager lo autoriza expresamente.
+
+DatabaseAgent no debe modificar docs/Logs.md.
+
+## 4. RustBackend
+
+Debe revisar y corregir el backend para que use SQLite como única persistencia de datos del MVP.
+
+Debe comprobar:
+
+- Que GET /categories lee desde SQLite.
+- Que GET /products lee desde SQLite.
+- Que GET /products/:id lee desde SQLite.
+- Que POST /products guarda en SQLite.
+- Que no se usa `.json` para guardar productos.
+- Que no se usa `.json` para guardar categorías.
+- Que no se usa almacenamiento en memoria para productos reales.
+- Que no hay mocks activos para productos o categorías.
+- Que las consultas son parametrizadas.
+- Que la ruta de la base de datos apunta a `database/nebripop.db`.
+- Que el backend maneja errores si la base de datos no existe.
+- Que el backend documenta cómo crear la base de datos si falta.
+
+Si detecta uso de `.json`, debe sustituirlo por acceso a SQLite.
+
+Endpoints obligatorios a validar:
+
+GET /health
+GET /categories
+GET /products
+GET /products/:id
+POST /products
+
+Validaciones obligatorias en POST /products:
+
+- category_id debe existir.
+- title no puede estar vacío.
+- description no puede estar vacía.
+- price debe ser mayor o igual que 0.
+- condition debe ser uno de: new, like_new, good, used, damaged.
+- location no puede estar vacía.
+- status debe ser available por defecto.
+- main_image_url puede ser null.
+- user_id puede ser temporalmente 1 hasta implementar usuarios en Fase 6.
+
+RustBackend puede modificar:
+
+backend/src/
+backend/Cargo.toml
+backend/README.md
+docs/API_DOCS.md, si necesita actualizar endpoints
+
+RustBackend no debe implementar:
+
+- Login.
+- Registro.
+- JWT.
+- Favoritos.
+- Mensajes.
+- Chat.
+- Pagos.
+- Subida real de imágenes.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+RustBackend no debe modificar docs/Logs.md.
+
+## 5. RustFrontend
+
+Debe revisar y corregir el frontend para que consuma siempre el backend Axum.
+
+Debe comprobar:
+
+- Que la Home carga productos desde GET http://127.0.0.1:3000/products.
+- Que las categorías se cargan desde GET http://127.0.0.1:3000/categories.
+- Que el detalle carga desde GET http://127.0.0.1:3000/products/:id.
+- Que el formulario envía POST http://127.0.0.1:3000/products.
+- Que no existen datos mock internos sustituyendo al backend.
+- Que no se leen archivos `.json` locales.
+- Que al crear un producto se actualiza el listado.
+- Que al reiniciar el frontend los productos siguen apareciendo porque vienen de SQLite a través del backend.
+- Que si el backend está apagado, se muestra error claro.
+- Que las imágenes rotas se sustituyen por placeholder “Sin imagen” cuando main_image_url esté vacío o no disponible.
+
+RustFrontend puede modificar:
+
+frontend/src/
+frontend/styles.css
+frontend/README.md
+
+RustFrontend no debe implementar:
+
+- Login.
+- Registro.
+- JWT.
+- Favoritos.
+- Mensajes.
+- Chat.
+- Pagos.
+- Subida real de imágenes.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+RustFrontend no debe modificar backend/ salvo autorización explícita.
+
+RustFrontend no debe modificar docs/Logs.md.
+
+## 6. QAAgent
+
+Debe crear un checklist completo de integración.
+
+Debe crear o actualizar:
+
+docs/QA_PHASE_5_INTEGRATION.md
+
+Debe comprobar:
+
+Backend:
+- cargo run arranca correctamente.
+- GET /health funciona.
+- GET /categories devuelve categorías desde SQLite.
+- GET /products devuelve productos desde SQLite.
+- GET /products/:id devuelve detalle desde SQLite.
+- POST /products crea producto en SQLite.
+- Si se reinicia backend, el producto sigue en SQLite.
+
+Frontend:
+- trunk serve arranca correctamente.
+- La Home carga productos desde el backend.
+- El formulario carga categorías desde el backend.
+- El formulario crea productos mediante POST.
+- El listado se actualiza después de publicar.
+- El detalle de producto funciona.
+- Se muestran errores si backend está apagado.
+- Se muestra placeholder si no hay imagen.
+
+Base de datos:
+- Existe database/nebripop.db.
+- Las tablas existen.
+- Los productos se guardan realmente en SQLite.
+- No se usan archivos JSON para persistencia.
+- Los datos persisten tras reiniciar backend.
+
+Comandos de prueba backend:
+
+cd backend
+cargo run
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/health -Method GET
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/categories -Method GET
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products -Method GET
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products/1 -Method GET
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"user_id":1,"category_id":1,"title":"Producto prueba fase 5","description":"Producto creado desde integración","price":99.0,"condition":"good","location":"Madrid","main_image_url":null}'
+
+Comandos de prueba SQLite:
+
+sqlite3 database/nebripop.db ".tables"
+sqlite3 database/nebripop.db "SELECT id, title, price, location FROM products;"
+
+Comandos de prueba frontend:
+
+cd frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+QAAgent no debe modificar código salvo autorización expresa.
+
+QAAgent no debe modificar docs/Logs.md.
+
+## 7. SequrityAgent
+
+Debe revisar riesgos de seguridad de la integración.
+
+Debe crear o actualizar:
+
+docs/SECURITY_PHASE_5_INTEGRATION.md
+
+Debe revisar:
+
+- Que no hay secretos en frontend.
+- Que no hay secretos en backend.
+- Que .env no se sube.
+- Que .env.example no contiene datos reales.
+- Que no se usan archivos `.json` con datos sensibles.
+- Que SQLite no contiene datos personales reales en seeds.
+- Que las consultas son parametrizadas.
+- Que CORS está limitado al frontend local.
+- Que los errores no exponen rutas internas sensibles.
+- Que main_image_url no se ejecuta como código.
+- Que user_id temporal está documentado.
+- Que no se implementa autenticación falsa.
+
+SequrityAgent no debe modificar código salvo autorización.
+
+SequrityAgent no debe modificar docs/Logs.md.
+
+## 8. DocumentationAgent
+
+Debe documentar toda la Fase 5.
+
+Debe crear o actualizar:
+
+docs/PHASE_5_INTEGRATION.md
+docs/QA_PHASE_5_INTEGRATION.md, si procede
+docs/SECURITY_PHASE_5_INTEGRATION.md, si procede
+docs/API_DOCS.md, si procede
+backend/README.md, si procede
+frontend/README.md, si procede
+database/README.md, si procede
+
+Debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase5IntegrationMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+docs/PHASE_5_INTEGRATION.md debe incluir:
+
+# Fase 5 — Integración completa Frontend + Backend + SQLite
+
+## 1. Objetivo de la fase
+
+## 2. Flujo validado
+
+## 3. Base de datos SQLite utilizada
+
+## 4. Generación de database/nebripop.db
+
+## 5. Endpoints validados
+
+## 6. Pantallas conectadas
+
+## 7. Persistencia real
+
+## 8. Eliminación de uso de JSON como persistencia
+
+## 9. Pruebas realizadas
+
+## 10. Riesgos detectados
+
+## 11. Resultado final
+
+## 12. Próxima fase recomendada
+
+Regla obligatoria para DocumentationAgent y docs/Logs.md:
+
+DocumentationAgent NO debe modificar docs/Logs.md durante el desarrollo de la fase por iniciativa propia.
+
+Al terminar la Fase 5, DocumentationAgent debe preparar el resumen de la fase.
+
+Después, el Agent Manager debe autorizar automáticamente la actualización de docs/Logs.md con la instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 5.”
+
+Una vez recibida esta autorización automática, DocumentationAgent debe actualizar docs/Logs.md obligatoriamente.
+
+La entrada en docs/Logs.md debe incluir:
+
+- Fecha.
+- Fase: Fase 5 — Integración completa Frontend + Backend + SQLite.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Base de datos generada o validada.
+- Endpoints validados.
+- Pantallas conectadas.
+- Confirmación de que no se usa JSON como persistencia.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 5 no puede considerarse cerrada hasta que docs/Logs.md esté actualizado correctamente.
+
+## 9. ReviewerAgent
+
+Debe revisar el resultado de la Fase 5.
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_5.md
+
+Debe comprobar:
+
+- Que la integración Leptos → Axum → SQLite funciona.
+- Que database/nebripop.db existe o se ha generado correctamente.
+- Que la base de datos viene de schema.sql y seeds.sql.
+- Que el backend usa SQLite como fuente de verdad.
+- Que no se usan archivos .json para persistencia.
+- Que el frontend consume el backend.
+- Que crear producto desde frontend persiste en SQLite.
+- Que los datos persisten al reiniciar backend.
+- Que los errores se muestran correctamente.
+- Que no se han implementado funcionalidades fuera de Fase 5.
+- Que QAAgent ha documentado pruebas.
+- Que SequrityAgent ha documentado riesgos.
+- Que DocumentationAgent ha documentado la fase.
+- Que docs/Logs.md ha sido actualizado por DocumentationAgent tras autorización automática del Agent Manager.
+
+Debe emitir un veredicto:
+
+- Fase 5 aprobada. Se puede pasar a Fase 6.
+- Fase 5 aprobada con ajustes menores.
+- Fase 5 no aprobada.
+
+ReviewerAgent no debe modificar código salvo autorización expresa.
+
+ReviewerAgent no debe modificar docs/Logs.md.
+
+## 10. GitHubAgent
+
+GitHubAgent solo debe actuar al final de la fase si el Agent Manager lo autoriza.
+
+Debe revisar:
+
+- git status
+- git remote -v
+- git branch
+- git diff
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Repositorio esperado:
+
+https://github.com/DavidCabrerizo/NebriPop/
+
+No debe hacer commit ni push salvo autorización explícita del Agent Manager.
+
+Si el Agent Manager autoriza subir la Fase 5, GitHubAgent debe:
+
+1. Revisar que no se suben secretos.
+2. Revisar que no se suben .env reales.
+3. Revisar si database/nebripop.db debe subirse o no según .gitignore y decisión del Agent Manager.
+4. Revisar que no se sube target/.
+5. Revisar que no se suben archivos temporales de Trunk.
+6. Preparar commit.
+7. Hacer push al repositorio oficial.
+
+Mensaje de commit sugerido:
+
+feat: integra frontend backend y SQLite
+
+GitHubAgent no debe modificar docs/Logs.md.
+
+Después del commit y push, debe preparar un resumen para DocumentationAgent si el Agent Manager lo considera parte del cierre de la fase.
+
+Archivos permitidos en esta fase:
+
+- database/nebripop.db, solo si Agent Manager decide versionarlo y no contiene datos sensibles
+- database/README.md
+- backend/src/
+- backend/README.md
+- frontend/src/
+- frontend/styles.css
+- frontend/README.md
+- docs/PHASE_5_INTEGRATION.md
+- docs/QA_PHASE_5_INTEGRATION.md
+- docs/SECURITY_PHASE_5_INTEGRATION.md
+- docs/REVIEW_PHASE_5.md
+- docs/API_DOCS.md
+- docs/Prompts/PromptFase5IntegrationMVP.txt
+- .gitignore, si hay que ajustar reglas de .db, target o archivos temporales
+- docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Archivos prohibidos en esta fase:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- Datos persistentes en archivos .json.
+- Código funcional de login.
+- Código funcional de registro.
+- JWT.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Búsqueda avanzada.
+- Filtros avanzados.
+- Datos personales reales.
+
+Restricciones importantes:
+
+- No usar JSON como persistencia.
+- No guardar datos principales en memoria.
+- No implementar login.
+- No implementar registro.
+- No implementar favoritos.
+- No implementar mensajes.
+- No implementar chat.
+- No implementar pagos.
+- No implementar funcionalidades fuera de Fase 5.
+- No guardar datos personales reales.
+- No cambiar Leptos por otro framework.
+- No cambiar Axum por otro backend.
+- No cambiar SQLite por otra base de datos.
+- No hacer commit ni push sin autorización del Agent Manager.
+- Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+- Al finalizar la fase, el Agent Manager debe autorizar automáticamente a DocumentationAgent a actualizar docs/Logs.md.
+- DocumentationAgent debe actualizar docs/Logs.md obligatoriamente antes de cerrar la fase.
+- Mantener todo en español.
+- Usar formato Markdown profesional.
+- Mantener la fase centrada en integración y persistencia real.
+
+Criterios de aceptación de Fase 5:
+
+La Fase 5 se considera válida si:
+
+1. Existe o se genera correctamente database/nebripop.db.
+2. database/nebripop.db se genera desde schema.sql y seeds.sql.
+3. El backend arranca correctamente.
+4. El frontend arranca correctamente.
+5. GET /categories devuelve datos desde SQLite.
+6. GET /products devuelve datos desde SQLite.
+7. GET /products/:id devuelve datos desde SQLite.
+8. POST /products guarda realmente en SQLite.
+9. El frontend lista productos desde el backend.
+10. El frontend permite crear productos mediante el backend.
+11. El producto creado aparece en el listado.
+12. El producto creado permanece tras reiniciar backend.
+13. No se usan archivos .json como persistencia.
+14. No se usan mocks para productos o categorías reales.
+15. Los errores se muestran correctamente.
+16. QAAgent ha creado checklist de integración.
+17. SequrityAgent ha revisado riesgos.
+18. ReviewerAgent ha emitido veredicto.
+19. DocumentationAgent ha documentado la fase.
+20. docs/Logs.md ha quedado actualizado obligatoriamente por DocumentationAgent tras autorización automática del Agent Manager.
+21. La fase queda lista para pasar a Fase 6.
+
+Registro automático en docs/Logs.md al finalizar:
+
+Al finalizar la Fase 5, el Agent Manager debe revisar el resultado de la fase y autorizar automáticamente a @DocumentationAgent para registrar los cambios en docs/Logs.md.
+
+El Agent Manager debe emitir esta instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 5.”
+
+Una vez recibida esta autorización, @DocumentationAgent debe actualizar docs/Logs.md automáticamente con los siguientes datos:
+
+- Fecha.
+- Fase: Fase 5 — Integración completa Frontend + Backend + SQLite.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Base de datos generada o validada.
+- Endpoints validados.
+- Pantallas conectadas.
+- Confirmación de que no se usa JSON como persistencia.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 5 no puede cerrarse hasta que docs/Logs.md esté actualizado.
+
+Resultado esperado:
+
+Al finalizar la Fase 5, devuelve:
+
+1. Estado de la Fase 5.
+2. Agentes que han intervenido.
+3. Archivos creados.
+4. Archivos modificados.
+5. Confirmación de database/nebripop.db.
+6. Confirmación de que schema.sql y seeds.sql se han usado correctamente.
+7. Confirmación de que no se usa JSON como persistencia.
+8. Endpoints validados.
+9. Pantallas conectadas.
+10. Flujo completo validado.
+11. Riesgos detectados.
+12. Resultado de QAAgent.
+13. Resultado de SequrityAgent.
+14. Resultado de ReviewerAgent.
+15. Confirmación de actualización de docs/Logs.md por DocumentationAgent.
+16. Si se puede pasar a Fase 6.
+17. Si se recomienda activar GitHubAgent para commit y push.
+18. Próximo prompt recomendado para Fase 6.
+
+Guardar este prompt completo en:
+
+docs/Prompts/PromptFase5IntegrationMVP.txt

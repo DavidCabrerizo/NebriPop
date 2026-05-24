@@ -15,3 +15,5 @@ Thumbs.db
 .idea/
 
 backend/target/
+frontend/target/
+frontend/dist/

@@ -1,6 +1,5 @@
 use crate::api::categories_api::fetch_categories;
 use crate::api::products_api::create_product;
-use crate::components::error_message::ErrorMessage;
 use crate::models::product::CreateProductDto;
 use leptos::*;
 use leptos_router::*;
@@ -22,8 +21,8 @@ pub fn CreateProduct() -> impl IntoView {
 
     let on_submit = move |ev: ev::SubmitEvent| {
         ev.prevent_default();
-        set_error_msg(None);
-        set_success_msg(None);
+        set_error_msg.set(None);
+        set_success_msg.set(None);
 
         let t = title.get();
         let d = description.get();
@@ -33,17 +32,17 @@ pub fn CreateProduct() -> impl IntoView {
         let loc = location.get();
         
         if t.is_empty() || d.is_empty() || loc.is_empty() {
-            set_error_msg(Some("Por favor, completa todos los campos obligatorios.".to_string()));
+            set_error_msg.set(Some("Por favor, completa todos los campos obligatorios.".to_string()));
             return;
         }
         
         if p < 0.0 {
-            set_error_msg(Some("El precio no puede ser negativo.".to_string()));
+            set_error_msg.set(Some("El precio no puede ser negativo.".to_string()));
             return;
         }
 
         if cat == 0 {
-             set_error_msg(Some("Por favor, selecciona una categoría.".to_string()));
+             set_error_msg.set(Some("Por favor, selecciona una categoría.".to_string()));
              return;
         }
 
@@ -64,20 +63,20 @@ pub fn CreateProduct() -> impl IntoView {
         spawn_local(async move {
             match create_product(dto).await {
                 Ok(_) => {
-                    set_success_msg(Some("¡Producto publicado correctamente!".to_string()));
+                    set_success_msg.set(Some("¡Producto publicado correctamente!".to_string()));
                     // Limpiar formulario
-                    set_title("".to_string());
-                    set_description("".to_string());
-                    set_price(0.0);
-                    set_location("".to_string());
-                    set_image_url("".to_string());
+                    set_title.set("".to_string());
+                    set_description.set("".to_string());
+                    set_price.set(0.0);
+                    set_location.set("".to_string());
+                    set_image_url.set("".to_string());
                     
                     // Pequeña pausa y redirigir
                     let navigate = use_navigate();
                     navigate("/", Default::default());
                 }
                 Err(e) => {
-                    set_error_msg(Some(e));
+                    set_error_msg.set(Some(e));
                 }
             }
         });
@@ -93,14 +92,14 @@ pub fn CreateProduct() -> impl IntoView {
             <form on:submit=on_submit>
                 <div class="form-group">
                     <label>"Título *"</label>
-                    <input type="text" prop:value=title on:input=move |ev| set_title(event_target_value(&ev)) required/>
+                    <input type="text" prop:value=title on:input=move |ev| set_title.set(event_target_value(&ev)) required/>
                 </div>
                 
                 <div class="form-group">
                     <label>"Categoría *"</label>
                     <select prop:value=move || category_id.get().to_string() on:change=move |ev| {
                         if let Ok(val) = event_target_value(&ev).parse::<i64>() {
-                            set_category_id(val);
+                            set_category_id.set(val);
                         }
                     } required>
                         <option value="0">"Selecciona una categoría"</option>
@@ -123,14 +122,14 @@ pub fn CreateProduct() -> impl IntoView {
                     <label>"Precio (€) *"</label>
                     <input type="number" step="0.01" min="0" prop:value=move || price.get().to_string() on:input=move |ev| {
                         if let Ok(val) = event_target_value(&ev).parse::<f64>() {
-                            set_price(val);
+                            set_price.set(val);
                         }
                     } required/>
                 </div>
                 
                 <div class="form-group">
                     <label>"Estado *"</label>
-                    <select prop:value=condition on:change=move |ev| set_condition(event_target_value(&ev)) required>
+                    <select prop:value=condition on:change=move |ev| set_condition.set(event_target_value(&ev)) required>
                         <option value="new">"Nuevo"</option>
                         <option value="like_new">"Como nuevo"</option>
                         <option value="good">"Bueno"</option>
@@ -141,22 +140,22 @@ pub fn CreateProduct() -> impl IntoView {
                 
                 <div class="form-group">
                     <label>"Ubicación *"</label>
-                    <input type="text" prop:value=location on:input=move |ev| set_location(event_target_value(&ev)) required/>
+                    <input type="text" prop:value=location on:input=move |ev| set_location.set(event_target_value(&ev)) required/>
                 </div>
                 
                 <div class="form-group">
                     <label>"URL de la Imagen (opcional)"</label>
-                    <input type="url" prop:value=image_url on:input=move |ev| set_image_url(event_target_value(&ev))/>
+                    <input type="url" prop:value=image_url on:input=move |ev| set_image_url.set(event_target_value(&ev))/>
                 </div>
                 
                 <div class="form-group">
                     <label>"Descripción *"</label>
-                    <textarea prop:value=description on:input=move |ev| set_description(event_target_value(&ev)) required></textarea>
+                    <textarea prop:value=description on:input=move |ev| set_description.set(event_target_value(&ev)) required></textarea>
                 </div>
                 
                 <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; padding: 12px;">"Publicar Producto"</button>
                 <div style="text-align: center; margin-top: 15px;">
-                    <A href="/" style="color: #6b7280; text-decoration: none;">"Cancelar"</A>
+                    <a href="/" style="color: #6b7280; text-decoration: none;">"Cancelar"</a>
                 </div>
             </form>
         </div>

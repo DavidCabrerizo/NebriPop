@@ -1,4 +1,4 @@
-use crate::api::client::get_url;
+use crate::api::client::{get_url, handle_error, handle_network_error};
 use crate::models::category::Category;
 use reqwest::Client;
 
@@ -8,11 +8,11 @@ pub async fn fetch_categories() -> Result<Vec<Category>, String> {
         .get(&get_url("/categories"))
         .send()
         .await
-        .map_err(|e| e.to_string())?;
+        .map_err(handle_network_error)?;
 
     if res.status().is_success() {
         res.json::<Vec<Category>>().await.map_err(|e| e.to_string())
     } else {
-        Err(format!("Error del servidor: {}", res.status()))
+        Err(handle_error(res).await)
     }
 }
