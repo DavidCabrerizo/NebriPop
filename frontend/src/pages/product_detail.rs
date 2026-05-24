@@ -12,6 +12,7 @@ struct ProductParams {
 #[component]
 pub fn ProductDetail() -> impl IntoView {
     let params = use_params::<ProductParams>();
+    let (active_image, set_active_image) = create_signal(None::<String>);
     
     let product_id = move || {
         params.with(|params_res| {
@@ -55,7 +56,7 @@ pub fn ProductDetail() -> impl IntoView {
                             view! {
                                 <div class="detail-view">
                                     <div class="detail-image-container">
-                                        <img src=img_src alt=product.title.clone() class="detail-img"/>
+                                        <img src=move || active_image.get().unwrap_or_else(|| img_src.clone()) alt=product.title.clone() class="detail-img"/>
                                         {if !thumbnails.is_empty() {
                                             view! {
                                                 <div class="thumbnails" style="display: flex; gap: 10px; margin-top: 10px; overflow-x: auto;">
@@ -65,8 +66,14 @@ pub fn ProductDetail() -> impl IntoView {
                                                         } else {
                                                             format!("http://127.0.0.1:3000/{}", img.image_url)
                                                         };
+                                                        let t_src_clone = t_src.clone();
                                                         view! {
-                                                            <img src=t_src alt="thumbnail" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;"/>
+                                                            <img 
+                                                                src=t_src 
+                                                                alt="thumbnail" 
+                                                                style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;"
+                                                                on:click=move |_| set_active_image.set(Some(t_src_clone.clone()))
+                                                            />
                                                         }
                                                     }).collect_view()}
                                                 </div>

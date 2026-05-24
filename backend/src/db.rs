@@ -1,4 +1,4 @@
-use sqlx::{sqlite::{SqliteConnectOptions, SqlitePoolOptions}, SqlitePool, Row};
+use sqlx::{sqlite::{SqliteConnectOptions, SqlitePoolOptions}, SqlitePool};
 use std::str::FromStr;
 use tokio::fs;
 

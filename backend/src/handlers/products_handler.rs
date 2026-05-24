@@ -3,7 +3,7 @@ use axum::{
     response::Json,
 };
 use sqlx::SqlitePool;
-use std::path::PathBuf;
+
 use tokio::fs;
 use crate::dto::product_dto::CreateProductDto;
 use crate::errors::AppError;

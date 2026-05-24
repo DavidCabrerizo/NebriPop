@@ -17,7 +17,8 @@ pub fn CreateProduct() -> impl IntoView {
     let (location, set_location) = create_signal("".to_string());
     let (image_url, set_image_url) = create_signal("".to_string());
     
-    let file_input_ref = create_node_ref::<html::Input>();
+    let main_file_input_ref = create_node_ref::<html::Input>();
+    let secondary_file_input_ref = create_node_ref::<html::Input>();
     
     let (error_msg, set_error_msg) = create_signal(None::<String>);
     let (success_msg, set_success_msg) = create_signal(None::<String>);
@@ -52,7 +53,18 @@ pub fn CreateProduct() -> impl IntoView {
         let img = image_url.get();
         // Extract files from input
         let mut upload_files = Vec::new();
-        if let Some(input) = file_input_ref.get() {
+        
+        // 1. Añadir primero la imagen principal (así el backend la guarda con position=0)
+        if let Some(input) = main_file_input_ref.get() {
+            if let Some(files) = input.files() {
+                if let Some(file) = files.item(0) {
+                    upload_files.push(file);
+                }
+            }
+        }
+        
+        // 2. Añadir las imágenes secundarias
+        if let Some(input) = secondary_file_input_ref.get() {
             if let Some(files) = input.files() {
                 for i in 0..files.length() {
                     if let Some(file) = files.item(i) {
@@ -167,9 +179,16 @@ pub fn CreateProduct() -> impl IntoView {
                     <input type="text" prop:value=location on:input=move |ev| set_location.set(event_target_value(&ev)) required/>
                 </div>
                 
-                <div class="form-group">
-                    <label>"Subir Imágenes (Local)"</label>
-                    <input type="file" _ref=file_input_ref accept="image/jpeg,image/png" multiple/>
+                <div class="form-group" style="border: 1px solid var(--border-color); padding: 15px; border-radius: 6px; background-color: #f9fafb;">
+                    <label style="color: var(--primary-color); font-weight: bold;">"Imagen Principal (Local)"</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0; margin-bottom: 10px;">"Esta será la imagen de portada de tu producto."</p>
+                    <input type="file" _ref=main_file_input_ref accept="image/jpeg,image/png"/>
+                </div>
+
+                <div class="form-group" style="border: 1px solid var(--border-color); padding: 15px; border-radius: 6px; background-color: #f9fafb;">
+                    <label>"Imágenes Secundarias (Local)"</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0; margin-bottom: 10px;">"Puedes seleccionar múltiples imágenes adicionales."</p>
+                    <input type="file" _ref=secondary_file_input_ref accept="image/jpeg,image/png" multiple/>
                 </div>
                 
                 <div class="form-group">

@@ -31,12 +31,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Configurar CORS
     let cors = CorsLayer::new()
-        .allow_origin(Any) // En producción limitar a http://127.0.0.1:8081
+        .allow_origin(Any)
         .allow_methods([Method::GET, Method::POST, Method::OPTIONS, Method::PUT, Method::DELETE])
-        .allow_headers([axum::http::header::CONTENT_TYPE]);
+        .allow_headers(Any);
 
-    // Crear la aplicación (router)
-    let app = routes::app_router(pool).layer(cors);
+    // Crear la aplicación (router) con límite aumentado para subidas de archivos
+    let app = routes::app_router(pool)
+        .layer(axum::extract::DefaultBodyLimit::max(50 * 1024 * 1024))
+        .layer(cors);
 
     // Bind y arrancar servidor
     let addr = SocketAddr::from(([127, 0, 0, 1], cfg.port));

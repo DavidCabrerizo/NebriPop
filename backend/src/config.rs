@@ -13,7 +13,7 @@ impl Config {
         let _ = dotenv();
 
         let database_url = env::var("DATABASE_URL")
-            .unwrap_or_else(|_| "sqlite://./database/nebripop.db".to_string());
+            .unwrap_or_else(|_| "sqlite://../database/nebripop.db".to_string());
         
         let port = env::var("PORT")
             .unwrap_or_else(|_| "3000".to_string())
