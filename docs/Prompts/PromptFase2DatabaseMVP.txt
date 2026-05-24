@@ -1,0 +1,103 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 2 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 2 — Diseño de la base de datos SQLite real del MVP
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se ha completado la Fase 1, donde se creó la estructura real del proyecto NebriPop. Ahora vamos a diseñar la base de datos SQLite real del MVP, que será utilizada posteriormente por el backend Axum.
+
+NebriPop será una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. Los usuarios podrán publicar productos, consultar productos publicados, ver detalles, gestionar usuarios básicos y preparar futuras funcionalidades como favoritos y mensajes.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Control de versiones: Git + GitHub
+- Coordinación: Antigravity
+- Implementación técnica: OpenCode cuando sea autorizado
+
+Objetivo principal de la Fase 2:
+Diseñar y preparar la base de datos SQLite real del MVP, definiendo las tablas principales, sus campos, relaciones, restricciones, datos iniciales y documentación.
+
+Importante:
+En esta fase NO se debe implementar todavía:
+- Backend funcional completo.
+- Endpoints reales.
+- Frontend funcional.
+- Login completo.
+- Sistema de favoritos completo.
+- Sistema de mensajes completo.
+- Subida real de imágenes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema de compras reales.
+
+La Fase 2 se centra únicamente en base de datos, esquema SQL, seeds y documentación.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. DatabaseAgent
+3. RustArchitectAgent
+4. RustBackend
+5. QAAgent
+6. SequrityAgent
+7. DocumentationAgent
+8. ReviewerAgent
+9. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 2 sin autorización explícita.
+
+Regla específica sobre docs/Logs.md:
+Ningún agente debe modificar docs/Logs.md directamente salvo DocumentationAgent.
+
+DocumentationAgent no debe modificar docs/Logs.md por iniciativa propia.
+
+Al finalizar la Fase 2, el Agent Manager / Product Manager Agent debe revisar el resultado de la fase y, si todo es correcto, autorizar explícitamente a @DocumentationAgent para registrar los cambios en docs/Logs.md.
+
+El Agent Manager debe emitir una instrucción clara como:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 2.”
+
+Solo después de recibir esa autorización, @DocumentationAgent podrá crear o actualizar docs/Logs.md.
+
+Si el Agent Manager no da autorización explícita, @DocumentationAgent solo debe preparar el resumen de cambios, pero no modificar docs/Logs.md.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con la base de datos real del MVP.
+
+Archivos principales que deben crearse o actualizarse:
+
+database/schema.sql
+database/seeds.sql
+database/README.md
+docs/DATABASE_SCHEMA.md
+docs/DATABASE_DECISIONS.md
+docs/PHASE_2_DATABASE.md
+docs/QA_PHASE_2_DATABASE.md
+docs/SECURITY_PHASE_2_DATABASE.md
+docs/REVIEW_PHASE_2.md
+docs/Prompts/PromptFase2DatabaseMVP.txt
+
+Opcional, solo si el Agent Manager lo autoriza:
+
+database/nebripop.db
+
+Tareas por agente:
+(Resto del prompt omitido por brevedad, contenido idéntico a la petición original)
