@@ -1,0 +1,403 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 1 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 1 — Creación de la estructura real del proyecto MVP
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se ha completado la Fase 0 de validación previa. En esta nueva fase vamos a crear la estructura real del proyecto NebriPop, separada de las pruebas técnicas realizadas anteriormente en la carpeta experiments/.
+
+NebriPop será una aplicación tipo Wallapop académico para estudiantes. El MVP se desarrollará con:
+
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Control de versiones: Git + GitHub
+- Coordinación: Antigravity
+- Implementación técnica: OpenCode cuando sea autorizado
+
+Objetivo principal de la Fase 1:
+Crear la estructura base real del proyecto MVP sin implementar todavía funcionalidades de negocio.
+
+Importante:
+En esta fase NO se deben implementar todavía:
+- Login
+- Registro
+- Productos reales
+- Favoritos
+- Mensajes
+- Subida de imágenes
+- Búsqueda
+- Filtros
+- Autenticación
+- Endpoints funcionales complejos
+- Migraciones definitivas
+- Lógica completa del MVP
+
+La Fase 1 solo debe preparar la estructura inicial del proyecto para que las siguientes fases puedan implementarse de forma ordenada.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. DevopsAgent
+4. DocumentationAgent
+5. ReviewerAgent
+6. GitHubAgent
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede actuar fuera de su rol ni modificar archivos fuera del alcance de la Fase 1 sin autorización explícita.
+
+Archivos y carpetas que se deben crear o revisar:
+
+Estructura principal esperada:
+
+NebriPop/
+├── backend/
+├── frontend/
+├── database/
+├── docs/
+├── scripts/
+├── experiments/
+├── AGENTS.md
+├── README.md
+├── .gitignore
+└── .env.example
+
+La carpeta experiments/ debe mantenerse porque contiene las pruebas técnicas previas, pero no debe mezclarse con el código real del MVP.
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 1.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos y carpetas permitidos.
+- Archivos y carpetas prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 2.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+No debe implementar código directamente.
+
+## 2. RustArchitectAgent
+
+Debe definir la estructura base recomendada del MVP.
+
+Debe proponer una arquitectura inicial clara para:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+
+Debe crear o actualizar, si el Agent Manager lo autoriza:
+
+docs/ARCHITECTURE.md
+
+El documento debe incluir:
+
+- Arquitectura general del MVP.
+- Separación entre frontend, backend y base de datos.
+- Función de cada carpeta.
+- Relación entre Leptos, Axum y SQLite.
+- Diferencia entre experiments/ y código real del MVP.
+- Reglas para evitar conflictos entre agentes.
+- Recomendaciones para Fase 2.
+
+RustArchitectAgent no debe implementar lógica de negocio.
+
+## 3. DevopsAgent
+
+Debe preparar la base de entorno del proyecto.
+
+Debe revisar o crear:
+
+- .gitignore
+- .env.example
+- scripts/
+- README.md, solo secciones básicas de ejecución futura
+
+Debe asegurar que .gitignore incluya como mínimo:
+
+target/
+.env
+.env.local
+*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+.vscode/
+.idea/
+
+Importante:
+No debe ignorar la carpeta docs/.
+No debe ignorar los archivos de prompts.
+No debe ignorar el código fuente.
+
+Debe crear o actualizar, si el Agent Manager lo autoriza:
+
+docs/ENVIRONMENT_SETUP.md
+
+El documento debe incluir:
+
+- Requisitos previos.
+- Rust.
+- Cargo.
+- Trunk.
+- Target wasm32-unknown-unknown.
+- Visual Studio Build Tools en Windows.
+- Puertos previstos:
+  - Backend: 3000
+  - Frontend: 8081
+- Comandos futuros esperados para backend y frontend.
+
+DevopsAgent no debe crear workflows CI/CD todavía salvo autorización expresa.
+
+## 4. DocumentationAgent
+
+Debe documentar la Fase 1.
+
+Debe crear o actualizar:
+
+docs/PHASE_1_STRUCTURE.md
+
+El documento debe incluir:
+
+- Objetivo de la Fase 1.
+- Estructura creada.
+- Explicación de cada carpeta.
+- Qué se ha hecho.
+- Qué no se ha implementado todavía.
+- Diferencia entre experiments/ y código real.
+- Próxima fase recomendada.
+- Resumen preparado para docs/Logs.md.
+
+No debe modificar docs/Logs.md directamente salvo autorización expresa del Agent Manager.
+
+También debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase1EstructuraMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+## 5. ReviewerAgent
+
+Debe revisar el resultado de la Fase 1.
+
+Debe comprobar:
+
+- Que la estructura creada es coherente.
+- Que no se ha implementado lógica de negocio.
+- Que no se han tocado archivos prohibidos.
+- Que experiments/ se mantiene aislada.
+- Que backend/, frontend/ y database/ están preparados para fases posteriores.
+- Que .gitignore es correcto.
+- Que .env.example no contiene secretos reales.
+- Que la documentación de la fase existe.
+- Que se puede pasar a Fase 2.
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_1.md
+
+Debe emitir un veredicto:
+
+- Fase 1 aprobada. Se puede pasar a Fase 2.
+- Fase 1 aprobada con ajustes menores.
+- Fase 1 no aprobada.
+
+## 6. GitHubAgent
+
+Debe actuar solo al final de la fase si el Agent Manager lo autoriza.
+
+Debe revisar:
+
+- git status
+- git remote -v
+- git branch
+- git diff
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Repositorio esperado:
+
+https://github.com/DavidCabrerizo/NebriPop/
+
+No debe hacer commit ni push salvo autorización explícita del Agent Manager.
+
+Si el Agent Manager autoriza subir la Fase 1, GitHubAgent debe:
+
+1. Revisar que no se suben secretos.
+2. Revisar que no se suben carpetas target/.
+3. Revisar que no se suben .env reales.
+4. Preparar commit.
+5. Hacer push al repositorio oficial.
+
+Mensaje de commit sugerido:
+
+chore: crea estructura base del MVP NebriPop
+
+Archivos permitidos en esta fase:
+
+- backend/
+- frontend/
+- database/
+- scripts/
+- docs/ARCHITECTURE.md
+- docs/ENVIRONMENT_SETUP.md
+- docs/PHASE_1_STRUCTURE.md
+- docs/REVIEW_PHASE_1.md
+- docs/Prompts/PromptFase1EstructuraMVP.txt
+- README.md
+- .gitignore
+- .env.example
+- AGENTS.md solo si es necesaria una pequeña actualización documental
+
+Archivos prohibidos en esta fase:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- docs/Logs.md directamente, salvo autorización expresa.
+- Código funcional de productos.
+- Código funcional de usuarios.
+- Código funcional de favoritos.
+- Código funcional de mensajes.
+- Migraciones definitivas.
+- Base de datos real con datos.
+- Autenticación.
+- Subida de imágenes.
+- Chat.
+- Pagos.
+- Notificaciones.
+
+Restricciones importantes:
+
+- No implementar funcionalidades de negocio.
+- No crear endpoints funcionales del MVP.
+- No crear pantallas funcionales del MVP.
+- No crear tablas definitivas todavía.
+- No crear base de datos real con datos.
+- No modificar experiments/ salvo que sea para dejarla claramente aislada.
+- No borrar contenido existente.
+- No modificar docs/Logs.md directamente.
+- No hacer commit ni push sin autorización del Agent Manager.
+- No cambiar el stack tecnológico.
+- Mantener todo en español.
+- Usar formato Markdown profesional en documentación.
+
+Estructura mínima esperada:
+
+backend/
+  README.md
+  src/
+    .gitkeep
+
+frontend/
+  README.md
+  src/
+    .gitkeep
+
+database/
+  README.md
+  .gitkeep
+
+scripts/
+  README.md
+  .gitkeep
+
+docs/
+  ARCHITECTURE.md
+  ENVIRONMENT_SETUP.md
+  PHASE_1_STRUCTURE.md
+  REVIEW_PHASE_1.md
+  Prompts/
+    PromptFase1EstructuraMVP.txt
+
+Opcional:
+Si RustArchitectAgent y DevopsAgent lo consideran adecuado, se puede crear la estructura mínima de proyectos Rust, pero sin lógica de negocio:
+
+backend/
+  Cargo.toml
+  src/
+    main.rs
+
+frontend/
+  Cargo.toml
+  index.html
+  src/
+    main.rs
+
+En caso de crear estos archivos, deben contener únicamente una base mínima de arranque o placeholders, sin funcionalidades del MVP.
+
+Criterios de aceptación de Fase 1:
+
+La Fase 1 se considera válida si:
+
+1. Existe una estructura clara del proyecto real.
+2. backend/, frontend/, database/, docs/ y scripts/ están creados.
+3. experiments/ permanece aislada.
+4. No se ha implementado lógica de negocio.
+5. No se han creado funcionalidades reales del MVP.
+6. .gitignore protege archivos sensibles y target/.
+7. .env.example existe y no contiene secretos reales.
+8. README.md incluye una descripción básica del proyecto.
+9. docs/ARCHITECTURE.md explica la arquitectura inicial.
+10. docs/PHASE_1_STRUCTURE.md documenta la fase.
+11. docs/REVIEW_PHASE_1.md contiene la revisión del ReviewerAgent.
+12. Se ha preparado resumen para DocumentationAgent.
+13. GitHubAgent solo actúa si Agent Manager lo autoriza.
+
+Resultado esperado:
+
+Al finalizar la Fase 1, devuelve:
+
+1. Estado de la Fase 1.
+2. Agentes que han intervenido.
+3. Archivos creados.
+4. Archivos modificados.
+5. Estructura final del proyecto.
+6. Explicación de cada carpeta.
+7. Confirmación de que no se ha implementado lógica de negocio.
+8. Riesgos detectados.
+9. Resultado de ReviewerAgent.
+10. Si se puede pasar a Fase 2.
+11. Resumen preparado para DocumentationAgent.
+12. Si se recomienda activar GitHubAgent para commit y push.
+13. Próximo prompt recomendado para Fase 2.
+
+Resumen para DocumentationAgent:
+
+Prepara un resumen para que @DocumentationAgent registre la Fase 1 en docs/Logs.md.
+
+El resumen debe incluir:
+
+- Fecha.
+- Fase: Fase 1 — Creación de la estructura real del proyecto MVP.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+No modifiques docs/Logs.md directamente salvo autorización expresa.
+
+Guardar este prompt completo en:
+
+docs/Prompts/PromptFase1EstructuraMVP.txt
