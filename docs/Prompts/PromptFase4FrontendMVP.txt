@@ -1,0 +1,720 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 4 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 4 — Frontend base con Leptos conectado al backend Axum
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se ha completado la Fase 3, donde se implementó el backend base real de NebriPop usando Rust + Axum conectado a SQLite. Ahora vamos a implementar el frontend base real usando Rust + Leptos, consumiendo los endpoints creados en la Fase 3.
+
+NebriPop será una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. En esta fase el objetivo es crear la primera interfaz visible del MVP, permitiendo listar productos, ver el detalle de un producto y publicar productos básicos desde el frontend.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Backend URL local: http://127.0.0.1:3000
+- Frontend URL local: http://127.0.0.1:8081
+- Control de versiones: Git + GitHub
+- Coordinación: Antigravity
+- Implementación técnica: OpenCode cuando sea autorizado
+
+Objetivo principal de la Fase 4:
+Implementar el frontend base del MVP con Leptos, conectado al backend Axum, permitiendo visualizar productos, consultar categorías, crear productos y ver el detalle de un producto.
+
+Importante:
+En esta fase SÍ se puede implementar frontend funcional básico.
+
+En esta fase NO se debe implementar todavía:
+- Login completo.
+- Registro completo.
+- Autenticación con JWT.
+- Perfil de usuario.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Subida real de imágenes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Búsqueda avanzada.
+- Filtros avanzados.
+- Diseño final completo.
+
+La Fase 4 se centra en frontend base, llamadas API, pantallas principales, formularios, validaciones básicas, gestión de errores y documentación.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. UXDesigner
+3. RustArchitectAgent
+4. RustFrontend
+5. RustBackend, solo para resolver dudas de API
+6. QAAgent
+7. SequrityAgent
+8. DocumentationAgent
+9. ReviewerAgent
+10. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 4 sin autorización explícita.
+
+Regla obligatoria sobre docs/Logs.md:
+Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+
+Al finalizar la Fase 4, el Agent Manager / Product Manager Agent debe autorizar automáticamente a @DocumentationAgent para actualizar docs/Logs.md.
+
+La instrucción obligatoria del Agent Manager será:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 4.”
+
+Después de esta autorización automática, @DocumentationAgent debe actualizar docs/Logs.md obligatoriamente con el resumen de la Fase 4.
+
+La Fase 4 no podrá darse por finalizada hasta que docs/Logs.md haya sido actualizado correctamente.
+
+Si ocurre un error al actualizar docs/Logs.md, DocumentationAgent debe informar del error, corregirlo si está dentro de su alcance y volver a intentar la actualización.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con el frontend real del MVP.
+
+Archivos principales que deben revisarse antes de actuar:
+
+docs/API_DOCS.md
+docs/BACKEND_ARCHITECTURE.md
+docs/PHASE_3_BACKEND.md
+docs/REVIEW_PHASE_3.md
+frontend/README.md
+frontend/Cargo.toml, si existe
+frontend/index.html, si existe
+frontend/src/
+AGENTS.md
+RULES.md
+AI_WORKFLOW.md, si existe
+.env.example
+.gitignore
+
+Endpoints backend que debe consumir el frontend:
+
+Backend local:
+http://127.0.0.1:3000
+
+Endpoints disponibles:
+
+GET /health
+GET /categories
+GET /products
+GET /products/:id
+POST /products
+
+Archivos principales que pueden crearse o actualizarse:
+
+frontend/Cargo.toml
+frontend/index.html
+frontend/src/main.rs
+frontend/src/app.rs
+frontend/src/api/mod.rs
+frontend/src/api/client.rs
+frontend/src/api/products_api.rs
+frontend/src/api/categories_api.rs
+frontend/src/components/mod.rs
+frontend/src/components/product_card.rs
+frontend/src/components/product_form.rs
+frontend/src/components/product_list.rs
+frontend/src/components/error_message.rs
+frontend/src/components/loading.rs
+frontend/src/pages/mod.rs
+frontend/src/pages/home.rs
+frontend/src/pages/product_detail.rs
+frontend/src/pages/create_product.rs
+frontend/src/models/mod.rs
+frontend/src/models/product.rs
+frontend/src/models/category.rs
+frontend/src/models/api_error.rs
+frontend/src/styles.css, si se usa CSS simple
+frontend/README.md
+docs/FRONTEND_ARCHITECTURE.md
+docs/PHASE_4_FRONTEND.md
+docs/QA_PHASE_4_FRONTEND.md
+docs/SECURITY_PHASE_4_FRONTEND.md
+docs/REVIEW_PHASE_4.md
+docs/Prompts/PromptFase4FrontendMVP.txt
+docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 4.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 5.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+No debe implementar código directamente.
+
+El Agent Manager debe controlar especialmente que:
+
+- RustFrontend solo modifique frontend/ y documentación relacionada.
+- RustBackend solo intervenga para resolver dudas de API, no para añadir endpoints nuevos salvo autorización expresa.
+- DatabaseAgent no debe intervenir salvo que haya un problema directo con datos recibidos desde la API.
+- GitHubAgent no haga commit ni push sin autorización.
+- No se implementen funcionalidades fuera de la Fase 4.
+- Al finalizar la fase, autorice automáticamente a DocumentationAgent a actualizar docs/Logs.md.
+- La fase no se marque como finalizada hasta que docs/Logs.md esté actualizado.
+
+## 2. UXDesigner
+
+Debe definir la experiencia de usuario base de la Fase 4.
+
+Debe proponer una interfaz sencilla tipo marketplace para:
+
+- Página Home con listado de productos.
+- Tarjeta de producto.
+- Página de detalle de producto.
+- Formulario para publicar producto.
+- Mensajes de carga.
+- Mensajes de error.
+- Mensajes de éxito.
+- Navegación básica.
+
+Debe crear o actualizar, si el Agent Manager lo autoriza:
+
+docs/UI_UX_PHASE_4.md
+
+Debe mantener una propuesta simple, clara y adecuada para MVP.
+
+No debe implementar código salvo autorización expresa.
+
+Recomendaciones visuales:
+
+- Título principal: NebriPop
+- Subtítulo: Marketplace de productos de segunda mano
+- Diseño limpio y funcional.
+- Tarjetas de producto con título, precio, ubicación, estado e imagen si existe.
+- Formulario claro para publicar producto.
+- Mensajes visibles para errores de conexión o validación.
+
+## 3. RustArchitectAgent
+
+Debe revisar la arquitectura frontend antes de implementar.
+
+Debe comprobar:
+
+- Que el frontend Leptos encaja con la estructura creada en Fase 1.
+- Que consume correctamente el backend Axum de Fase 3.
+- Que la separación pages, components, api y models es adecuada.
+- Que la estructura no introduce sobreingeniería.
+- Que el frontend puede crecer posteriormente para login, favoritos, mensajes y búsqueda.
+- Que el diseño permite reutilizar componentes.
+
+Debe crear o actualizar:
+
+docs/FRONTEND_ARCHITECTURE.md
+
+Debe añadir recomendaciones para RustFrontend antes de codificar.
+
+No debe implementar código.
+
+## 4. RustFrontend
+
+RustFrontend será el agente principal de implementación técnica de esta fase.
+
+Debe implementar el frontend base real con Leptos.
+
+Debe usar la skill clean-rust-skill si está disponible.
+
+Debe trabajar en:
+
+frontend/
+
+Debe implementar:
+
+- Aplicación Leptos ejecutable con Trunk.
+- Frontend local en http://127.0.0.1:8081.
+- Cliente API para consumir http://127.0.0.1:3000.
+- Carga de categorías con GET /categories.
+- Carga de productos con GET /products.
+- Vista de detalle con GET /products/:id.
+- Formulario de creación de producto con POST /products.
+- Validaciones básicas en cliente.
+- Mensajes de error.
+- Mensajes de carga.
+- Mensaje de éxito tras crear producto.
+- Actualización del listado después de crear producto.
+- Componentes reutilizables.
+- Código limpio y modular.
+- Documentación mínima en frontend/README.md.
+
+Pantallas mínimas obligatorias:
+
+### Home / Listado de productos
+
+Debe mostrar:
+
+- Título de la app: NebriPop.
+- Listado de productos recibidos desde GET /products.
+- Cada producto en una tarjeta.
+- Precio.
+- Categoría si está disponible.
+- Ubicación.
+- Estado.
+- Botón o enlace para ver detalle.
+- Mensaje de carga.
+- Mensaje de error si el backend no responde.
+- Mensaje si no hay productos.
+
+### Detalle de producto
+
+Debe mostrar:
+
+- Título.
+- Descripción.
+- Precio.
+- Categoría.
+- Estado.
+- Ubicación.
+- Imagen principal si existe.
+- Estado de publicación.
+- Fecha de creación si está disponible.
+- Botón para volver al listado.
+
+### Formulario para publicar producto
+
+Debe incluir campos:
+
+- category_id
+- title
+- description
+- price
+- condition
+- location
+- main_image_url, opcional
+
+Debe enviar a:
+
+POST http://127.0.0.1:3000/products
+
+Body esperado:
+
+{
+  "user_id": 1,
+  "category_id": 1,
+  "title": "iPhone 12 usado",
+  "description": "iPhone 12 en buen estado",
+  "price": 250.0,
+  "condition": "used",
+  "location": "Madrid",
+  "main_image_url": null
+}
+
+Notas:
+- user_id puede enviarse temporalmente como 1 hasta que exista login funcional.
+- Este comportamiento debe quedar documentado como solución temporal de MVP.
+- category_id debe elegirse desde las categorías cargadas del backend.
+- condition debe ser uno de: new, like_new, good, used, damaged.
+
+Validaciones frontend obligatorias:
+
+- title no puede estar vacío.
+- description no puede estar vacía.
+- price debe ser mayor o igual que 0.
+- category_id debe estar seleccionado.
+- condition debe estar seleccionada.
+- location no puede estar vacía.
+- main_image_url es opcional.
+- Mostrar error si el backend devuelve error.
+- Mostrar error si el backend no está encendido.
+
+RustFrontend no debe implementar todavía:
+
+- Login.
+- Registro.
+- JWT.
+- Favoritos.
+- Mensajes.
+- Upload real de imágenes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+Comandos esperados para ejecutar frontend:
+
+cd frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+Antes de probar frontend, el backend debe estar ejecutándose:
+
+cd backend
+cargo run
+
+## 5. RustBackend
+
+Debe intervenir solo si hay dudas de integración API.
+
+Puede revisar:
+
+- Que los endpoints documentados en docs/API_DOCS.md coinciden con lo que consume RustFrontend.
+- Que CORS permite llamadas desde http://127.0.0.1:8081.
+- Que los errores del backend son entendibles para el frontend.
+
+No debe añadir endpoints nuevos salvo autorización expresa del Agent Manager.
+
+No debe modificar backend/ salvo que el Agent Manager lo autorice por un bloqueo real de integración.
+
+No debe modificar docs/Logs.md.
+
+## 6. QAAgent
+
+Debe crear un checklist de validación del frontend.
+
+Debe crear o actualizar:
+
+docs/QA_PHASE_4_FRONTEND.md
+
+Debe comprobar:
+
+- Que el frontend compila.
+- Que Trunk arranca en http://127.0.0.1:8081.
+- Que el backend está activo en http://127.0.0.1:3000.
+- Que la Home carga productos desde GET /products.
+- Que la Home muestra tarjetas de producto.
+- Que el detalle de producto carga correctamente.
+- Que el formulario carga categorías desde GET /categories.
+- Que POST /products crea un producto.
+- Que el listado se actualiza después de crear producto.
+- Que las validaciones de cliente funcionan.
+- Que se muestra error si el backend está apagado.
+- Que se muestra error si el backend devuelve error.
+- Que no se han implementado funcionalidades fuera de Fase 4.
+- Que no se ha modificado backend salvo autorización.
+
+Debe incluir comandos de prueba:
+
+Backend:
+
+cd backend
+cargo run
+
+Frontend:
+
+cd frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+URLs de prueba:
+
+http://127.0.0.1:8081
+http://127.0.0.1:3000/health
+http://127.0.0.1:3000/products
+http://127.0.0.1:3000/categories
+
+QAAgent no debe modificar código salvo autorización expresa.
+
+No debe modificar docs/Logs.md.
+
+## 7. SequrityAgent
+
+Debe revisar riesgos de seguridad del frontend.
+
+Debe crear o actualizar:
+
+docs/SECURITY_PHASE_4_FRONTEND.md
+
+Debe revisar:
+
+- Que el frontend no contiene secretos.
+- Que no hay claves ni tokens en el código.
+- Que la URL del backend local no contiene credenciales.
+- Que los datos del formulario se validan antes de enviarse.
+- Que los errores no muestran información sensible.
+- Que main_image_url no se ejecuta como código.
+- Que no se implementa autenticación falsa.
+- Que user_id temporal está documentado como solución provisional.
+- Que no se guardan contraseñas ni datos sensibles en localStorage.
+- Que no se implementa login incompleto en esta fase.
+
+No debe modificar código salvo autorización del Agent Manager.
+
+No debe modificar docs/Logs.md.
+
+## 8. DocumentationAgent
+
+Debe documentar toda la Fase 4.
+
+Debe crear o actualizar:
+
+docs/PHASE_4_FRONTEND.md
+docs/FRONTEND_ARCHITECTURE.md
+docs/UI_UX_PHASE_4.md, si procede
+frontend/README.md, si procede
+
+Debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase4FrontendMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+docs/PHASE_4_FRONTEND.md debe incluir:
+
+# Fase 4 — Frontend base con Leptos conectado al backend Axum
+
+## 1. Objetivo de la fase
+
+## 2. Stack utilizado
+
+## 3. Estructura frontend creada
+
+## 4. Conexión con backend Axum
+
+## 5. Pantallas implementadas
+
+## 6. Componentes creados
+
+## 7. Llamadas API realizadas
+
+## 8. Validaciones aplicadas
+
+## 9. Manejo de errores
+
+## 10. Pruebas recomendadas
+
+## 11. Riesgos detectados
+
+## 12. Próxima fase recomendada
+
+Regla obligatoria para DocumentationAgent y docs/Logs.md:
+
+DocumentationAgent NO debe modificar docs/Logs.md durante el desarrollo de la fase por iniciativa propia.
+
+Al terminar la Fase 4, DocumentationAgent debe preparar el resumen de la fase.
+
+Después, el Agent Manager debe autorizar automáticamente la actualización de docs/Logs.md con la instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 4.”
+
+Una vez recibida esta autorización automática, DocumentationAgent debe actualizar docs/Logs.md obligatoriamente.
+
+La entrada en docs/Logs.md debe incluir:
+
+- Fecha.
+- Fase: Fase 4 — Frontend base con Leptos conectado al backend Axum.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Pantallas implementadas.
+- Componentes creados.
+- Endpoints consumidos.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 4 no puede considerarse cerrada hasta que docs/Logs.md esté actualizado correctamente.
+
+## 9. ReviewerAgent
+
+Debe revisar el resultado de la Fase 4.
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_4.md
+
+Debe comprobar:
+
+- Que el frontend está implementado con Leptos.
+- Que se ejecuta con Trunk.
+- Que consume correctamente el backend Axum.
+- Que se respeta la arquitectura definida.
+- Que las pantallas mínimas existen.
+- Que los componentes son claros y reutilizables.
+- Que las llamadas API están separadas del código de interfaz.
+- Que las validaciones básicas existen.
+- Que los errores se muestran al usuario.
+- Que no se ha implementado login.
+- Que no se han añadido funcionalidades fuera de Fase 4.
+- Que QAAgent ha documentado pruebas.
+- Que SequrityAgent ha documentado riesgos.
+- Que DocumentationAgent ha documentado la fase.
+- Que docs/Logs.md ha sido actualizado por DocumentationAgent tras autorización automática del Agent Manager.
+
+Debe emitir un veredicto:
+
+- Fase 4 aprobada. Se puede pasar a Fase 5.
+- Fase 4 aprobada con ajustes menores.
+- Fase 4 no aprobada.
+
+No debe modificar código salvo autorización expresa.
+
+No debe modificar docs/Logs.md.
+
+## 10. GitHubAgent
+
+GitHubAgent solo debe actuar al final de la fase si el Agent Manager lo autoriza.
+
+Debe revisar:
+
+- git status
+- git remote -v
+- git branch
+- git diff
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Repositorio esperado:
+
+https://github.com/DavidCabrerizo/NebriPop/
+
+No debe hacer commit ni push salvo autorización explícita del Agent Manager.
+
+Si el Agent Manager autoriza subir la Fase 4, GitHubAgent debe:
+
+1. Revisar que no se suben secretos.
+2. Revisar que no se suben .env reales.
+3. Revisar que no se sube target/.
+4. Revisar que no se suben archivos temporales de Trunk.
+5. Preparar commit.
+6. Hacer push al repositorio oficial.
+
+Mensaje de commit sugerido:
+
+feat: implementa frontend base con Leptos
+
+GitHubAgent no debe modificar docs/Logs.md.
+
+Después del commit y push, debe preparar un resumen para que DocumentationAgent lo registre en docs/Logs.md, si el Agent Manager lo considera parte del cierre de la fase.
+
+Archivos permitidos en esta fase:
+
+- frontend/Cargo.toml
+- frontend/index.html
+- frontend/src/
+- frontend/styles.css, si existe
+- frontend/README.md
+- docs/FRONTEND_ARCHITECTURE.md
+- docs/UI_UX_PHASE_4.md
+- docs/PHASE_4_FRONTEND.md
+- docs/QA_PHASE_4_FRONTEND.md
+- docs/SECURITY_PHASE_4_FRONTEND.md
+- docs/REVIEW_PHASE_4.md
+- docs/Prompts/PromptFase4FrontendMVP.txt
+- .env.example, solo si hay que añadir FRONTEND_PORT o API_BASE_URL sin secretos reales
+- .gitignore, solo si hay que proteger archivos generados
+- docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Archivos prohibidos en esta fase:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- backend/src/, salvo autorización expresa por bloqueo de integración.
+- Código funcional de login.
+- Código funcional de registro.
+- JWT.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Chat.
+- Subida real de imágenes.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Búsqueda avanzada.
+- Filtros avanzados.
+- Base de datos real con datos sensibles.
+
+Restricciones importantes:
+
+- No implementar login.
+- No implementar registro.
+- No implementar favoritos.
+- No implementar mensajes.
+- No implementar subida real de imágenes.
+- No implementar pagos.
+- No implementar funcionalidades fuera de Fase 4.
+- No modificar backend/src/ salvo autorización del Agent Manager.
+- No guardar datos personales reales.
+- No subir archivos generados innecesarios.
+- No cambiar Leptos por otro framework.
+- No cambiar Axum por otro backend.
+- No cambiar SQLite por otra base de datos.
+- No hacer commit ni push sin autorización del Agent Manager.
+- Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+- Al finalizar la fase, el Agent Manager debe autorizar automáticamente a DocumentationAgent a actualizar docs/Logs.md.
+- DocumentationAgent debe actualizar docs/Logs.md obligatoriamente antes de cerrar la fase.
+- Mantener todo en español.
+- Usar formato Markdown profesional.
+- Mantener la fase centrada solo en frontend base.
+
+Criterios de aceptación de Fase 4:
+
+La Fase 4 se considera válida si:
+
+1. El frontend compila correctamente.
+2. El frontend arranca con Trunk.
+3. El frontend se sirve en http://127.0.0.1:8081.
+4. El backend se consume desde http://127.0.0.1:3000.
+5. La Home muestra productos desde GET /products.
+6. El detalle de producto funciona con GET /products/:id.
+7. El formulario de publicación existe.
+8. El formulario carga categorías desde GET /categories.
+9. POST /products crea un producto en backend.
+10. El listado se actualiza después de crear un producto.
+11. Los errores se muestran al usuario.
+12. Las validaciones básicas funcionan.
+13. No se ha implementado login.
+14. No se han añadido funcionalidades fuera de Fase 4.
+15. QAAgent ha creado checklist de validación.
+16. SequrityAgent ha revisado riesgos.
+17. DocumentationAgent ha documentado la fase.
+18. ReviewerAgent ha emitido veredicto.
+19. docs/Logs.md ha quedado actualizado obligatoriamente por DocumentationAgent tras autorización automática del Agent Manager.
+20. La fase queda lista para pasar a Fase 5.
+
+Registro automático en docs/Logs.md al finalizar:
+
+Al finalizar la Fase 4, el Agent Manager debe revisar el resultado de la fase y autorizar automáticamente a @DocumentationAgent para registrar los cambios en docs/Logs.md.
+
+El Agent Manager debe emitir esta instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 4.”
+
+Una vez recibida esta autorización, @DocumentationAgent debe actualizar docs/Logs.md automáticamente con los siguientes datos:
+
+- Fecha.
+- Fase: Fase 4 — Frontend base con Leptos conectado al backend Axum.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Pantallas implementadas.
+- Componentes creados.
+- Endpoints consumidos.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 4 no puede cerrarse hasta que docs/Logs.md esté actualizado.

@@ -1,3 +1,7 @@
+use leptos::*;
+use nebripop_frontend::app::App;
+
 fn main() {
-    println!("NebriPop Frontend - Base MVP structure initialized");
+    console_error_panic_hook::set_once();
+    mount_to_body(|| view! { <App/> })
 }
