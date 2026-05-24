@@ -1,0 +1,747 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 3 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 3 — Backend base con Axum conectado a SQLite
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se ha completado la Fase 2, donde se diseñó la base de datos SQLite real del MVP de NebriPop. Ahora vamos a implementar el backend base real usando Rust + Axum y conectándolo con la base de datos SQLite diseñada en la fase anterior.
+
+NebriPop será una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. En esta fase el objetivo es crear la primera API backend funcional para consultar categorías, listar productos, ver el detalle de un producto y crear productos básicos.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Acceso a datos: SQLx o rusqlite, según decida RustBackend con aprobación del Agent Manager
+- Control de versiones: Git + GitHub
+- Coordinación: Antigravity
+- Implementación técnica: OpenCode cuando sea autorizado
+
+Objetivo principal de la Fase 3:
+Implementar el backend base del MVP con Axum, conectado a SQLite, dejando disponibles los primeros endpoints necesarios para productos y categorías.
+
+Importante:
+En esta fase SÍ se puede implementar backend funcional básico.
+
+En esta fase NO se debe implementar todavía:
+- Frontend funcional.
+- Login completo.
+- Registro completo.
+- Autenticación con JWT.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Subida real de imágenes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+La Fase 3 se centra en backend, API REST, conexión a SQLite, modelos, repositorios, validaciones básicas y documentación.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. RustBackend
+4. DatabaseAgent
+5. QAAgent
+6. SequrityAgent
+7. DocumentationAgent
+8. ReviewerAgent
+9. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 3 sin autorización explícita.
+
+Regla obligatoria sobre docs/Logs.md:
+Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+
+Al finalizar la Fase 3, el Agent Manager / Product Manager Agent debe autorizar automáticamente a @DocumentationAgent para actualizar docs/Logs.md.
+
+La instrucción obligatoria del Agent Manager será:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 3.”
+
+Después de esta autorización automática, @DocumentationAgent debe actualizar docs/Logs.md obligatoriamente con el resumen de la Fase 3.
+
+La Fase 3 no podrá darse por finalizada hasta que docs/Logs.md haya sido actualizado correctamente.
+
+Si ocurre un error al actualizar docs/Logs.md, DocumentationAgent debe informar del error, corregirlo si está dentro de su alcance y volver a intentar la actualización.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con el backend real del MVP.
+
+Archivos principales que deben revisarse antes de actuar:
+
+database/schema.sql
+database/seeds.sql
+database/README.md
+docs/DATABASE_SCHEMA.md
+docs/DATABASE_DECISIONS.md
+docs/PHASE_2_DATABASE.md
+backend/README.md
+docs/ARCHITECTURE.md
+docs/PHASE_1_STRUCTURE.md
+AGENTS.md
+RULES.md
+AI_WORKFLOW.md, si existe
+.env.example
+.gitignore
+
+Archivos principales que pueden crearse o actualizarse:
+
+backend/Cargo.toml
+backend/src/main.rs
+backend/src/config.rs
+backend/src/db.rs
+backend/src/models.rs
+backend/src/errors.rs
+backend/src/routes/mod.rs
+backend/src/routes/health.rs
+backend/src/routes/categories.rs
+backend/src/routes/products.rs
+backend/src/handlers/mod.rs
+backend/src/handlers/health_handler.rs
+backend/src/handlers/categories_handler.rs
+backend/src/handlers/products_handler.rs
+backend/src/repositories/mod.rs
+backend/src/repositories/category_repository.rs
+backend/src/repositories/product_repository.rs
+backend/src/services/mod.rs
+backend/src/services/product_service.rs
+backend/src/services/category_service.rs
+backend/src/dto/mod.rs
+backend/src/dto/product_dto.rs
+backend/src/dto/category_dto.rs
+backend/tests/
+docs/API_DOCS.md
+docs/BACKEND_ARCHITECTURE.md
+docs/PHASE_3_BACKEND.md
+docs/QA_PHASE_3_BACKEND.md
+docs/SECURITY_PHASE_3_BACKEND.md
+docs/REVIEW_PHASE_3.md
+docs/Prompts/PromptFase3BackendMVP.txt
+docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 3.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 4.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+No debe implementar código directamente.
+
+El Agent Manager debe controlar especialmente que:
+
+- RustBackend solo modifique backend/ y documentación relacionada.
+- DatabaseAgent solo intervenga en validaciones relacionadas con SQLite.
+- RustFrontend no implemente frontend en esta fase.
+- GitHubAgent no haga commit ni push sin autorización.
+- No se implementen funcionalidades fuera de la Fase 3.
+- Al finalizar la fase, autorice automáticamente a DocumentationAgent a actualizar docs/Logs.md.
+- La fase no se marque como finalizada hasta que docs/Logs.md esté actualizado.
+
+## 2. RustArchitectAgent
+
+Debe revisar la arquitectura backend antes de implementar.
+
+Debe comprobar:
+
+- Que el backend Axum encaja con la estructura creada en Fase 1.
+- Que el backend se conecta correctamente con la base SQLite de Fase 2.
+- Que la separación routes, handlers, services, repositories, models, dto y errors es adecuada.
+- Que la estructura no introduce sobreingeniería.
+- Que el backend puede crecer posteriormente para usuarios, favoritos y mensajes.
+- Que el frontend Leptos podrá consumir la API en Fase 4.
+
+Debe crear o actualizar:
+
+docs/BACKEND_ARCHITECTURE.md
+
+Debe añadir recomendaciones para RustBackend antes de codificar.
+
+No debe implementar código.
+
+## 3. RustBackend
+
+RustBackend será el agente principal de implementación técnica de esta fase.
+
+Debe implementar el backend base real con Axum.
+
+Debe usar la skill clean-rust-skill si está disponible.
+
+Debe trabajar en:
+
+backend/
+
+Debe implementar:
+
+- Servidor Axum en http://127.0.0.1:3000
+- Conexión a SQLite
+- CORS preparado para frontend en http://127.0.0.1:8081
+- Lectura de configuración desde variables de entorno o valores por defecto
+- Endpoint GET /health
+- Endpoint GET /categories
+- Endpoint GET /products
+- Endpoint GET /products/:id
+- Endpoint POST /products
+- Manejo de errores en JSON
+- Validaciones básicas de entrada
+- Estructuras Rust para Category y Product
+- DTOs para crear producto
+- Repositorios para consultar SQLite
+- Servicios si aportan claridad
+- Documentación mínima en backend/README.md
+
+Base de datos esperada:
+
+database/nebripop.db
+
+Si database/nebripop.db no existe, RustBackend debe coordinarse con DatabaseAgent para indicar cómo generarla desde:
+
+database/schema.sql
+database/seeds.sql
+
+No debe crear una base de datos distinta en otra ruta salvo autorización del Agent Manager.
+
+Endpoints obligatorios:
+
+### GET /health
+
+Debe devolver:
+
+{
+  "status": "ok",
+  "message": "NebriPop backend funcionando"
+}
+
+### GET /categories
+
+Debe devolver la lista de categorías desde SQLite.
+
+Respuesta esperada:
+
+[
+  {
+    "id": 1,
+    "name": "Electrónica",
+    "created_at": "2026-05-24T10:00:00"
+  }
+]
+
+### GET /products
+
+Debe devolver la lista de productos desde SQLite.
+
+Respuesta esperada:
+
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "category_id": 1,
+    "title": "iPhone 12 usado",
+    "description": "iPhone 12 en buen estado",
+    "price": 250.0,
+    "condition": "used",
+    "location": "Madrid",
+    "status": "available",
+    "main_image_url": null,
+    "created_at": "2026-05-24T10:00:00",
+    "updated_at": "2026-05-24T10:00:00"
+  }
+]
+
+### GET /products/:id
+
+Debe devolver el detalle de un producto concreto.
+
+Si el producto no existe, debe devolver error JSON claro con código HTTP adecuado.
+
+### POST /products
+
+Debe permitir crear un producto básico.
+
+Body esperado:
+
+{
+  "user_id": 1,
+  "category_id": 1,
+  "title": "iPhone 12 usado",
+  "description": "iPhone 12 en buen estado",
+  "price": 250.0,
+  "condition": "used",
+  "location": "Madrid",
+  "main_image_url": null
+}
+
+Validaciones obligatorias:
+
+- category_id debe existir.
+- title no puede estar vacío.
+- description no puede estar vacía.
+- price debe ser mayor o igual que 0.
+- condition debe ser uno de: new, like_new, good, used, damaged.
+- location no puede estar vacía.
+- status debe establecerse por defecto como available.
+- Si user_id es null o no se usa todavía, debe estar justificado por la ausencia de login funcional.
+- No aceptar campos malformados.
+- Devolver errores claros en JSON.
+
+Respuesta esperada:
+
+{
+  "id": 1,
+  "user_id": 1,
+  "category_id": 1,
+  "title": "iPhone 12 usado",
+  "description": "iPhone 12 en buen estado",
+  "price": 250.0,
+  "condition": "used",
+  "location": "Madrid",
+  "status": "available",
+  "main_image_url": null,
+  "created_at": "2026-05-24T10:00:00",
+  "updated_at": "2026-05-24T10:00:00"
+}
+
+RustBackend no debe implementar todavía:
+
+- Login.
+- Registro.
+- JWT.
+- Favoritos.
+- Mensajes.
+- Upload de imágenes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Frontend.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+## 4. DatabaseAgent
+
+Debe apoyar a RustBackend en la conexión con SQLite.
+
+Debe revisar:
+
+- Que database/schema.sql es compatible con el backend.
+- Que database/seeds.sql permite probar categorías y productos.
+- Que la ruta de database/nebripop.db es correcta.
+- Que los nombres de columnas coinciden con los modelos Rust.
+- Que las consultas son seguras y parametrizadas.
+- Que no se usan datos sensibles.
+- Que la base de datos puede regenerarse desde schema.sql y seeds.sql.
+
+Puede actualizar:
+
+database/README.md
+docs/DATABASE_DECISIONS.md
+
+Solo puede modificar schema.sql o seeds.sql si detecta un error imprescindible y el Agent Manager lo autoriza.
+
+No debe modificar frontend/.
+No debe modificar docs/Logs.md.
+
+## 5. QAAgent
+
+Debe crear un checklist de validación del backend.
+
+Debe crear o actualizar:
+
+docs/QA_PHASE_3_BACKEND.md
+
+Debe comprobar:
+
+- Que el backend compila.
+- Que cargo run arranca el servidor en el puerto 3000.
+- Que GET /health responde correctamente.
+- Que GET /categories devuelve categorías desde SQLite.
+- Que GET /products devuelve productos desde SQLite.
+- Que GET /products/:id devuelve un producto existente.
+- Que GET /products/:id devuelve error si no existe.
+- Que POST /products crea un producto válido.
+- Que POST /products rechaza título vacío.
+- Que POST /products rechaza descripción vacía.
+- Que POST /products rechaza precio negativo.
+- Que POST /products rechaza condition inválido.
+- Que POST /products rechaza category_id inexistente.
+- Que los errores se devuelven en JSON.
+- Que no se han implementado funcionalidades fuera de Fase 3.
+- Que no se ha modificado frontend/.
+
+Debe incluir comandos de prueba con PowerShell:
+
+GET /health:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/health -Method GET
+
+GET /categories:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/categories -Method GET
+
+GET /products:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products -Method GET
+
+GET /products/1:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products/1 -Method GET
+
+POST /products:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/products `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"user_id":1,"category_id":1,"title":"iPhone 12 usado","description":"iPhone 12 en buen estado","price":250.0,"condition":"used","location":"Madrid","main_image_url":null}'
+
+QAAgent no debe modificar código salvo autorización expresa.
+No debe modificar docs/Logs.md.
+
+## 6. SequrityAgent
+
+Debe revisar riesgos de seguridad del backend.
+
+Debe crear o actualizar:
+
+docs/SECURITY_PHASE_3_BACKEND.md
+
+Debe revisar:
+
+- Que las consultas SQLite sean parametrizadas.
+- Que no se construyan queries concatenando strings del usuario.
+- Que los errores no filtren información interna sensible.
+- Que no se suban credenciales.
+- Que .env no se suba al repositorio.
+- Que .env.example no contenga secretos reales.
+- Que CORS esté limitado al frontend local previsto.
+- Que POST /products valide correctamente los datos.
+- Que no exista autenticación falsa o insegura.
+- Que no se guarden contraseñas en texto plano.
+- Que no se implemente login de forma incompleta en esta fase.
+
+No debe modificar código salvo autorización del Agent Manager.
+No debe modificar docs/Logs.md.
+
+## 7. DocumentationAgent
+
+Debe documentar toda la Fase 3.
+
+Debe crear o actualizar:
+
+docs/PHASE_3_BACKEND.md
+docs/API_DOCS.md
+docs/BACKEND_ARCHITECTURE.md, si procede
+backend/README.md, si procede
+
+Debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase3BackendMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+docs/PHASE_3_BACKEND.md debe incluir:
+
+# Fase 3 — Backend base con Axum conectado a SQLite
+
+## 1. Objetivo de la fase
+
+## 2. Stack utilizado
+
+## 3. Estructura backend creada
+
+## 4. Conexión con SQLite
+
+## 5. Endpoints implementados
+
+## 6. Modelos y DTOs
+
+## 7. Validaciones aplicadas
+
+## 8. Manejo de errores
+
+## 9. Pruebas recomendadas
+
+## 10. Riesgos detectados
+
+## 11. Próxima fase recomendada
+
+docs/API_DOCS.md debe documentar:
+
+- GET /health
+- GET /categories
+- GET /products
+- GET /products/:id
+- POST /products
+
+Para cada endpoint debe incluir:
+
+- Método.
+- URL.
+- Descripción.
+- Body esperado, si aplica.
+- Respuesta esperada.
+- Errores posibles.
+
+Regla obligatoria para DocumentationAgent y docs/Logs.md:
+
+DocumentationAgent NO debe modificar docs/Logs.md durante el desarrollo de la fase por iniciativa propia.
+
+Al terminar la Fase 3, DocumentationAgent debe preparar el resumen de la fase.
+
+Después, el Agent Manager debe autorizar automáticamente la actualización de docs/Logs.md con la instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 3.”
+
+Una vez recibida esta autorización automática, DocumentationAgent debe actualizar docs/Logs.md obligatoriamente.
+
+La entrada en docs/Logs.md debe incluir:
+
+- Fecha.
+- Fase: Fase 3 — Backend base con Axum conectado a SQLite.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Endpoints implementados.
+- Base de datos utilizada.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 3 no puede considerarse cerrada hasta que docs/Logs.md esté actualizado correctamente.
+
+## 8. ReviewerAgent
+
+Debe revisar el resultado de la Fase 3.
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_3.md
+
+Debe comprobar:
+
+- Que el backend está implementado con Axum.
+- Que conecta correctamente con SQLite.
+- Que se respeta la arquitectura definida.
+- Que los endpoints obligatorios existen.
+- Que los modelos y DTOs son claros.
+- Que los repositorios separan acceso a datos.
+- Que las validaciones básicas existen.
+- Que los errores se devuelven en JSON.
+- Que no se ha implementado frontend.
+- Que no se han añadido funcionalidades fuera de Fase 3.
+- Que QAAgent ha documentado pruebas.
+- Que SequrityAgent ha documentado riesgos.
+- Que DocumentationAgent ha documentado la fase.
+- Que docs/Logs.md ha sido actualizado por DocumentationAgent tras autorización automática del Agent Manager.
+
+Debe emitir un veredicto:
+
+- Fase 3 aprobada. Se puede pasar a Fase 4.
+- Fase 3 aprobada con ajustes menores.
+- Fase 3 no aprobada.
+
+No debe modificar código salvo autorización expresa.
+No debe modificar docs/Logs.md.
+
+## 9. GitHubAgent
+
+GitHubAgent solo debe actuar al final de la fase si el Agent Manager lo autoriza.
+
+Debe revisar:
+
+- git status
+- git remote -v
+- git branch
+- git diff
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Repositorio esperado:
+
+https://github.com/DavidCabrerizo/NebriPop/
+
+No debe hacer commit ni push salvo autorización explícita del Agent Manager.
+
+Si el Agent Manager autoriza subir la Fase 3, GitHubAgent debe:
+
+1. Revisar que no se suben secretos.
+2. Revisar que no se suben .env reales.
+3. Revisar que no se suben bases de datos con datos sensibles.
+4. Revisar que no se sube target/.
+5. Preparar commit.
+6. Hacer push al repositorio oficial.
+
+Mensaje de commit sugerido:
+
+feat: implementa backend base con Axum y SQLite
+
+GitHubAgent no debe modificar docs/Logs.md.
+
+Después del commit y push, debe preparar un resumen para que DocumentationAgent lo registre en docs/Logs.md, si el Agent Manager lo considera parte del cierre de la fase.
+
+Archivos permitidos en esta fase:
+
+- backend/Cargo.toml
+- backend/src/
+- backend/tests/
+- backend/README.md
+- database/README.md, solo si es necesario
+- docs/BACKEND_ARCHITECTURE.md
+- docs/API_DOCS.md
+- docs/PHASE_3_BACKEND.md
+- docs/QA_PHASE_3_BACKEND.md
+- docs/SECURITY_PHASE_3_BACKEND.md
+- docs/REVIEW_PHASE_3.md
+- docs/Prompts/PromptFase3BackendMVP.txt
+- .env.example, solo si hay que añadir DATABASE_URL sin secretos reales
+- .gitignore, solo si hay que proteger archivos generados
+- docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Archivos prohibidos en esta fase:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- frontend/src/
+- Código funcional frontend.
+- Pantallas reales.
+- Login funcional.
+- Registro funcional.
+- JWT.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Chat.
+- Subida de imágenes.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Búsqueda avanzada.
+- Filtros avanzados.
+
+Restricciones importantes:
+
+- No implementar frontend funcional.
+- No implementar login.
+- No implementar favoritos.
+- No implementar mensajes.
+- No implementar subida real de imágenes.
+- No implementar pagos.
+- No implementar funcionalidades fuera de Fase 3.
+- No modificar frontend/src/.
+- No guardar datos personales reales.
+- No subir bases de datos con datos sensibles.
+- No cambiar SQLite por otra base de datos.
+- No hacer commit ni push sin autorización del Agent Manager.
+- Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+- Al finalizar la fase, el Agent Manager debe autorizar automáticamente a DocumentationAgent a actualizar docs/Logs.md.
+- DocumentationAgent debe actualizar docs/Logs.md obligatoriamente antes de cerrar la fase.
+- Mantener todo en español.
+- Usar formato Markdown profesional.
+- Mantener la fase centrada solo en backend base.
+
+Criterios de aceptación de Fase 3:
+
+La Fase 3 se considera válida si:
+
+1. El backend compila correctamente.
+2. El backend arranca con cargo run.
+3. El servidor escucha en http://127.0.0.1:3000.
+4. GET /health funciona.
+5. GET /categories funciona y lee desde SQLite.
+6. GET /products funciona y lee desde SQLite.
+7. GET /products/:id funciona.
+8. POST /products crea un producto válido en SQLite.
+9. Los errores se devuelven en JSON.
+10. Las validaciones básicas funcionan.
+11. Las consultas son parametrizadas.
+12. CORS está configurado para el frontend local.
+13. No se ha implementado frontend.
+14. No se han añadido funcionalidades fuera de Fase 3.
+15. QAAgent ha creado checklist de validación.
+16. SequrityAgent ha revisado riesgos.
+17. DocumentationAgent ha documentado la fase.
+18. ReviewerAgent ha emitido veredicto.
+19. docs/Logs.md ha quedado actualizado obligatoriamente por DocumentationAgent tras autorización automática del Agent Manager.
+20. La fase queda lista para pasar a Fase 4.
+
+Registro automático en docs/Logs.md al finalizar:
+
+Al finalizar la Fase 3, el Agent Manager debe revisar el resultado de la fase y autorizar automáticamente a @DocumentationAgent para registrar los cambios en docs/Logs.md.
+
+El Agent Manager debe emitir esta instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 3.”
+
+Una vez recibida esta autorización, @DocumentationAgent debe actualizar docs/Logs.md automáticamente con los siguientes datos:
+
+- Fecha.
+- Fase: Fase 3 — Backend base con Axum conectado a SQLite.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Endpoints implementados.
+- Base de datos utilizada.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 3 no puede cerrarse hasta que docs/Logs.md esté actualizado.
+
+Resultado esperado:
+
+Al finalizar la Fase 3, devuelve:
+
+1. Estado de la Fase 3.
+2. Agentes que han intervenido.
+3. Archivos creados.
+4. Archivos modificados.
+5. Estructura backend creada.
+6. Endpoints implementados.
+7. Conexión SQLite utilizada.
+8. Validaciones aplicadas.
+9. Riesgos detectados.
+10. Resultado de QAAgent.
+11. Resultado de SequrityAgent.
+12. Resultado de ReviewerAgent.
+13. Confirmación de actualización de docs/Logs.md por DocumentationAgent.
+14. Si se puede pasar a Fase 4.
+15. Si se recomienda activar GitHubAgent para commit y push.
+16. Próximo prompt recomendado para Fase 4.
+
+Guardar este prompt completo en:
+
+docs/Prompts/PromptFase3BackendMVP.txt
