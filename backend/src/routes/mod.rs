@@ -1,3 +1,6 @@
+pub mod auth;
+pub mod users;
+
 use axum::{
     routing::{get, post},
     Router,
@@ -18,5 +21,7 @@ pub fn app_router(pool: SqlitePool) -> Router {
         .route("/products", post(products_handler::create_product))
         .route("/products/:id", get(products_handler::get_product_by_id))
         .route("/products/:id/images", post(products_handler::upload_product_images))
+        .nest("/auth", auth::auth_routes())
+        .nest("/users", users::users_routes())
         .with_state(pool)
 }

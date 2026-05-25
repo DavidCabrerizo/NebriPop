@@ -74,8 +74,23 @@ pub fn CreateProduct() -> impl IntoView {
             }
         }
 
+        // GET USER ID FROM LOCALSTORAGE
+        let mut user_id = 0;
+        if let Some(window) = web_sys::window() {
+            if let Ok(Some(storage)) = window.local_storage() {
+                if let Ok(Some(id_str)) = storage.get_item("user_id") {
+                    user_id = id_str.parse::<i64>().unwrap_or(0);
+                }
+            }
+        }
+
+        if user_id == 0 {
+            set_error_msg.set(Some("Debes iniciar sesión para publicar un producto.".to_string()));
+            return;
+        }
+
         let dto = CreateProductDto {
-            user_id: 1, // TEMPORAL PARA MVP
+            user_id,
             category_id: cat,
             title: t,
             description: d,

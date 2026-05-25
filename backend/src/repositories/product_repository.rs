@@ -39,6 +39,22 @@ impl ProductRepository {
         Ok(product)
     }
 
+    pub async fn find_by_user_id(pool: &SqlitePool, user_id: i64) -> Result<Vec<Product>, AppError> {
+        let products = sqlx::query_as::<_, Product>(
+            r#"SELECT 
+                id, user_id, category_id, title, description, price, condition, 
+                location, status, main_image_url, created_at, updated_at 
+               FROM products 
+               WHERE user_id = ?
+               ORDER BY created_at DESC"#
+        )
+        .bind(user_id)
+        .fetch_all(pool)
+        .await?;
+
+        Ok(products)
+    }
+
     pub async fn find_images_by_product_id(pool: &SqlitePool, product_id: i64) -> Result<Vec<ProductImage>, AppError> {
         let images = sqlx::query_as::<_, ProductImage>(
             r#"SELECT id, product_id, image_url, position, created_at 

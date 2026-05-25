@@ -1,0 +1,21 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 6 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 6 — Sistema básico de usuarios
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se han completado las fases anteriores del MVP de NebriPop:
+- Fase 1: estructura real del proyecto.
+- Fase 2: diseño de la base de datos SQLite.
+- Fase 3: backend base con Axum conectado a SQLite.
+- Fase 4: frontend base con Leptos conectado al backend Axum.
+- Fase 5: integración completa Frontend + Backend + SQLite.
+- Fase 5B: gestión de imágenes de productos.
+
+[Resto del prompt se encuentra en la instrucción de ejecución detallada por el usuario, enfocado en SQLite, Rust Backend, Leptos Frontend, documentación y testing de registro/login básicos, contraseñas hasheadas y evitación de JSONs.]

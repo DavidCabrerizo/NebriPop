@@ -8,6 +8,20 @@ pub struct Category {
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
+pub struct User {
+    pub id: i64,
+    pub name: String,
+    pub email: String,
+    #[serde(skip_serializing)]
+    pub password_hash: String,
+    pub phone: Option<String>,
+    pub location: Option<String>,
+    pub avatar_url: Option<String>,
+    pub created_at: String,
+    pub updated_at: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
 pub struct Product {
     pub id: i64,
     pub user_id: Option<i64>,

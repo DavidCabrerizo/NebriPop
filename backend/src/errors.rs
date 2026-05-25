@@ -16,9 +16,11 @@ pub enum AppError {
 
     #[error("Error de validación: {0}")]
     ValidationError(String),
-    
     #[error("Error interno del servidor")]
     InternalServerError,
+    
+    #[error("No autorizado: {0}")]
+    Unauthorized(String),
 }
 
 impl IntoResponse for AppError {
@@ -31,6 +33,7 @@ impl IntoResponse for AppError {
             }
             AppError::NotFound(msg) => (StatusCode::NOT_FOUND, msg),
             AppError::ValidationError(msg) => (StatusCode::BAD_REQUEST, msg),
+            AppError::Unauthorized(msg) => (StatusCode::UNAUTHORIZED, msg),
         };
 
         let body = Json(json!({
