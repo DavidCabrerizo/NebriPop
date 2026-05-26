@@ -1,7 +1,6 @@
 use crate::api::client::{get_url, handle_error, handle_network_error};
-use crate::models::product::{CreateProductDto, Product};
-use reqwest::{Client, multipart};
-use std::path::Path;
+use crate::models::product::{CreateProductDto, Product, ProductDetailResponse};
+use reqwest::Client;
 
 pub async fn fetch_products() -> Result<Vec<Product>, String> {
     let client = Client::new();
@@ -18,7 +17,7 @@ pub async fn fetch_products() -> Result<Vec<Product>, String> {
     }
 }
 
-pub async fn fetch_product_by_id(id: i64) -> Result<Product, String> {
+pub async fn fetch_product_by_id(id: i64) -> Result<ProductDetailResponse, String> {
     let client = Client::new();
     let res = client
         .get(&get_url(&format!("/products/{}", id)))
@@ -27,7 +26,7 @@ pub async fn fetch_product_by_id(id: i64) -> Result<Product, String> {
         .map_err(handle_network_error)?;
 
     if res.status().is_success() {
-        res.json::<Product>().await.map_err(|e| e.to_string())
+        res.json::<ProductDetailResponse>().await.map_err(|e| e.to_string())
     } else {
         Err(handle_error(res).await)
     }

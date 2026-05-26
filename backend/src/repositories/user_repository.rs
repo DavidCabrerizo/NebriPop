@@ -58,3 +58,28 @@ pub async fn find_by_id(pool: &SqlitePool, id: i64) -> Result<Option<User>, AppE
 
     Ok(user)
 }
+
+pub async fn update_profile(
+    pool: &SqlitePool,
+    id: i64,
+    phone: Option<&str>,
+    location: Option<&str>,
+) -> Result<User, AppError> {
+    let query = r#"
+        UPDATE users 
+        SET phone = ?, location = ?, updated_at = CURRENT_TIMESTAMP 
+        WHERE id = ?
+        RETURNING id, name, email, password_hash, phone, location, avatar_url, created_at, updated_at
+    "#;
+
+    let user = sqlx::query_as::<_, User>(query)
+        .bind(phone)
+        .bind(location)
+        .bind(id)
+        .fetch_optional(pool)
+        .await
+        .map_err(|e| AppError::DatabaseError(e))?
+        .ok_or_else(|| AppError::NotFound(format!("Usuario {} no encontrado", id)))?;
+
+    Ok(user)
+}

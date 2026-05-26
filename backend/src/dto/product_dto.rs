@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::models::Product;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct CreateProductDto {
@@ -10,4 +11,10 @@ pub struct CreateProductDto {
     pub condition: String,
     pub location: String,
     pub main_image_url: Option<String>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct ProductDetailResponse {
+    pub product: Product,
+    pub author_name: String,
 }

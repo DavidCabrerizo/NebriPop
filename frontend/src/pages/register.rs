@@ -1,5 +1,4 @@
 use leptos::*;
-use leptos_router::*;
 use crate::api::auth_api;
 
 #[component]

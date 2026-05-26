@@ -57,10 +57,34 @@ header {
 
 .btn-secondary {
   background-color: #4b5563;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
 }
 
 .btn-secondary:hover {
   background-color: #374151;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
 }
 
 .grid {

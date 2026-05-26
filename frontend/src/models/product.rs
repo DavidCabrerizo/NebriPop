@@ -37,3 +37,9 @@ pub struct CreateProductDto {
     pub location: String,
     pub main_image_url: Option<String>,
 }
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
+pub struct ProductDetailResponse {
+    pub product: Product,
+    pub author_name: String,
+}

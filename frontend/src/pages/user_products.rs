@@ -29,13 +29,28 @@ pub fn UserProducts() -> impl IntoView {
                         if products.is_empty() {
                             view! { <p>"Este usuario no tiene productos publicados."</p> }.into_view()
                         } else {
-                            products.into_iter().map(|p| view! {
-                                <div class="product-card">
-                                    <h3>{p.title}</h3>
-                                    <p class="price">{format!("{} €", p.price)}</p>
-                                    <p class="condition">{p.condition}</p>
-                                    <a href=format!("/products/{}", p.id) class="btn-primary">"Ver Detalle"</a>
-                                </div>
+                            products.into_iter().map(|p| {
+                                let img_src_raw = p.main_image_url.clone().unwrap_or_default();
+                                let img_src = if img_src_raw.is_empty() {
+                                    "https://via.placeholder.com/300x200?text=Sin+imagen".to_string()
+                                } else if img_src_raw.starts_with("http") {
+                                    img_src_raw
+                                } else {
+                                    format!("http://127.0.0.1:3000/{}", img_src_raw)
+                                };
+
+                                view! {
+                                    <a href=format!("/products/{}", p.id) class="card" style="text-decoration: none; color: inherit;">
+                                        <img src=img_src alt=p.title.clone() class="card-img"/>
+                                        <div class="card-content">
+                                            <h3 class="card-title">{p.title}</h3>
+                                            <p class="card-price">{format!("{} €", p.price)}</p>
+                                            <p class="card-meta">
+                                                <strong>"Estado: "</strong> {p.condition}
+                                            </p>
+                                        </div>
+                                    </a>
+                                }
                             }).collect_view()
                         }
                     }).unwrap_or_else(|| view! { <p>"Error al cargar los productos."</p> }.into_view())

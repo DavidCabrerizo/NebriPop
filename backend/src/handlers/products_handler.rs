@@ -5,12 +5,13 @@ use axum::{
 use sqlx::SqlitePool;
 
 use tokio::fs;
-use crate::dto::product_dto::CreateProductDto;
+use crate::dto::product_dto::{CreateProductDto, ProductDetailResponse};
 use crate::errors::AppError;
 use crate::models::{Product, ProductImage};
 use crate::repositories::{
     category_repository::CategoryRepository,
     product_repository::ProductRepository,
+    user_repository,
 };
 use serde::Serialize;
 
@@ -24,12 +25,26 @@ pub async fn get_products(
 pub async fn get_product_by_id(
     State(pool): State<SqlitePool>,
     Path(id): Path<i64>,
-) -> Result<Json<Product>, AppError> {
+) -> Result<Json<ProductDetailResponse>, AppError> {
     let product = ProductRepository::find_by_id(&pool, id)
         .await?
         .ok_or_else(|| AppError::NotFound(format!("Producto con ID {} no encontrado", id)))?;
     
-    Ok(Json(product))
+    // Obtener el nombre del autor
+    let author_name = if let Some(user_id) = product.user_id {
+        if let Ok(Some(user)) = user_repository::find_by_id(&pool, user_id).await {
+            user.name
+        } else {
+            "Usuario desconocido".to_string()
+        }
+    } else {
+        "Usuario desconocido".to_string()
+    };
+
+    Ok(Json(ProductDetailResponse {
+        product,
+        author_name,
+    }))
 }
 
 pub async fn create_product(

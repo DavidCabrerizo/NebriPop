@@ -41,7 +41,9 @@ pub fn ProductDetail() -> impl IntoView {
             <Suspense fallback=move || view! { <Loading/> }>
                 {move || {
                     product_resource.get().map(|result| match result {
-                        Ok(product) => {
+                        Ok(detail_response) => {
+                            let product = detail_response.product;
+                            let author_name = detail_response.author_name;
                             let img_src_raw = product.main_image_url.clone().unwrap_or_default();
                             let img_src = if img_src_raw.is_empty() {
                                 "https://via.placeholder.com/600x400?text=Sin+imagen".to_string()
@@ -90,6 +92,7 @@ pub fn ProductDetail() -> impl IntoView {
                                             <p><strong>"Estado: "</strong> {product.condition}</p>
                                             <p><strong>"Ubicación: "</strong> {product.location}</p>
                                             <p><strong>"Publicado el: "</strong> {product.created_at}</p>
+                                            <p><strong>"Publicado por: "</strong> {author_name}</p>
                                         </div>
                                         
                                         <h3>"Descripción"</h3>

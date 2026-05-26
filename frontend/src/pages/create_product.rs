@@ -3,7 +3,6 @@ use crate::api::products_api::{create_product, upload_product_images};
 use crate::models::product::CreateProductDto;
 use leptos::*;
 use leptos_router::*;
-use web_sys::HtmlInputElement;
 
 #[component]
 pub fn CreateProduct() -> impl IntoView {
