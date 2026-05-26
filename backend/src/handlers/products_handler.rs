@@ -1,11 +1,11 @@
 use axum::{
-    extract::{Path, State, Multipart},
+    extract::{Path, State, Multipart, Query},
     response::Json,
 };
 use sqlx::SqlitePool;
 
 use tokio::fs;
-use crate::dto::product_dto::{CreateProductDto, ProductDetailResponse};
+use crate::dto::product_dto::{CreateProductDto, ProductDetailResponse, ProductFiltersDto};
 use crate::errors::AppError;
 use crate::models::{Product, ProductImage};
 use crate::repositories::{
@@ -17,8 +17,9 @@ use serde::Serialize;
 
 pub async fn get_products(
     State(pool): State<SqlitePool>,
+    Query(filters): Query<ProductFiltersDto>,
 ) -> Result<Json<Vec<Product>>, AppError> {
-    let products = ProductRepository::find_all(&pool).await?;
+    let products = ProductRepository::find_all(&pool, &filters).await?;
     Ok(Json(products))
 }
 

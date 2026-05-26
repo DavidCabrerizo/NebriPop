@@ -14,6 +14,7 @@ pub fn CreateProduct() -> impl IntoView {
     let (category_id, set_category_id) = create_signal(0i64);
     let (condition, set_condition) = create_signal("good".to_string());
     let (location, set_location) = create_signal("".to_string());
+    let (status, set_status) = create_signal("available".to_string());
     let (image_url, set_image_url) = create_signal("".to_string());
     
     let main_file_input_ref = create_node_ref::<html::Input>();
@@ -33,6 +34,7 @@ pub fn CreateProduct() -> impl IntoView {
         let cat = category_id.get();
         let cond = condition.get();
         let loc = location.get();
+        let stat = status.get();
         
         if t.is_empty() || d.is_empty() || loc.is_empty() {
             set_error_msg.set(Some("Por favor, completa todos los campos obligatorios.".to_string()));
@@ -96,6 +98,7 @@ pub fn CreateProduct() -> impl IntoView {
             price: p,
             condition: cond,
             location: loc,
+            status: stat,
             main_image_url: None, // Will be set by backend upon image upload
         };
 
@@ -191,6 +194,15 @@ pub fn CreateProduct() -> impl IntoView {
                 <div class="form-group">
                     <label>"Ubicación *"</label>
                     <input type="text" prop:value=location on:input=move |ev| set_location.set(event_target_value(&ev)) required/>
+                </div>
+                
+                <div class="form-group">
+                    <label>"Disponibilidad *"</label>
+                    <select prop:value=status on:change=move |ev| set_status.set(event_target_value(&ev)) required>
+                        <option value="available">"Disponible"</option>
+                        <option value="reserved">"Reservado"</option>
+                        <option value="sold">"Vendido"</option>
+                    </select>
                 </div>
                 
                 <div class="form-group" style="border: 1px solid var(--border-color); padding: 15px; border-radius: 6px; background-color: #f9fafb;">

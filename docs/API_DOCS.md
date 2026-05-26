@@ -2,9 +2,18 @@
 
 ## 1. Productos
 
-### 1.1 Obtener todos los productos
+### 1.1 Obtener productos (con búsqueda y filtros)
 - **Método:** `GET`
 - **Ruta:** `/products`
+- **Query Params (Opcionales):**
+  - `search` (String): Búsqueda en título o descripción.
+  - `category_id` (Integer): ID de categoría.
+  - `min_price` (Float): Precio mínimo.
+  - `max_price` (Float): Precio máximo.
+  - `condition` (String): Estado del producto (`new`, `like_new`, `good`, `used`, `damaged`).
+  - `location` (String): Ubicación.
+  - `status` (String): Disponibilidad (`available`, `reserved`, `sold`).
+  - `sort` (String): Ordenación (`newest` por defecto, `price_asc`, `price_desc`).
 - **Respuesta:**
   ```json
   [

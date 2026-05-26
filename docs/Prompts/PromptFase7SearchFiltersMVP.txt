@@ -1,0 +1,828 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 7 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 7 — Búsqueda y filtros de productos
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se han completado las fases anteriores del MVP de NebriPop:
+
+- Fase 1: estructura real del proyecto.
+- Fase 2: diseño de la base de datos SQLite.
+- Fase 3: backend base con Axum conectado a SQLite.
+- Fase 4: frontend base con Leptos conectado al backend Axum.
+- Fase 5: integración completa Frontend + Backend + SQLite.
+- Fase 5B: gestión de imágenes de productos.
+- Fase 6: sistema básico de usuarios.
+
+NebriPop es una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. Actualmente los usuarios pueden publicar productos, ver productos, consultar detalles, subir imágenes y asociar productos a usuarios. Ahora necesitamos añadir búsqueda y filtros para que el usuario pueda encontrar productos de forma rápida.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Base de datos real: database/nebripop.db
+- Backend local: http://127.0.0.1:3000
+- Frontend local: http://127.0.0.1:8081
+- Control de versiones: Git + GitHub
+
+Objetivo principal de la Fase 7:
+Implementar búsqueda y filtros de productos en NebriPop, permitiendo buscar por texto y filtrar por categoría, precio, estado, ubicación y estado de publicación.
+
+Importante:
+Esta fase debe centrarse únicamente en búsqueda y filtros.
+
+En esta fase SÍ se permite implementar:
+- Búsqueda por texto.
+- Filtro por categoría.
+- Filtro por precio mínimo y máximo.
+- Filtro por estado del producto.
+- Filtro por ubicación.
+- Filtro por estado de publicación.
+- Orden básico de resultados.
+- Actualización del listado en el frontend.
+- Query params en backend.
+- Consultas SQLite parametrizadas.
+
+En esta fase NO se debe implementar todavía:
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Recomendaciones inteligentes.
+- Geolocalización real.
+- Algoritmos avanzados.
+- Panel de administración.
+
+Regla crítica de persistencia:
+Los productos, categorías y usuarios deben seguir guardándose en SQLite.
+
+Queda prohibido guardar productos, filtros, resultados o datos principales del MVP en archivos `.json`.
+
+No se deben usar archivos como:
+
+- products.json
+- filters.json
+- search.json
+- data.json
+- mock.json
+
+SQLite debe seguir siendo la fuente de verdad.
+
+Regla obligatoria de planificación:
+Antes de implementar código, el Agent Manager debe solicitar un plan de implementación breve a RustArchitectAgent, RustBackend, RustFrontend, DatabaseAgent, QAAgent y SequrityAgent.
+
+El plan debe incluir:
+
+1. Qué archivos se van a crear o modificar.
+2. Qué cambios se harán en backend.
+3. Qué cambios se harán en frontend.
+4. Qué cambios se harán en SQLite, si son necesarios.
+5. Qué endpoints se van a modificar.
+6. Qué query params se van a usar.
+7. Qué riesgos se deben controlar.
+8. Qué pruebas se van a realizar.
+9. Qué agentes intervienen en cada paso.
+
+El Agent Manager debe revisar y aprobar el plan antes de permitir que RustBackend o RustFrontend escriban código.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. DatabaseAgent
+4. RustBackend
+5. RustFrontend
+6. UXDesigner
+7. QAAgent
+8. SequrityAgent
+9. DocumentationAgent
+10. ReviewerAgent
+11. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 7 sin autorización explícita.
+
+Regla obligatoria sobre docs/Logs.md:
+Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+
+Al finalizar la Fase 7, el Agent Manager / Product Manager Agent debe autorizar automáticamente a @DocumentationAgent para actualizar docs/Logs.md.
+
+La instrucción obligatoria del Agent Manager será:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 7.”
+
+Después de esta autorización automática, @DocumentationAgent debe actualizar docs/Logs.md obligatoriamente con el resumen de la Fase 7.
+
+La Fase 7 no podrá darse por finalizada hasta que docs/Logs.md haya sido actualizado correctamente.
+
+Si ocurre un error al actualizar docs/Logs.md, DocumentationAgent debe informar del error, corregirlo si está dentro de su alcance y volver a intentar la actualización.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con el código real del MVP.
+
+Archivos principales que deben revisarse antes de actuar:
+
+database/schema.sql
+database/seeds.sql
+database/nebripop.db
+database/README.md
+backend/Cargo.toml
+backend/src/
+frontend/Cargo.toml
+frontend/src/
+frontend/styles.css
+docs/API_DOCS.md
+docs/DATABASE_SCHEMA.md
+docs/PHASE_6_USERS.md
+docs/AUTH_BASIC.md
+.env.example
+.gitignore
+
+Archivos principales que pueden crearse o actualizarse:
+
+backend/src/routes/products.rs
+backend/src/handlers/products_handler.rs
+backend/src/repositories/product_repository.rs
+backend/src/services/product_service.rs
+backend/src/dto/product_dto.rs
+backend/src/models.rs
+frontend/src/pages/home.rs
+frontend/src/components/product_filter.rs
+frontend/src/components/search_bar.rs
+frontend/src/components/product_list.rs
+frontend/src/api/products_api.rs
+frontend/src/models/product.rs
+frontend/styles.css
+docs/PHASE_7_SEARCH_FILTERS.md
+docs/API_DOCS.md
+docs/QA_PHASE_7_SEARCH_FILTERS.md
+docs/SECURITY_PHASE_7_SEARCH_FILTERS.md
+docs/REVIEW_PHASE_7.md
+docs/UI_UX_PHASE_7.md
+docs/Prompts/PromptFase7SearchFiltersMVP.txt
+docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 7.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 8.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+Debe controlar especialmente que:
+
+- Primero se cree y apruebe un plan de implementación.
+- No se usen archivos `.json`.
+- SQLite siga siendo la fuente de verdad.
+- RustBackend implemente filtros mediante query params.
+- RustFrontend implemente interfaz de búsqueda y filtros.
+- DatabaseAgent revise índices y rendimiento.
+- SequrityAgent revise riesgos de consultas.
+- DocumentationAgent actualice docs/Logs.md al finalizar.
+- GitHubAgent no haga commit ni push sin autorización.
+
+## 2. RustArchitectAgent
+
+Debe crear un plan de arquitectura para búsqueda y filtros.
+
+Debe definir:
+
+- Cómo se enviarán los filtros desde el frontend.
+- Qué query params debe aceptar el backend.
+- Cómo se construirá la consulta SQLite.
+- Cómo evitar SQL injection.
+- Qué componentes necesita el frontend.
+- Cómo mantener el código modular.
+- Qué archivos deben modificarse.
+- Riesgos técnicos.
+- Recomendaciones para RustBackend y RustFrontend.
+
+Query params recomendados:
+
+GET /products?search=iphone
+GET /products?category_id=1
+GET /products?min_price=50
+GET /products?max_price=300
+GET /products?condition=used
+GET /products?location=Madrid
+GET /products?status=available
+GET /products?sort=price_asc
+GET /products?sort=price_desc
+GET /products?sort=newest
+
+También se podrán combinar:
+
+GET /products?search=iphone&category_id=1&min_price=100&max_price=500&condition=used&location=Madrid&status=available&sort=newest
+
+Debe crear o actualizar:
+
+docs/PHASE_7_SEARCH_FILTERS.md
+
+No debe implementar código.
+
+## 3. DatabaseAgent
+
+Debe revisar si la base de datos está preparada para búsqueda y filtros.
+
+Debe comprobar:
+
+- Que products tiene campos necesarios:
+  - title
+  - description
+  - price
+  - condition
+  - location
+  - status
+  - category_id
+  - created_at
+
+- Que existen índices útiles:
+  - idx_products_category_id
+  - idx_products_status
+  - idx_products_price
+  - idx_products_location
+  - idx_products_created_at
+
+Debe proponer crear índices si faltan.
+
+Puede actualizar:
+
+database/schema.sql
+docs/DATABASE_SCHEMA.md
+docs/DATABASE_DECISIONS.md
+
+Solo debe modificar database/schema.sql si el Agent Manager lo autoriza.
+
+No debe modificar frontend.
+No debe modificar docs/Logs.md.
+
+## 4. RustBackend
+
+RustBackend será el agente principal de implementación backend de esta fase.
+
+Debe trabajar en:
+
+backend/
+
+Debe modificar el endpoint:
+
+GET /products
+
+para aceptar filtros mediante query params.
+
+Parámetros soportados:
+
+- search
+- category_id
+- min_price
+- max_price
+- condition
+- location
+- status
+- sort
+
+Funcionamiento esperado:
+
+### search
+
+Debe buscar coincidencias en:
+
+- title
+- description
+
+Debe usar LIKE de SQLite de forma segura y parametrizada.
+
+Ejemplo:
+
+GET /products?search=iphone
+
+### category_id
+
+Debe filtrar por categoría.
+
+Ejemplo:
+
+GET /products?category_id=1
+
+### min_price y max_price
+
+Debe filtrar por rango de precio.
+
+Ejemplo:
+
+GET /products?min_price=50&max_price=300
+
+### condition
+
+Debe filtrar por estado del producto.
+
+Valores permitidos:
+
+- new
+- like_new
+- good
+- used
+- damaged
+
+### location
+
+Debe filtrar por ubicación usando búsqueda parcial.
+
+Ejemplo:
+
+GET /products?location=Madrid
+
+### status
+
+Debe filtrar por estado de publicación.
+
+Valores permitidos:
+
+- available
+- reserved
+- sold
+
+### sort
+
+Debe permitir ordenación básica:
+
+- newest
+- price_asc
+- price_desc
+
+Si no se envía sort, usar newest por defecto.
+
+Reglas backend obligatorias:
+
+- No construir SQL inseguro concatenando directamente datos del usuario.
+- Usar consultas parametrizadas.
+- Validar tipos numéricos.
+- Rechazar valores inválidos de condition.
+- Rechazar valores inválidos de status.
+- Rechazar valores inválidos de sort.
+- Si no hay resultados, devolver lista vacía.
+- Mantener compatibilidad con GET /products sin filtros.
+- Mantener main_image_url en la respuesta.
+- No romper GET /products/:id.
+- No modificar endpoints de usuarios salvo que sea estrictamente necesario.
+
+RustBackend puede modificar:
+
+backend/src/routes/products.rs
+backend/src/handlers/products_handler.rs
+backend/src/repositories/product_repository.rs
+backend/src/services/product_service.rs
+backend/src/dto/product_dto.rs
+backend/src/models.rs
+docs/API_DOCS.md, si necesita actualizar endpoints
+
+RustBackend no debe implementar:
+
+- Favoritos.
+- Mensajes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Geolocalización real.
+- Recomendaciones inteligentes.
+
+RustBackend no debe modificar docs/Logs.md.
+
+## 5. UXDesigner
+
+Debe proponer la experiencia de usuario de búsqueda y filtros.
+
+Debe crear o actualizar:
+
+docs/UI_UX_PHASE_7.md
+
+Debe definir:
+
+- Dónde colocar la barra de búsqueda.
+- Cómo mostrar filtros de categoría.
+- Cómo mostrar filtros de precio.
+- Cómo mostrar filtros de estado.
+- Cómo mostrar filtro de ubicación.
+- Cómo mostrar ordenación.
+- Cómo limpiar filtros.
+- Cómo mostrar “sin resultados”.
+- Cómo mantener la interfaz simple y parecida a un marketplace.
+
+Debe mantener una interfaz sencilla, clara y de MVP.
+
+No debe implementar código salvo autorización.
+
+## 6. RustFrontend
+
+RustFrontend será el agente principal de implementación frontend de esta fase.
+
+Debe trabajar en:
+
+frontend/
+
+Debe implementar:
+
+- Barra de búsqueda.
+- Filtro por categoría.
+- Filtro por precio mínimo.
+- Filtro por precio máximo.
+- Filtro por condición.
+- Filtro por ubicación.
+- Filtro por estado de publicación.
+- Selector de ordenación.
+- Botón “Buscar” o búsqueda reactiva.
+- Botón “Limpiar filtros”.
+- Mensaje cuando no hay resultados.
+- Mensaje de carga.
+- Mensaje de error si backend falla.
+
+Debe consumir:
+
+GET http://127.0.0.1:3000/products con query params.
+
+Ejemplos:
+
+http://127.0.0.1:3000/products?search=iphone
+http://127.0.0.1:3000/products?category_id=1&min_price=100&max_price=500
+http://127.0.0.1:3000/products?condition=used&location=Madrid&sort=newest
+
+Debe cargar categorías desde:
+
+GET http://127.0.0.1:3000/categories
+
+Componentes recomendados:
+
+- SearchBar
+- ProductFilter
+- ProductList
+- ProductCard
+
+Validaciones frontend:
+
+- min_price no puede ser negativo.
+- max_price no puede ser negativo.
+- min_price no debe ser mayor que max_price.
+- condition debe ser válida.
+- status debe ser válido.
+- category_id debe venir de categorías cargadas.
+- Si no hay resultados, mostrar “No se encontraron productos”.
+
+RustFrontend puede modificar:
+
+frontend/src/pages/home.rs
+frontend/src/components/product_filter.rs
+frontend/src/components/search_bar.rs
+frontend/src/components/product_list.rs
+frontend/src/api/products_api.rs
+frontend/src/models/product.rs
+frontend/styles.css
+
+RustFrontend no debe implementar:
+
+- Favoritos.
+- Mensajes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Geolocalización real.
+- Compra real.
+
+RustFrontend no debe modificar docs/Logs.md.
+
+## 7. QAAgent
+
+Debe crear o actualizar:
+
+docs/QA_PHASE_7_SEARCH_FILTERS.md
+
+Debe validar:
+
+Backend:
+- GET /products sin filtros sigue funcionando.
+- GET /products?search=iphone devuelve resultados correctos.
+- GET /products?category_id=1 filtra correctamente.
+- GET /products?min_price=50&max_price=300 filtra correctamente.
+- GET /products?condition=used filtra correctamente.
+- GET /products?location=Madrid filtra correctamente.
+- GET /products?status=available filtra correctamente.
+- GET /products?sort=price_asc ordena correctamente.
+- GET /products?sort=price_desc ordena correctamente.
+- GET /products?sort=newest ordena correctamente.
+- Valores inválidos devuelven error JSON claro.
+- Sin resultados devuelve lista vacía.
+
+Frontend:
+- Barra de búsqueda funciona.
+- Filtros se aplican correctamente.
+- Botón limpiar filtros funciona.
+- Se muestra mensaje sin resultados.
+- Se muestran errores si backend falla.
+- El listado se actualiza tras aplicar filtros.
+- Las imágenes siguen mostrándose.
+- La navegación a detalle sigue funcionando.
+
+Base de datos:
+- No se usan JSON.
+- SQLite sigue siendo la fuente de verdad.
+- Los filtros consultan products en SQLite.
+- Los índices existen o están documentados.
+
+Comandos de prueba backend:
+
+cd backend
+cargo run
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products?search=iphone" -Method GET
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products?category_id=1" -Method GET
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products?min_price=50&max_price=300" -Method GET
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products?condition=used" -Method GET
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products?location=Madrid" -Method GET
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products?sort=price_asc" -Method GET
+
+Comandos de prueba frontend:
+
+cd frontend
+trunk serve --address 127.0.0.1 --port 8081 --open
+
+QAAgent no debe modificar código salvo autorización expresa.
+QAAgent no debe modificar docs/Logs.md.
+
+## 8. SequrityAgent
+
+Debe crear o actualizar:
+
+docs/SECURITY_PHASE_7_SEARCH_FILTERS.md
+
+Debe revisar:
+
+- Que las consultas SQL son parametrizadas.
+- Que no se concatenan directamente valores del usuario en SQL.
+- Que search no permite inyección SQL.
+- Que sort se valida contra lista blanca.
+- Que condition se valida contra lista blanca.
+- Que status se valida contra lista blanca.
+- Que min_price y max_price se validan como números.
+- Que no se exponen errores internos.
+- Que no se usan JSON con datos.
+- Que no hay secretos en frontend.
+- Que no se implementa geolocalización real sin control.
+
+Debe proponer mejoras futuras si procede.
+
+SequrityAgent no debe modificar código salvo autorización.
+SequrityAgent no debe modificar docs/Logs.md.
+
+## 9. DocumentationAgent
+
+Debe documentar toda la Fase 7.
+
+Debe crear o actualizar:
+
+docs/PHASE_7_SEARCH_FILTERS.md
+docs/API_DOCS.md
+docs/UI_UX_PHASE_7.md, si procede
+docs/QA_PHASE_7_SEARCH_FILTERS.md, si procede
+docs/SECURITY_PHASE_7_SEARCH_FILTERS.md, si procede
+frontend/README.md, si procede
+backend/README.md, si procede
+
+Debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase7SearchFiltersMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+docs/PHASE_7_SEARCH_FILTERS.md debe incluir:
+
+# Fase 7 — Búsqueda y filtros de productos
+
+## 1. Objetivo de la fase
+
+## 2. Plan de implementación aprobado
+
+## 3. Filtros implementados
+
+## 4. Query params utilizados
+
+## 5. Cambios en backend
+
+## 6. Cambios en frontend
+
+## 7. Cambios en SQLite
+
+## 8. Validaciones aplicadas
+
+## 9. Seguridad
+
+## 10. Pruebas realizadas
+
+## 11. Resultado final
+
+## 12. Próxima fase recomendada
+
+Regla obligatoria sobre docs/Logs.md:
+
+DocumentationAgent NO debe modificar docs/Logs.md durante el desarrollo de la fase por iniciativa propia.
+
+Al terminar la Fase 7, DocumentationAgent debe preparar el resumen de la fase.
+
+Después, el Agent Manager debe autorizar automáticamente la actualización de docs/Logs.md con la instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 7.”
+
+Una vez recibida esta autorización automática, DocumentationAgent debe actualizar docs/Logs.md obligatoriamente.
+
+La entrada en docs/Logs.md debe incluir:
+
+- Fecha.
+- Fase: Fase 7 — Búsqueda y filtros de productos.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Filtros implementados.
+- Query params añadidos.
+- Cambios en backend.
+- Cambios en frontend.
+- Cambios en SQLite, si aplica.
+- Seguridad aplicada.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 7 no puede considerarse cerrada hasta que docs/Logs.md esté actualizado correctamente.
+
+## 10. ReviewerAgent
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_7.md
+
+Debe comprobar:
+
+- Que se hizo plan de implementación antes de codificar.
+- Que GET /products sigue funcionando sin filtros.
+- Que los filtros funcionan en backend.
+- Que los filtros funcionan en frontend.
+- Que SQLite sigue siendo la fuente de verdad.
+- Que no se usan JSON como persistencia.
+- Que las consultas están parametrizadas.
+- Que sort, condition y status están validados.
+- Que no se han implementado funcionalidades fuera del alcance.
+- Que QAAgent ha documentado pruebas.
+- Que SequrityAgent ha documentado riesgos.
+- Que DocumentationAgent ha documentado la fase.
+- Que docs/Logs.md ha sido actualizado por DocumentationAgent tras autorización automática del Agent Manager.
+
+Debe emitir veredicto:
+
+- Fase 7 aprobada. Se puede pasar a Fase 8.
+- Fase 7 aprobada con ajustes menores.
+- Fase 7 no aprobada.
+
+ReviewerAgent no debe modificar docs/Logs.md.
+
+## 11. GitHubAgent
+
+Solo debe actuar si el Agent Manager lo autoriza al final de la fase.
+
+Debe revisar:
+
+- git status
+- git diff
+- git remote -v
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Debe revisar especialmente:
+
+- .env
+- target/
+- database/nebripop.db
+- archivos temporales
+- posibles datos personales reales
+
+Mensaje de commit sugerido:
+
+feat: añade búsqueda y filtros de productos
+
+GitHubAgent no debe modificar docs/Logs.md.
+
+Archivos permitidos:
+
+- backend/src/
+- frontend/src/
+- frontend/styles.css
+- database/schema.sql, solo si se añaden índices necesarios
+- docs/PHASE_7_SEARCH_FILTERS.md
+- docs/UI_UX_PHASE_7.md
+- docs/QA_PHASE_7_SEARCH_FILTERS.md
+- docs/SECURITY_PHASE_7_SEARCH_FILTERS.md
+- docs/REVIEW_PHASE_7.md
+- docs/API_DOCS.md
+- docs/Prompts/PromptFase7SearchFiltersMVP.txt
+- docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+- .gitignore, si hay que ajustar reglas
+
+Archivos prohibidos:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- Archivos .json como persistencia.
+- Favoritos funcionales.
+- Mensajes funcionales.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Datos personales reales.
+
+Criterios de aceptación:
+
+La Fase 7 se considera válida si:
+
+1. Se crea y aprueba un plan de implementación antes de codificar.
+2. GET /products sigue funcionando sin filtros.
+3. GET /products acepta search.
+4. GET /products acepta category_id.
+5. GET /products acepta min_price y max_price.
+6. GET /products acepta condition.
+7. GET /products acepta location.
+8. GET /products acepta status.
+9. GET /products acepta sort.
+10. Los filtros pueden combinarse.
+11. Las consultas usan SQLite.
+12. No se usan JSON como persistencia.
+13. Las consultas son parametrizadas.
+14. El frontend tiene barra de búsqueda.
+15. El frontend tiene filtros visibles.
+16. El frontend permite limpiar filtros.
+17. El frontend muestra mensaje sin resultados.
+18. Las imágenes y detalles siguen funcionando.
+19. QAAgent documenta pruebas.
+20. SequrityAgent documenta riesgos.
+21. ReviewerAgent emite veredicto.
+22. DocumentationAgent documenta la fase.
+23. docs/Logs.md queda actualizado automáticamente.
+24. La fase queda lista para pasar a Fase 8.
+
+Resultado esperado:
+
+Al finalizar, devuelve:
+
+1. Estado de la Fase 7.
+2. Plan de implementación aprobado.
+3. Agentes que han intervenido.
+4. Archivos creados.
+5. Archivos modificados.
+6. Query params implementados.
+7. Cambios en backend.
+8. Cambios en frontend.
+9. Cambios en SQLite, si aplica.
+10. Validaciones aplicadas.
+11. Resultado de QAAgent.
+12. Resultado de SequrityAgent.
+13. Resultado de ReviewerAgent.
+14. Confirmación de actualización de docs/Logs.md.
+15. Si se recomienda activar GitHubAgent para commit y push.
+16. Si se puede pasar a Fase 8.
+17. Próximo prompt recomendado para Fase 8.
+
+Guardar este prompt completo en:
+
+docs/Prompts/PromptFase7SearchFiltersMVP.txt

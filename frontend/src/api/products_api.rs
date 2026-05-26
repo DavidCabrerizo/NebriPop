@@ -1,11 +1,14 @@
 use crate::api::client::{get_url, handle_error, handle_network_error};
-use crate::models::product::{CreateProductDto, Product, ProductDetailResponse};
+use crate::models::product::{CreateProductDto, Product, ProductDetailResponse, ProductFilters};
 use reqwest::Client;
 
-pub async fn fetch_products() -> Result<Vec<Product>, String> {
+pub async fn fetch_products(filters: &ProductFilters) -> Result<Vec<Product>, String> {
+    let query_string = filters.to_query_string();
+    let url = format!("/products{}", query_string);
+    web_sys::console::log_1(&format!("Fetching products with URL: {}", url).into());
     let client = Client::new();
     let res = client
-        .get(&get_url("/products"))
+        .get(&get_url(&url))
         .send()
         .await
         .map_err(handle_network_error)?;

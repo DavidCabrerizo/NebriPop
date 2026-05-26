@@ -1,21 +1,90 @@
-use sqlx::SqlitePool;
+use sqlx::{SqlitePool, QueryBuilder, Sqlite};
 use crate::models::{Product, ProductImage};
-use crate::dto::product_dto::CreateProductDto;
+use crate::dto::product_dto::{CreateProductDto, ProductFiltersDto};
 use crate::errors::AppError;
 
 pub struct ProductRepository;
 
 impl ProductRepository {
-    pub async fn find_all(pool: &SqlitePool) -> Result<Vec<Product>, AppError> {
-        let products = sqlx::query_as::<_, Product>(
+    pub async fn find_all(pool: &SqlitePool, filters: &ProductFiltersDto) -> Result<Vec<Product>, AppError> {
+        let mut query_builder: QueryBuilder<Sqlite> = QueryBuilder::new(
             r#"SELECT 
                 id, user_id, category_id, title, description, price, condition, 
                 location, status, main_image_url, created_at, updated_at 
-               FROM products 
-               ORDER BY created_at DESC"#
-        )
-        .fetch_all(pool)
-        .await?;
+               FROM products"#
+        );
+
+        let mut has_where = false;
+        let mut push_where_or_and = |qb: &mut QueryBuilder<Sqlite>| {
+            if has_where {
+                qb.push(" AND ");
+            } else {
+                qb.push(" WHERE ");
+                has_where = true;
+            }
+        };
+
+        if let Some(search) = &filters.search {
+            if !search.trim().is_empty() {
+                push_where_or_and(&mut query_builder);
+                query_builder.push("(title LIKE ");
+                query_builder.push_bind(format!("%{}%", search));
+                query_builder.push(" OR description LIKE ");
+                query_builder.push_bind(format!("%{}%", search));
+                query_builder.push(")");
+            }
+        }
+
+        if let Some(cat_id) = filters.category_id {
+            push_where_or_and(&mut query_builder);
+            query_builder.push("category_id = ");
+            query_builder.push_bind(cat_id);
+        }
+
+        if let Some(min_p) = filters.min_price {
+            push_where_or_and(&mut query_builder);
+            query_builder.push("price >= ");
+            query_builder.push_bind(min_p);
+        }
+
+        if let Some(max_p) = filters.max_price {
+            push_where_or_and(&mut query_builder);
+            query_builder.push("price <= ");
+            query_builder.push_bind(max_p);
+        }
+
+        if let Some(cond) = &filters.condition {
+            if !cond.trim().is_empty() {
+                push_where_or_and(&mut query_builder);
+                query_builder.push("condition = ");
+                query_builder.push_bind(cond);
+            }
+        }
+
+        if let Some(loc) = &filters.location {
+            if !loc.trim().is_empty() {
+                push_where_or_and(&mut query_builder);
+                query_builder.push("location LIKE ");
+                query_builder.push_bind(format!("%{}%", loc));
+            }
+        }
+
+        if let Some(stat) = &filters.status {
+            if !stat.trim().is_empty() {
+                push_where_or_and(&mut query_builder);
+                query_builder.push("status = ");
+                query_builder.push_bind(stat);
+            }
+        }
+
+        match filters.sort.as_deref() {
+            Some("price_asc") => query_builder.push(" ORDER BY price ASC"),
+            Some("price_desc") => query_builder.push(" ORDER BY price DESC"),
+            _ => query_builder.push(" ORDER BY created_at DESC"),
+        };
+
+        let query = query_builder.build_query_as::<Product>();
+        let products = query.fetch_all(pool).await?;
 
         Ok(products)
     }
@@ -103,7 +172,7 @@ impl ProductRepository {
     }
 
     pub async fn create(pool: &SqlitePool, dto: &CreateProductDto) -> Result<Product, AppError> {
-        let status = "available"; // Default status
+        let status = dto.status.as_deref().unwrap_or("available");
         
         let result = sqlx::query(
             r#"INSERT INTO products (
