@@ -1,5 +1,6 @@
 pub mod auth;
 pub mod users;
+pub mod favorites;
 
 use axum::{
     routing::{get, post, put, delete},
@@ -25,5 +26,6 @@ pub fn app_router(pool: SqlitePool) -> Router {
         .route("/products/:product_id/images/:image_id", delete(products_handler::delete_product_image))
         .nest("/auth", auth::auth_routes())
         .nest("/users", users::users_routes())
+        .merge(favorites::favorites_routes())
         .with_state(pool)
 }

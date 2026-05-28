@@ -1,6 +1,7 @@
 use crate::api::products_api::fetch_product_by_id;
 use crate::components::error_message::ErrorMessage;
 use crate::components::loading::Loading;
+use crate::components::favorite_button::FavoriteButton;
 use leptos::*;
 use leptos_router::*;
 
@@ -99,7 +100,10 @@ pub fn ProductDetail() -> impl IntoView {
                                     </div>
                                     <div class="detail-content">
                                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                            <h1 style="margin-top:0;">{product.title}</h1>
+                                            <div style="display: flex; align-items: center; gap: 10px;">
+                                                <h1 style="margin-top:0; margin-bottom: 0;">{product.title}</h1>
+                                                <FavoriteButton product_id=product.id />
+                                            </div>
                                             {if is_owner {
                                                 view! {
                                                     <A href=edit_url class="btn">"Editar Producto"</A>

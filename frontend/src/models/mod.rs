@@ -1,6 +1,7 @@
 pub mod category;
 pub mod product;
 pub mod user;
+pub mod favorite;
 pub mod auth;
 
 use serde::{Deserialize, Serialize};

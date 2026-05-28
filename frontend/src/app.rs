@@ -4,6 +4,7 @@ use leptos_router::*;
 use crate::pages::{
     create_product::CreateProduct, edit_product::EditProduct, home::Home, product_detail::ProductDetail,
     login::Login, register::Register, profile::Profile, user_products::UserProducts,
+    favorites::Favorites,
 };
 
 #[component]
@@ -66,6 +67,7 @@ pub fn App() -> impl IntoView {
                     <Route path="/register" view=Register/>
                     <Route path="/profile" view=Profile/>
                     <Route path="/users/:id/products" view=UserProducts/>
+                    <Route path="/favorites" view=Favorites/>
                 </Routes>
             </main>
         </Router>

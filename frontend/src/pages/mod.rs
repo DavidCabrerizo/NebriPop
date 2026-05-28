@@ -1,5 +1,6 @@
 pub mod create_product;
 pub mod edit_product;
+pub mod favorites;
 pub mod home;
 pub mod product_detail;
 pub mod login;

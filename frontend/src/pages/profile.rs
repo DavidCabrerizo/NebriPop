@@ -117,6 +117,7 @@ pub fn Profile() -> impl IntoView {
                                     
                                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
                                         <A href=format!("/users/{}/products", user.id) class="btn btn-secondary">"Ver productos publicados"</A>
+                                        <A href="/favorites" class="btn btn-secondary">"Mis Favoritos"</A>
                                         <button class="btn btn-primary" on:click=on_click_edit.clone()>"Editar Perfil"</button>
                                     </div>
                                 }.into_view()

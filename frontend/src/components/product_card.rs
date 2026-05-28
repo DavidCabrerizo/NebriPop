@@ -1,4 +1,5 @@
 use crate::models::product::Product;
+use crate::components::favorite_button::FavoriteButton;
 use leptos::*;
 use leptos_router::A;
 
@@ -16,15 +17,20 @@ pub fn ProductCard(product: Product) -> impl IntoView {
     let detail_url = format!("/products/{}", product.id);
 
     view! {
-        <A href=detail_url class="card">
-            <img src=img_src alt=product.title.clone() class="card-img" />
-            <div class="card-content">
-                <div class="card-price">{format!("{} €", product.price)}</div>
-                <h3 class="card-title">{product.title}</h3>
-                <div class="card-meta">
-                    {product.location} " • " {product.condition}
-                </div>
+        <div style="position: relative; height: 100%;">
+            <div style="position: absolute; top: 10px; right: 10px; z-index: 10; background: rgba(255,255,255,0.9); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                <FavoriteButton product_id=product.id />
             </div>
-        </A>
+            <A href=detail_url class="card">
+                <img src=img_src alt=product.title.clone() class="card-img" />
+                <div class="card-content">
+                    <div class="card-price">{format!("{} €", product.price)}</div>
+                    <h3 class="card-title" style="margin: 0;">{product.title}</h3>
+                    <div class="card-meta">
+                        {product.location} " • " {product.condition}
+                    </div>
+                </div>
+            </A>
+        </div>
     }
 }

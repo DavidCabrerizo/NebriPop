@@ -1,0 +1,813 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 8 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 8 — Sistema de favoritos
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se han completado las fases anteriores del MVP de NebriPop:
+
+- Fase 1: estructura real del proyecto.
+- Fase 2: diseño de la base de datos SQLite.
+- Fase 3: backend base con Axum conectado a SQLite.
+- Fase 4: frontend base con Leptos conectado al backend Axum.
+- Fase 5: integración completa Frontend + Backend + SQLite.
+- Fase 5B: gestión de imágenes de productos.
+- Fase 6: sistema básico de usuarios.
+- Fase 7: búsqueda y filtros de productos.
+
+NebriPop es una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. Ahora necesitamos implementar el sistema de favoritos para que los usuarios puedan guardar productos que les interesen, quitarlos de favoritos y consultar su lista de productos favoritos.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Base de datos real: database/nebripop.db
+- Backend local: http://127.0.0.1:3000
+- Frontend local: http://127.0.0.1:8081
+- Control de versiones: Git + GitHub
+
+Objetivo principal de la Fase 8:
+Implementar el sistema de favoritos de NebriPop, permitiendo que un usuario pueda añadir productos a favoritos, eliminarlos y consultar su lista de favoritos.
+
+Importante:
+Esta fase debe centrarse únicamente en favoritos.
+
+En esta fase SÍ se permite implementar:
+- Añadir producto a favoritos.
+- Eliminar producto de favoritos.
+- Consultar favoritos de un usuario.
+- Mostrar estado favorito/no favorito en el listado.
+- Mostrar estado favorito/no favorito en el detalle.
+- Página o sección de “Mis favoritos”.
+- Persistencia en SQLite.
+- Validaciones básicas.
+- Documentación, QA, seguridad y revisión.
+
+En esta fase NO se debe implementar todavía:
+- Mensajes funcionales.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Recomendaciones inteligentes.
+- Geolocalización real.
+- Panel de administración.
+- Reviews o valoraciones.
+
+Regla crítica de persistencia:
+Los favoritos deben guardarse en SQLite.
+
+Queda prohibido guardar favoritos en archivos `.json`.
+
+No se deben usar archivos como:
+- favorites.json
+- user_favorites.json
+- data.json
+- mock.json
+
+SQLite debe seguir siendo la fuente de verdad.
+
+Regla obligatoria de planificación:
+Antes de implementar código, el Agent Manager debe solicitar un plan de implementación breve a RustArchitectAgent, RustBackend, RustFrontend, DatabaseAgent, QAAgent y SequrityAgent.
+
+El plan debe incluir:
+
+1. Qué archivos se van a crear o modificar.
+2. Qué cambios se harán en backend.
+3. Qué cambios se harán en frontend.
+4. Qué cambios se harán en SQLite, si son necesarios.
+5. Qué endpoints se van a crear o modificar.
+6. Cómo se identificará temporalmente al usuario.
+7. Qué riesgos se deben controlar.
+8. Qué pruebas se van a realizar.
+9. Qué agentes intervienen en cada paso.
+
+El Agent Manager debe revisar y aprobar el plan antes de permitir que RustBackend o RustFrontend escriban código.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. DatabaseAgent
+4. RustBackend
+5. RustFrontend
+6. UXDesigner
+7. QAAgent
+8. SequrityAgent
+9. DocumentationAgent
+10. ReviewerAgent
+11. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 8 sin autorización explícita.
+
+Regla obligatoria sobre docs/Logs.md:
+Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+
+Al finalizar la Fase 8, el Agent Manager / Product Manager Agent debe autorizar automáticamente a @DocumentationAgent para actualizar docs/Logs.md.
+
+La instrucción obligatoria del Agent Manager será:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 8.”
+
+Después de esta autorización automática, @DocumentationAgent debe actualizar docs/Logs.md obligatoriamente con el resumen de la Fase 8.
+
+La Fase 8 no podrá darse por finalizada hasta que docs/Logs.md haya sido actualizado correctamente.
+
+Si ocurre un error al actualizar docs/Logs.md, DocumentationAgent debe informar del error, corregirlo si está dentro de su alcance y volver a intentar la actualización.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con el código real del MVP.
+
+Archivos principales que deben revisarse antes de actuar:
+
+database/schema.sql
+database/seeds.sql
+database/nebripop.db
+database/README.md
+backend/Cargo.toml
+backend/src/
+frontend/Cargo.toml
+frontend/src/
+frontend/styles.css
+docs/API_DOCS.md
+docs/DATABASE_SCHEMA.md
+docs/PHASE_6_USERS.md
+docs/PHASE_7_SEARCH_FILTERS.md
+docs/AUTH_BASIC.md
+.env.example
+.gitignore
+
+Archivos principales que pueden crearse o actualizarse:
+
+backend/src/routes/favorites.rs
+backend/src/handlers/favorites_handler.rs
+backend/src/repositories/favorite_repository.rs
+backend/src/services/favorite_service.rs
+backend/src/dto/favorite_dto.rs
+backend/src/models.rs
+backend/src/routes/mod.rs
+backend/src/handlers/mod.rs
+backend/src/repositories/mod.rs
+backend/src/services/mod.rs
+
+frontend/src/pages/favorites.rs
+frontend/src/components/favorite_button.rs
+frontend/src/components/product_card.rs
+frontend/src/pages/home.rs
+frontend/src/pages/product_detail.rs
+frontend/src/api/favorites_api.rs
+frontend/src/api/products_api.rs
+frontend/src/models/favorite.rs
+frontend/src/models/product.rs
+frontend/styles.css
+
+docs/PHASE_8_FAVORITES.md
+docs/API_DOCS.md
+docs/UI_UX_PHASE_8.md
+docs/QA_PHASE_8_FAVORITES.md
+docs/SECURITY_PHASE_8_FAVORITES.md
+docs/REVIEW_PHASE_8.md
+docs/Prompts/PromptFase8FavoritesMVP.txt
+docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 8.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 9.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+Debe controlar especialmente que:
+
+- Primero se cree y apruebe un plan de implementación.
+- No se usen archivos `.json`.
+- SQLite siga siendo la fuente de verdad.
+- RustBackend implemente los endpoints de favoritos.
+- RustFrontend implemente botones y pantalla de favoritos.
+- DatabaseAgent revise la tabla favorites.
+- SequrityAgent revise riesgos de acceso entre usuarios.
+- DocumentationAgent actualice docs/Logs.md al finalizar.
+- GitHubAgent no haga commit ni push sin autorización.
+
+## 2. RustArchitectAgent
+
+Debe crear un plan de arquitectura para favoritos.
+
+Debe definir:
+
+- Cómo se relacionan users, products y favorites.
+- Qué endpoints debe exponer el backend.
+- Cómo se comprobará si un producto ya está en favoritos.
+- Cómo se mostrará el estado favorito/no favorito en frontend.
+- Cómo evitar duplicados.
+- Cómo mantener la lógica simple para el MVP.
+- Qué archivos deben modificarse.
+- Riesgos técnicos.
+- Recomendaciones para RustBackend y RustFrontend.
+
+Debe crear o actualizar:
+
+docs/PHASE_8_FAVORITES.md
+
+No debe implementar código.
+
+## 3. DatabaseAgent
+
+Debe revisar si la base de datos está preparada para favoritos.
+
+Debe comprobar que existe la tabla:
+
+favorites
+
+Con estructura mínima:
+
+- id INTEGER PRIMARY KEY AUTOINCREMENT
+- user_id INTEGER NOT NULL
+- product_id INTEGER NOT NULL
+- created_at TEXT NOT NULL
+- FOREIGN KEY (user_id) REFERENCES users(id)
+- FOREIGN KEY (product_id) REFERENCES products(id)
+- UNIQUE(user_id, product_id)
+
+Debe comprobar que existen índices útiles:
+
+- idx_favorites_user_id
+- idx_favorites_product_id
+
+Debe comprobar:
+
+- Que no se puedan duplicar favoritos para el mismo user_id y product_id.
+- Que user_id referencia a users.
+- Que product_id referencia a products.
+- Que no se usan archivos JSON.
+- Que SQLite es la fuente de verdad.
+
+Puede actualizar:
+
+database/schema.sql
+docs/DATABASE_SCHEMA.md
+docs/DATABASE_DECISIONS.md
+database/README.md
+
+Solo debe modificar database/schema.sql si el Agent Manager lo autoriza.
+
+No debe modificar frontend.
+No debe modificar docs/Logs.md.
+
+## 4. RustBackend
+
+RustBackend será el agente principal de implementación backend de esta fase.
+
+Debe trabajar en:
+
+backend/
+
+Debe implementar endpoints para favoritos.
+
+Endpoints obligatorios:
+
+### GET /users/:id/favorites
+
+Debe devolver la lista de productos favoritos de un usuario.
+
+Debe leer desde SQLite usando la tabla favorites y products.
+
+Respuesta esperada:
+
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "category_id": 1,
+    "title": "iPhone 12 usado",
+    "description": "iPhone 12 en buen estado",
+    "price": 250.0,
+    "condition": "used",
+    "location": "Madrid",
+    "status": "available",
+    "main_image_url": "uploads/products/1/imagen_1.jpg",
+    "created_at": "2026-05-24T10:00:00",
+    "updated_at": "2026-05-24T10:00:00"
+  }
+]
+
+### POST /favorites
+
+Debe añadir un producto a favoritos.
+
+Body esperado:
+
+{
+  "user_id": 1,
+  "product_id": 1
+}
+
+Validaciones:
+- user_id debe existir.
+- product_id debe existir.
+- No permitir duplicados.
+- Si ya existe, devolver mensaje claro.
+- No guardar en JSON.
+- Guardar en SQLite.
+
+Respuesta esperada:
+
+{
+  "message": "Producto añadido a favoritos",
+  "user_id": 1,
+  "product_id": 1
+}
+
+### DELETE /favorites/:product_id?user_id=1
+
+Debe eliminar un producto de favoritos para un usuario.
+
+Ejemplo:
+
+DELETE /favorites/1?user_id=1
+
+Validaciones:
+- user_id debe existir.
+- product_id debe existir.
+- Si no existe el favorito, devolver mensaje claro.
+- Eliminar solo el favorito del usuario indicado.
+
+Respuesta esperada:
+
+{
+  "message": "Producto eliminado de favoritos",
+  "user_id": 1,
+  "product_id": 1
+}
+
+### GET /favorites/check?user_id=1&product_id=1
+
+Debe indicar si un producto está en favoritos para un usuario.
+
+Respuesta esperada:
+
+{
+  "is_favorite": true
+}
+
+Reglas backend obligatorias:
+
+- Usar SQLite.
+- No usar JSON como persistencia.
+- Usar consultas parametrizadas.
+- Evitar duplicados mediante UNIQUE(user_id, product_id).
+- Validar que user_id y product_id existen.
+- No implementar favoritos globales sin usuario.
+- No modificar login salvo que sea imprescindible.
+- Mantener compatibilidad con GET /products.
+- Mantener compatibilidad con GET /products/:id.
+
+RustBackend puede modificar:
+
+backend/src/routes/favorites.rs
+backend/src/handlers/favorites_handler.rs
+backend/src/repositories/favorite_repository.rs
+backend/src/services/favorite_service.rs
+backend/src/dto/favorite_dto.rs
+backend/src/models.rs
+backend/src/routes/mod.rs
+backend/src/handlers/mod.rs
+backend/src/repositories/mod.rs
+backend/src/services/mod.rs
+docs/API_DOCS.md, si necesita actualizar endpoints
+
+RustBackend no debe implementar:
+
+- Mensajes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Recomendaciones inteligentes.
+
+RustBackend no debe modificar docs/Logs.md.
+
+## 5. UXDesigner
+
+Debe proponer la experiencia de usuario de favoritos.
+
+Debe crear o actualizar:
+
+docs/UI_UX_PHASE_8.md
+
+Debe definir:
+
+- Dónde colocar el botón de favorito.
+- Cómo representar favorito activo/inactivo.
+- Cómo mostrar favoritos en tarjetas de producto.
+- Cómo mostrar favoritos en detalle de producto.
+- Cómo acceder a la página “Mis favoritos”.
+- Cómo mostrar mensajes de éxito/error.
+- Cómo mostrar “No tienes favoritos todavía”.
+- Cómo mantener la interfaz simple y parecida a Wallapop.
+
+Debe mantener una interfaz sencilla, clara y de MVP.
+
+No debe implementar código salvo autorización.
+
+## 6. RustFrontend
+
+RustFrontend será el agente principal de implementación frontend de esta fase.
+
+Debe trabajar en:
+
+frontend/
+
+Debe implementar:
+
+- Botón de favorito en ProductCard.
+- Botón de favorito en ProductDetail.
+- Página “Mis favoritos”.
+- Llamadas API para favoritos.
+- Cambio visual entre favorito activo e inactivo.
+- Mensajes de éxito/error.
+- Estado de carga.
+- Mensaje si no hay favoritos.
+- Integración con usuario logueado.
+
+Debe consumir:
+
+GET http://127.0.0.1:3000/users/:id/favorites
+POST http://127.0.0.1:3000/favorites
+DELETE http://127.0.0.1:3000/favorites/:product_id?user_id=1
+GET http://127.0.0.1:3000/favorites/check?user_id=1&product_id=1
+
+Comportamiento esperado:
+
+- Si el usuario está logueado, puede añadir o quitar favoritos.
+- Si el usuario no está logueado, mostrar mensaje: “Inicia sesión para guardar favoritos”.
+- En listado de productos, mostrar icono o botón de favorito.
+- En detalle, mostrar botón de favorito.
+- En página de favoritos, mostrar solo productos guardados.
+- Si no hay favoritos, mostrar “No tienes productos favoritos todavía”.
+
+Validaciones frontend:
+
+- No llamar a favoritos si no hay user_id.
+- Mostrar error si backend falla.
+- No duplicar visualmente favoritos.
+- Refrescar estado tras añadir o quitar favorito.
+- Mantener imágenes y navegación funcionando.
+
+RustFrontend puede modificar:
+
+frontend/src/pages/favorites.rs
+frontend/src/components/favorite_button.rs
+frontend/src/components/product_card.rs
+frontend/src/pages/home.rs
+frontend/src/pages/product_detail.rs
+frontend/src/api/favorites_api.rs
+frontend/src/models/favorite.rs
+frontend/src/models/product.rs
+frontend/styles.css
+
+RustFrontend no debe implementar:
+
+- Mensajes.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+
+RustFrontend no debe modificar docs/Logs.md.
+
+## 7. QAAgent
+
+Debe crear o actualizar:
+
+docs/QA_PHASE_8_FAVORITES.md
+
+Debe validar:
+
+Backend:
+- GET /users/:id/favorites devuelve favoritos del usuario.
+- POST /favorites añade un producto a favoritos.
+- POST /favorites rechaza duplicados.
+- POST /favorites rechaza user_id inexistente.
+- POST /favorites rechaza product_id inexistente.
+- DELETE /favorites/:product_id?user_id=1 elimina favorito.
+- GET /favorites/check devuelve true/false correctamente.
+- Los favoritos se guardan en SQLite.
+- No se usan archivos JSON.
+
+Frontend:
+- Botón de favorito aparece en listado.
+- Botón de favorito aparece en detalle.
+- Añadir favorito cambia el estado visual.
+- Quitar favorito cambia el estado visual.
+- Página Mis favoritos muestra productos guardados.
+- Si no hay favoritos, muestra mensaje adecuado.
+- Si no hay usuario logueado, muestra mensaje para iniciar sesión.
+- Imágenes y navegación siguen funcionando.
+
+Base de datos:
+- favorites contiene user_id y product_id.
+- No se duplican favoritos.
+- Los favoritos persisten tras reiniciar backend.
+
+Comandos de prueba backend:
+
+cd backend
+cargo run
+
+Añadir favorito:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/favorites `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"user_id":1,"product_id":1}'
+
+Consultar favoritos:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/users/1/favorites -Method GET
+
+Comprobar favorito:
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/favorites/check?user_id=1&product_id=1" -Method GET
+
+Eliminar favorito:
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/favorites/1?user_id=1" -Method DELETE
+
+QAAgent no debe modificar código salvo autorización expresa.
+QAAgent no debe modificar docs/Logs.md.
+
+## 8. SequrityAgent
+
+Debe crear o actualizar:
+
+docs/SECURITY_PHASE_8_FAVORITES.md
+
+Debe revisar:
+
+- Que user_id y product_id se validan.
+- Que las consultas son parametrizadas.
+- Que un usuario no elimina favoritos de otro sin control.
+- Que no se usan JSON.
+- Que no se exponen datos sensibles.
+- Que no se implementa autenticación falsa.
+- Que si se usa user_id del frontend, quede documentado como limitación temporal del MVP.
+- Que no se guarda información innecesaria en favorites.
+- Que no se rompen validaciones de productos ni usuarios.
+
+Debe proponer mejoras futuras:
+
+- Validar favoritos con sesión real/JWT.
+- No aceptar user_id desde cliente cuando haya autenticación real.
+- Asociar favorito al usuario autenticado del token.
+
+SequrityAgent no debe modificar código salvo autorización.
+SequrityAgent no debe modificar docs/Logs.md.
+
+## 9. DocumentationAgent
+
+Debe documentar toda la Fase 8.
+
+Debe crear o actualizar:
+
+docs/PHASE_8_FAVORITES.md
+docs/API_DOCS.md
+docs/UI_UX_PHASE_8.md, si procede
+docs/QA_PHASE_8_FAVORITES.md, si procede
+docs/SECURITY_PHASE_8_FAVORITES.md, si procede
+frontend/README.md, si procede
+backend/README.md, si procede
+
+Debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase8FavoritesMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+docs/PHASE_8_FAVORITES.md debe incluir:
+
+# Fase 8 — Sistema de favoritos
+
+## 1. Objetivo de la fase
+
+## 2. Plan de implementación aprobado
+
+## 3. Funcionamiento de favoritos
+
+## 4. Endpoints implementados
+
+## 5. Cambios en backend
+
+## 6. Cambios en frontend
+
+## 7. Cambios en SQLite
+
+## 8. Validaciones aplicadas
+
+## 9. Seguridad
+
+## 10. Pruebas realizadas
+
+## 11. Resultado final
+
+## 12. Próxima fase recomendada
+
+Regla obligatoria sobre docs/Logs.md:
+
+DocumentationAgent NO debe modificar docs/Logs.md durante el desarrollo de la fase por iniciativa propia.
+
+Al terminar la Fase 8, DocumentationAgent debe preparar el resumen de la fase.
+
+Después, el Agent Manager debe autorizar automáticamente la actualización de docs/Logs.md con la instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 8.”
+
+Una vez recibida esta autorización automática, DocumentationAgent debe actualizar docs/Logs.md obligatoriamente.
+
+La entrada en docs/Logs.md debe incluir:
+
+- Fecha.
+- Fase: Fase 8 — Sistema de favoritos.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Endpoints creados o modificados.
+- Pantallas o componentes creados.
+- Cambios en backend.
+- Cambios en frontend.
+- Cambios en SQLite, si aplica.
+- Seguridad aplicada.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 8 no puede considerarse cerrada hasta que docs/Logs.md esté actualizado correctamente.
+
+## 10. ReviewerAgent
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_8.md
+
+Debe comprobar:
+
+- Que se hizo plan de implementación antes de codificar.
+- Que los favoritos se guardan en SQLite.
+- Que no se usan JSON.
+- Que existen endpoints de favoritos.
+- Que se puede añadir favorito.
+- Que se puede quitar favorito.
+- Que se puede consultar favoritos de usuario.
+- Que se evita duplicar favoritos.
+- Que el frontend muestra botón de favorito.
+- Que existe página Mis favoritos.
+- Que se muestra estado visual correcto.
+- Que no se han implementado funcionalidades fuera del alcance.
+- Que QAAgent ha documentado pruebas.
+- Que SequrityAgent ha documentado riesgos.
+- Que DocumentationAgent ha documentado la fase.
+- Que docs/Logs.md ha sido actualizado por DocumentationAgent tras autorización automática del Agent Manager.
+
+Debe emitir veredicto:
+
+- Fase 8 aprobada. Se puede pasar a Fase 9.
+- Fase 8 aprobada con ajustes menores.
+- Fase 8 no aprobada.
+
+ReviewerAgent no debe modificar docs/Logs.md.
+
+## 11. GitHubAgent
+
+Solo debe actuar si el Agent Manager lo autoriza al final de la fase.
+
+Debe revisar:
+
+- git status
+- git diff
+- git remote -v
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Debe revisar especialmente:
+
+- .env
+- target/
+- database/nebripop.db
+- archivos temporales
+- posibles datos personales reales
+
+Mensaje de commit sugerido:
+
+feat: añade sistema de favoritos
+
+GitHubAgent no debe modificar docs/Logs.md.
+
+Archivos permitidos:
+
+- backend/src/
+- frontend/src/
+- frontend/styles.css
+- database/schema.sql, solo si se ajusta la tabla favorites o índices
+- docs/PHASE_8_FAVORITES.md
+- docs/UI_UX_PHASE_8.md
+- docs/QA_PHASE_8_FAVORITES.md
+- docs/SECURITY_PHASE_8_FAVORITES.md
+- docs/REVIEW_PHASE_8.md
+- docs/API_DOCS.md
+- docs/Prompts/PromptFase8FavoritesMVP.txt
+- docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+- .gitignore, si hay que ajustar reglas
+
+Archivos prohibidos:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- Archivos .json como persistencia.
+- Mensajes funcionales.
+- Chat.
+- Pagos.
+- Notificaciones.
+- Sistema real de compras.
+- Datos personales reales.
+
+Criterios de aceptación:
+
+La Fase 8 se considera válida si:
+
+1. Se crea y aprueba un plan de implementación antes de codificar.
+2. Existe o se valida la tabla favorites.
+3. POST /favorites funciona.
+4. DELETE /favorites/:product_id?user_id=1 funciona.
+5. GET /users/:id/favorites funciona.
+6. GET /favorites/check funciona.
+7. No se duplican favoritos.
+8. Los favoritos se guardan en SQLite.
+9. No se usan JSON como persistencia.
+10. El frontend muestra botón de favorito en listado.
+11. El frontend muestra botón de favorito en detalle.
+12. El usuario puede añadir favoritos.
+13. El usuario puede quitar favoritos.
+14. Existe sección o página “Mis favoritos”.
+15. Se muestra mensaje si no hay favoritos.
+16. Se muestra aviso si no hay usuario logueado.
+17. QAAgent documenta pruebas.
+18. SequrityAgent documenta riesgos.
+19. ReviewerAgent emite veredicto.
+20. DocumentationAgent documenta la fase.
+21. docs/Logs.md queda actualizado automáticamente.
+22. La fase queda lista para pasar a Fase 9.
+
+Resultado esperado:
+
+Al finalizar, devuelve:
+
+1. Estado de la Fase 8.
+2. Plan de implementación aprobado.
+3. Agentes que han intervenido.
+4. Archivos creados.
+5. Archivos modificados.
+6. Endpoints implementados.
+7. Cambios en backend.
+8. Cambios en frontend.
+9. Cambios en SQLite, si aplica.
+10. Validaciones aplicadas.
+11. Resultado de QAAgent.
+12. Resultado de SequrityAgent.
+13. Resultado de ReviewerAgent.
+14. Confirmación de actualización de docs/Logs.md.
+15. Si se recomienda activar GitHubAgent para commit y push.
+16. Si se puede pasar a Fase 9.
+17. Próximo prompt recomendado para Fase 9.
+
+Guardar este prompt completo en:
+
+docs/Prompts/PromptFase8FavoritesMVP.txt
