@@ -98,3 +98,73 @@ pub async fn get_unread_count(user_id: i64) -> Result<i64, String> {
         Err(e) => Err(handle_network_error(e)),
     }
 }
+
+pub async fn block_user(blocker_id: i64, blocked_id: i64) -> Result<(), String> {
+    let url = get_url("/users/block");
+    let client = Client::new();
+    let payload = json!({ "blocker_id": blocker_id, "blocked_id": blocked_id });
+    
+    match client.post(&url).json(&payload).send().await {
+        Ok(res) if res.status().is_success() => Ok(()),
+        Ok(res) => Err(handle_error(res).await),
+        Err(e) => Err(handle_network_error(e)),
+    }
+}
+
+pub async fn unblock_user(blocker_id: i64, blocked_id: i64) -> Result<(), String> {
+    let url = get_url("/users/unblock");
+    let client = Client::new();
+    let payload = json!({ "blocker_id": blocker_id, "blocked_id": blocked_id });
+    
+    match client.post(&url).json(&payload).send().await {
+        Ok(res) if res.status().is_success() => Ok(()),
+        Ok(res) => Err(handle_error(res).await),
+        Err(e) => Err(handle_network_error(e)),
+    }
+}
+
+pub async fn delete_conversation(user_id: i64, product_id: i64, other_user_id: i64) -> Result<(), String> {
+    let url = get_url("/messages/conversation/delete");
+    let client = Client::new();
+    let payload = json!({ "user_id": user_id, "product_id": product_id, "other_user_id": other_user_id });
+    
+    match client.post(&url).json(&payload).send().await {
+        Ok(res) if res.status().is_success() => Ok(()),
+        Ok(res) => Err(handle_error(res).await),
+        Err(e) => Err(handle_network_error(e)),
+    }
+}
+
+pub async fn get_blocks(user_id: i64) -> Result<Vec<crate::models::message::BlockDto>, String> {
+    let url = get_url(&format!("/users/{}/blocks", user_id));
+    let client = Client::new();
+    
+    match client.get(&url).send().await {
+        Ok(response) => {
+            if response.status().is_success() {
+                let blocks = response.json::<Vec<crate::models::message::BlockDto>>().await.map_err(|e| e.to_string())?;
+                Ok(blocks)
+            } else {
+                Err(handle_error(response).await)
+            }
+        }
+        Err(e) => Err(handle_network_error(e)),
+    }
+}
+
+pub async fn get_deleted_conversations(user_id: i64) -> Result<Vec<crate::models::message::DeletedConversationDto>, String> {
+    let url = get_url(&format!("/users/{}/messages/deleted", user_id));
+    let client = Client::new();
+    
+    match client.get(&url).send().await {
+        Ok(response) => {
+            if response.status().is_success() {
+                let deleted = response.json::<Vec<crate::models::message::DeletedConversationDto>>().await.map_err(|e| e.to_string())?;
+                Ok(deleted)
+            } else {
+                Err(handle_error(response).await)
+            }
+        }
+        Err(e) => Err(handle_network_error(e)),
+    }
+}

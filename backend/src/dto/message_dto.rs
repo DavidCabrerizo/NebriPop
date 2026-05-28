@@ -29,3 +29,29 @@ pub struct ConversationQueryDto {
     pub user_id: i64,
     pub other_user_id: i64,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct BlockDto {
+    pub blocker_id: i64,
+    pub blocked_id: i64,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct DeletedConversationDto {
+    pub user_id: i64,
+    pub product_id: i64,
+    pub other_user_id: i64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct BlockUserRequest {
+    pub blocker_id: i64,
+    pub blocked_id: i64,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DeleteConversationRequest {
+    pub user_id: i64,
+    pub product_id: i64,
+    pub other_user_id: i64,
+}

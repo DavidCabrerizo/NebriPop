@@ -93,3 +93,27 @@ CREATE INDEX IF NOT EXISTS idx_favorites_product_id ON favorites(product_id);
 CREATE INDEX IF NOT EXISTS idx_messages_product_id ON messages(product_id);
 CREATE INDEX IF NOT EXISTS idx_messages_sender_id ON messages(sender_id);
 CREATE INDEX IF NOT EXISTS idx_messages_receiver_id ON messages(receiver_id);
+
+-- Tabla: blocks (Bloqueo de usuarios)
+CREATE TABLE IF NOT EXISTS blocks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    blocker_id INTEGER NOT NULL,
+    blocked_id INTEGER NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (blocker_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (blocked_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(blocker_id, blocked_id)
+);
+
+-- Tabla: deleted_conversations (Borrados lógicos de chat por usuario)
+CREATE TABLE IF NOT EXISTS deleted_conversations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    other_user_id INTEGER NOT NULL,
+    deleted_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (other_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(user_id, product_id, other_user_id)
+);

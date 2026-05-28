@@ -11,6 +11,11 @@ use crate::handlers::messages_handler::{
     get_conversation,
     mark_message_as_read,
     get_unread_messages_count,
+    block_user_handler,
+    get_blocks_handler,
+    delete_conversation_handler,
+    get_deleted_conversations_handler,
+    unblock_user_handler,
 };
 
 pub fn routes(pool: SqlitePool) -> Router {
@@ -21,5 +26,10 @@ pub fn routes(pool: SqlitePool) -> Router {
         .route("/users/:id/messages/unread", get(get_unread_messages_count))
         .route("/products/:product_id/messages", get(get_conversation))
         .route("/messages/:id/read", patch(mark_message_as_read))
+        .route("/messages/conversation/delete", post(delete_conversation_handler))
+        .route("/users/block", post(block_user_handler))
+        .route("/users/unblock", post(unblock_user_handler))
+        .route("/users/:id/blocks", get(get_blocks_handler))
+        .route("/users/:id/messages/deleted", get(get_deleted_conversations_handler))
         .with_state(pool)
 }

@@ -5,6 +5,7 @@
 *.sqlite
 *.sqlite3
 *.sqlite-journal
+*.db
 .env
 .env.local
 *.log

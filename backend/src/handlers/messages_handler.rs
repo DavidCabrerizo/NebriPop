@@ -6,7 +6,7 @@ use axum::{
 use sqlx::SqlitePool;
 
 use crate::{
-    dto::message_dto::{CreateMessageDto, ConversationQueryDto, UpdateMessageReadDto},
+    dto::message_dto::{CreateMessageDto, ConversationQueryDto, UpdateMessageReadDto, BlockUserRequest, DeleteConversationRequest},
     errors::AppError,
     repositories::message_repository::MessageRepository,
 };
@@ -64,4 +64,44 @@ pub async fn get_unread_messages_count(
     Ok(Json(serde_json::json!({
         "unread_count": count
     })))
+}
+
+pub async fn block_user_handler(
+    State(pool): State<SqlitePool>,
+    Json(payload): Json<BlockUserRequest>,
+) -> Result<Json<serde_json::Value>, AppError> {
+    MessageRepository::block_user(&pool, payload.blocker_id, payload.blocked_id).await?;
+    Ok(Json(serde_json::json!({ "message": "Usuario bloqueado con éxito" })))
+}
+
+pub async fn unblock_user_handler(
+    State(pool): State<SqlitePool>,
+    Json(payload): Json<BlockUserRequest>,
+) -> Result<Json<serde_json::Value>, AppError> {
+    MessageRepository::unblock_user(&pool, payload.blocker_id, payload.blocked_id).await?;
+    Ok(Json(serde_json::json!({ "message": "Usuario desbloqueado con éxito" })))
+}
+
+pub async fn get_blocks_handler(
+    State(pool): State<SqlitePool>,
+    Path(user_id): Path<i64>,
+) -> Result<Json<Vec<crate::dto::message_dto::BlockDto>>, AppError> {
+    let blocks = MessageRepository::get_blocks_for_user(&pool, user_id).await?;
+    Ok(Json(blocks))
+}
+
+pub async fn delete_conversation_handler(
+    State(pool): State<SqlitePool>,
+    Json(payload): Json<DeleteConversationRequest>,
+) -> Result<Json<serde_json::Value>, AppError> {
+    MessageRepository::delete_conversation(&pool, payload.user_id, payload.product_id, payload.other_user_id).await?;
+    Ok(Json(serde_json::json!({ "message": "Conversación borrada con éxito" })))
+}
+
+pub async fn get_deleted_conversations_handler(
+    State(pool): State<SqlitePool>,
+    Path(user_id): Path<i64>,
+) -> Result<Json<Vec<crate::dto::message_dto::DeletedConversationDto>>, AppError> {
+    let deleted = MessageRepository::get_deleted_conversations_for_user(&pool, user_id).await?;
+    Ok(Json(deleted))
 }
