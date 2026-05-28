@@ -153,3 +153,87 @@ pub async fn upload_product_images(
         images: saved_images,
     }))
 }
+
+pub async fn update_product(
+    State(pool): State<SqlitePool>,
+    Path(id): Path<i64>,
+    Json(payload): Json<crate::dto::product_dto::UpdateProductDto>,
+) -> Result<Json<Product>, AppError> {
+    // Validaciones
+    if payload.title.trim().is_empty() {
+        return Err(AppError::ValidationError("El título no puede estar vacío".to_string()));
+    }
+    if payload.description.trim().is_empty() {
+        return Err(AppError::ValidationError("La descripción no puede estar vacía".to_string()));
+    }
+    if payload.price < 0.0 {
+        return Err(AppError::ValidationError("El precio debe ser mayor o igual que 0".to_string()));
+    }
+    
+    let valid_conditions = ["new", "like_new", "good", "used", "damaged"];
+    if !valid_conditions.contains(&payload.condition.as_str()) {
+        return Err(AppError::ValidationError("Condición no válida".to_string()));
+    }
+    
+    if payload.location.trim().is_empty() {
+        return Err(AppError::ValidationError("La ubicación no puede estar vacía".to_string()));
+    }
+
+    // Comprobar que la categoría existe
+    let category = CategoryRepository::find_by_id(&pool, payload.category_id).await?;
+    if category.is_none() {
+        return Err(AppError::ValidationError(format!("La categoría con ID {} no existe", payload.category_id)));
+    }
+
+    // Comprobar que el producto pertenece al usuario
+    let existing_product = ProductRepository::find_by_id(&pool, id)
+        .await?
+        .ok_or_else(|| AppError::NotFound(format!("Producto con ID {} no encontrado", id)))?;
+
+    if existing_product.user_id != Some(payload.user_id) {
+        return Err(AppError::ValidationError("No tienes permiso para editar este producto".to_string()));
+    }
+
+    let product = ProductRepository::update(&pool, id, &payload).await?;
+
+    Ok(Json(product))
+}
+
+pub async fn delete_product_image(
+    State(pool): State<SqlitePool>,
+    Path((product_id, image_id)): Path<(i64, i64)>,
+) -> Result<Json<UploadImagesResponse>, AppError> {
+    // En el futuro, habría que comprobar si el usuario que hace la petición es el dueño
+    
+    let existing_product = ProductRepository::find_by_id(&pool, product_id)
+        .await?
+        .ok_or_else(|| AppError::NotFound(format!("Producto con ID {} no encontrado", product_id)))?;
+        
+    ProductRepository::delete_image(&pool, image_id, product_id).await?;
+    
+    let saved_images = ProductRepository::find_images_by_product_id(&pool, product_id).await?;
+    
+    Ok(Json(UploadImagesResponse {
+        message: "Imagen eliminada correctamente".to_string(),
+        images: saved_images,
+    }))
+}
+
+pub async fn delete_product(
+    State(pool): State<SqlitePool>,
+    Path(id): Path<i64>,
+    Query(params): Query<std::collections::HashMap<String, String>>,
+) -> Result<Json<()>, AppError> {
+    let existing_product = ProductRepository::find_by_id(&pool, id)
+        .await?
+        .ok_or_else(|| AppError::NotFound(format!("Producto con ID {} no encontrado", id)))?;
+        
+    let req_user_id = params.get("user_id").and_then(|id| id.parse::<i64>().ok());
+    if existing_product.user_id != req_user_id {
+        return Err(AppError::ValidationError("No tienes permiso para borrar este producto".to_string()));
+    }
+        
+    ProductRepository::delete(&pool, id).await?;
+    
+    Ok(Json(()))
+}

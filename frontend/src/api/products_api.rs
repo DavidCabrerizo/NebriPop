@@ -81,3 +81,49 @@ pub async fn upload_product_images(product_id: i64, files: Vec<web_sys::File>, i
         Err(format!("Error en el servidor: {}", res.status()))
     }
 }
+
+pub async fn update_product(id: i64, dto: crate::models::product::UpdateProductDto) -> Result<Product, String> {
+    let client = Client::new();
+    let res = client
+        .put(&get_url(&format!("/products/{}", id)))
+        .json(&dto)
+        .send()
+        .await
+        .map_err(handle_network_error)?;
+
+    if res.status().is_success() {
+        res.json::<Product>().await.map_err(|e| e.to_string())
+    } else {
+        Err(handle_error(res).await)
+    }
+}
+
+pub async fn delete_product_image(product_id: i64, image_id: i64) -> Result<(), String> {
+    let client = Client::new();
+    let res = client
+        .delete(&get_url(&format!("/products/{}/images/{}", product_id, image_id)))
+        .send()
+        .await
+        .map_err(handle_network_error)?;
+
+    if res.status().is_success() {
+        Ok(())
+    } else {
+        Err(handle_error(res).await)
+    }
+}
+
+pub async fn delete_product(id: i64, user_id: i64) -> Result<(), String> {
+    let client = Client::new();
+    let res = client
+        .delete(&get_url(&format!("/products/{}?user_id={}", id, user_id)))
+        .send()
+        .await
+        .map_err(handle_network_error)?;
+
+    if res.status().is_success() {
+        Ok(())
+    } else {
+        Err(handle_error(res).await)
+    }
+}

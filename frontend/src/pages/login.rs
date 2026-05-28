@@ -21,6 +21,12 @@ pub fn Login() -> impl IntoView {
                             let _ = storage.set_item("user_name", &res.user.name);
                         }
                     }
+                    if let Some(set_name) = use_context::<WriteSignal<String>>() {
+                        set_name.set(res.user.name.clone());
+                    }
+                    if let Some(set_logged_in) = use_context::<WriteSignal<bool>>() {
+                        set_logged_in.set(true);
+                    }
                     let navigate = use_navigate();
                     navigate("/", Default::default());
                 }

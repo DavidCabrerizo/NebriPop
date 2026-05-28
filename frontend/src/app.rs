@@ -2,7 +2,7 @@ use leptos::*;
 use leptos_router::*;
 
 use crate::pages::{
-    create_product::CreateProduct, home::Home, product_detail::ProductDetail,
+    create_product::CreateProduct, edit_product::EditProduct, home::Home, product_detail::ProductDetail,
     login::Login, register::Register, profile::Profile, user_products::UserProducts,
 };
 
@@ -10,6 +10,9 @@ use crate::pages::{
 pub fn App() -> impl IntoView {
     let (user_name, set_user_name) = create_signal(String::new());
     let (is_logged_in, set_is_logged_in) = create_signal(false);
+
+    provide_context(set_user_name);
+    provide_context(set_is_logged_in);
 
     // Check login state on component mount
     create_effect(move |_| {
@@ -58,6 +61,7 @@ pub fn App() -> impl IntoView {
                     <Route path="/" view=Home/>
                     <Route path="/products/new" view=CreateProduct/>
                     <Route path="/products/:id" view=ProductDetail/>
+                    <Route path="/products/:id/edit" view=EditProduct/>
                     <Route path="/login" view=Login/>
                     <Route path="/register" view=Register/>
                     <Route path="/profile" view=Profile/>

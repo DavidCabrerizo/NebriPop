@@ -200,4 +200,98 @@ impl ProductRepository {
 
         Ok(product)
     }
+
+    pub async fn update(pool: &SqlitePool, id: i64, dto: &crate::dto::product_dto::UpdateProductDto) -> Result<Product, AppError> {
+        let status = dto.status.as_deref().unwrap_or("available");
+        
+        sqlx::query(
+            r#"UPDATE products SET 
+                category_id = ?, title = ?, description = ?, price = ?, 
+                condition = ?, location = ?, status = ?, main_image_url = ?, updated_at = CURRENT_TIMESTAMP
+               WHERE id = ? AND user_id = ?"#
+        )
+        .bind(dto.category_id)
+        .bind(&dto.title)
+        .bind(&dto.description)
+        .bind(dto.price)
+        .bind(&dto.condition)
+        .bind(&dto.location)
+        .bind(status)
+        .bind(&dto.main_image_url)
+        .bind(id)
+        .bind(dto.user_id)
+        .execute(pool)
+        .await?;
+
+        let product = Self::find_by_id(pool, id)
+            .await?
+            .ok_or_else(|| AppError::NotFound(format!("Producto con ID {} no encontrado tras actualizar", id)))?;
+
+        Ok(product)
+    }
+
+    pub async fn delete_image(pool: &SqlitePool, id: i64, product_id: i64) -> Result<(), AppError> {
+        // Obtenemos la imagen para comprobar que existe y para poder borrar el archivo físico (opcional, aunque sqlite lo borra de db)
+        let image = sqlx::query_as::<_, ProductImage>(
+            "SELECT id, product_id, image_url, position, created_at FROM product_images WHERE id = ? AND product_id = ?"
+        )
+        .bind(id)
+        .bind(product_id)
+        .fetch_optional(pool)
+        .await?;
+
+        if let Some(img) = image {
+            // Eliminar de base de datos
+            sqlx::query("DELETE FROM product_images WHERE id = ?")
+                .bind(id)
+                .execute(pool)
+                .await?;
+
+            // Intentar eliminar el archivo físico si no es una url externa
+            if !img.image_url.starts_with("http") {
+                let _ = tokio::fs::remove_file(&img.image_url).await;
+            }
+
+            // Recalcular main_image_url si hemos borrado la principal
+            // Si la posicion era 0, buscamos la nueva imagen en posicion 0 o la primera
+            let remaining_images = Self::find_images_by_product_id(pool, product_id).await?;
+            if let Some(first_img) = remaining_images.first() {
+                sqlx::query("UPDATE products SET main_image_url = ? WHERE id = ?")
+                    .bind(&first_img.image_url)
+                    .bind(product_id)
+                    .execute(pool)
+                    .await?;
+            } else {
+                sqlx::query("UPDATE products SET main_image_url = NULL WHERE id = ?")
+                    .bind(product_id)
+                    .execute(pool)
+                    .await?;
+            }
+        }
+
+        Ok(())
+    }
+
+    pub async fn delete(pool: &SqlitePool, id: i64) -> Result<(), AppError> {
+        let images = Self::find_images_by_product_id(pool, id).await?;
+        for img in images {
+            if !img.image_url.starts_with("http") {
+                let _ = tokio::fs::remove_file(&img.image_url).await;
+            }
+        }
+        
+        sqlx::query("DELETE FROM product_images WHERE product_id = ?")
+            .bind(id)
+            .execute(pool)
+            .await?;
+            
+        sqlx::query("DELETE FROM products WHERE id = ?")
+            .bind(id)
+            .execute(pool)
+            .await?;
+            
+        let _ = tokio::fs::remove_dir_all(&format!("uploads/products/{}", id)).await;
+            
+        Ok(())
+    }
 }

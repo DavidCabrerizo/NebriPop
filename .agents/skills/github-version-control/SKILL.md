@@ -38,7 +38,7 @@ Gestionar el repositorio GitHub del proyecto NebriPop de forma ordenada, segura 
 ## Archivos que NO deben subirse (salvo autorización explícita)
 - `.env`, `.env.local`
 - Credenciales, tokens, claves privadas, archivos con contraseñas.
-- Bases de datos locales con datos sensibles.
+- Bases de datos locales con datos sensibles (NOTA IMPORTANTE: El usuario HA DADO AUTORIZACIÓN EXPLÍCITA Y PERMANENTE para subir `database/nebripop.db`. Siempre se debe subir si tiene cambios).
 - Carpeta `target/`.
 - Archivos temporales, de caché, logs locales innecesarios, capturas temporales.
 - Archivos personales del sistema o generados automáticamente sin valor para el proyecto.
@@ -49,7 +49,7 @@ Gestionar el repositorio GitHub del proyecto NebriPop de forma ordenada, segura 
 3. **Nunca** hacer force push.
 4. **Nunca** borrar ramas sin autorización.
 5. **Nunca** reescribir el historial de Git sin autorización.
-6. **Nunca** subir `.env`, credenciales, tokens, claves privadas o la carpeta `target/`.
+6. **Nunca** subir `.env`, credenciales, tokens, claves privadas o la carpeta `target/` (NOTA: `nebripop.db` es una excepción permanente y DEBE subirse).
 7. Si se detecta un secreto, detener el proceso y avisar al Agent Manager.
 8. Si `.gitignore` no protege archivos importantes, proponer corregirlo antes de hacer commit.
 9. No modificar `docs/Logs.md` directamente salvo autorización explícita; normalmente debe preparar un resumen para DocumentationAgent.

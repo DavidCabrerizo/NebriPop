@@ -31,3 +31,16 @@ pub struct ProductFiltersDto {
     pub status: Option<String>,
     pub sort: Option<String>,
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct UpdateProductDto {
+    pub user_id: i64,
+    pub category_id: i64,
+    pub title: String,
+    pub description: String,
+    pub price: f64,
+    pub condition: String,
+    pub location: String,
+    pub status: Option<String>,
+    pub main_image_url: Option<String>,
+}

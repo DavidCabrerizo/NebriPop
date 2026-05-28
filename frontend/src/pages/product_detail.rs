@@ -13,6 +13,17 @@ struct ProductParams {
 pub fn ProductDetail() -> impl IntoView {
     let params = use_params::<ProductParams>();
     let (active_image, set_active_image) = create_signal(None::<String>);
+    let (current_user_id, set_current_user_id) = create_signal(0i64);
+    
+    create_effect(move |_| {
+        if let Some(window) = web_sys::window() {
+            if let Ok(Some(storage)) = window.local_storage() {
+                if let Ok(Some(id_str)) = storage.get_item("user_id") {
+                    set_current_user_id.set(id_str.parse::<i64>().unwrap_or(0));
+                }
+            }
+        }
+    });
     
     let product_id = move || {
         params.with(|params_res| {
@@ -54,6 +65,8 @@ pub fn ProductDetail() -> impl IntoView {
                             };
 
                             let thumbnails = product.images.clone().unwrap_or_default();
+                            let is_owner = current_user_id.get() == product.user_id;
+                            let edit_url = format!("/products/{}/edit", product.id);
 
                             view! {
                                 <div class="detail-view">
@@ -85,7 +98,16 @@ pub fn ProductDetail() -> impl IntoView {
                                         }}
                                     </div>
                                     <div class="detail-content">
-                                        <h1 style="margin-top:0;">{product.title}</h1>
+                                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                            <h1 style="margin-top:0;">{product.title}</h1>
+                                            {if is_owner {
+                                                view! {
+                                                    <A href=edit_url class="btn">"Editar Producto"</A>
+                                                }.into_view()
+                                            } else {
+                                                view! { <div></div> }.into_view()
+                                            }}
+                                        </div>
                                         <h2 style="color: var(--primary-color);">{format!("{} €", product.price)}</h2>
                                         
                                         <div style="margin: 20px 0; padding: 15px; background: #f3f4f6; border-radius: 6px;">

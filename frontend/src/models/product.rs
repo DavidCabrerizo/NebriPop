@@ -39,6 +39,19 @@ pub struct CreateProductDto {
     pub main_image_url: Option<String>,
 }
 
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct UpdateProductDto {
+    pub user_id: i64,
+    pub category_id: i64,
+    pub title: String,
+    pub description: String,
+    pub price: f64,
+    pub condition: String,
+    pub location: String,
+    pub status: Option<String>,
+    pub main_image_url: Option<String>,
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct ProductDetailResponse {
     pub product: Product,
