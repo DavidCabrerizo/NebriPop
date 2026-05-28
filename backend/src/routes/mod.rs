@@ -1,6 +1,7 @@
 pub mod auth;
 pub mod users;
 pub mod favorites;
+pub mod messages;
 
 use axum::{
     routing::{get, post, put, delete},

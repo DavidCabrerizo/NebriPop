@@ -32,11 +32,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Configurar CORS
     let cors = CorsLayer::new()
         .allow_origin(Any)
-        .allow_methods([Method::GET, Method::POST, Method::OPTIONS, Method::PUT, Method::DELETE])
+        .allow_methods([Method::GET, Method::POST, Method::OPTIONS, Method::PUT, Method::DELETE, Method::PATCH])
         .allow_headers(Any);
 
     // Crear la aplicación (router) con límite aumentado para subidas de archivos
-    let app = routes::app_router(pool)
+    let app = routes::app_router(pool.clone())
+        .merge(routes::messages::routes(pool.clone()))
         .layer(axum::extract::DefaultBodyLimit::max(50 * 1024 * 1024))
         .layer(cors);
 

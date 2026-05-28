@@ -4,3 +4,4 @@ pub mod products_api;
 pub mod auth_api;
 pub mod favorites_api;
 pub mod users_api;
+pub mod messages_api;

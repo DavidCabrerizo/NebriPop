@@ -104,13 +104,23 @@ pub fn ProductDetail() -> impl IntoView {
                                                 <h1 style="margin-top:0; margin-bottom: 0;">{product.title}</h1>
                                                 <FavoriteButton product_id=product.id />
                                             </div>
-                                            {if is_owner {
-                                                view! {
-                                                    <A href=edit_url class="btn">"Editar Producto"</A>
-                                                }.into_view()
-                                            } else {
-                                                view! { <div></div> }.into_view()
-                                            }}
+                                            <div style="display: flex; gap: 10px;">
+                                                {if is_owner {
+                                                    view! {
+                                                        <A href=edit_url class="btn">"Editar Producto"</A>
+                                                    }.into_view()
+                                                } else if current_user_id.get() > 0 {
+                                                    view! {
+                                                        <div style="margin-top: 20px; display: block; text-align: center;">
+                                                            <A href=format!("/products/{}/conversation/{}", product.id, product.user_id) class="btn btn-primary">"Contactar"</A>
+                                                        </div>
+                                                    }.into_view()
+                                                } else {
+                                                    view! { 
+                                                        <span style="font-size: 0.9em; color: #666; display: flex; align-items: center;">"Inicia sesión para contactar"</span>
+                                                    }.into_view()
+                                                }}
+                                            </div>
                                         </div>
                                         <h2 style="color: var(--primary-color);">{format!("{} €", product.price)}</h2>
                                         

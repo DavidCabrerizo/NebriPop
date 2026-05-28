@@ -4,16 +4,21 @@ use leptos_router::*;
 use crate::pages::{
     create_product::CreateProduct, edit_product::EditProduct, home::Home, product_detail::ProductDetail,
     login::Login, register::Register, profile::Profile, user_products::UserProducts,
-    favorites::Favorites,
+    favorites::Favorites, messages::Messages, conversation::Conversation,
 };
 
 #[component]
 pub fn App() -> impl IntoView {
     let (user_name, set_user_name) = create_signal(String::new());
     let (is_logged_in, set_is_logged_in) = create_signal(false);
+    let (unread_count, set_unread_count) = create_signal(0i64);
 
+    provide_context(user_name);
     provide_context(set_user_name);
+    provide_context(is_logged_in);
     provide_context(set_is_logged_in);
+    provide_context(unread_count);
+    provide_context(set_unread_count);
 
     // Check login state on component mount
     create_effect(move |_| {
@@ -24,6 +29,28 @@ pub fn App() -> impl IntoView {
                     set_is_logged_in.set(true);
                 }
             }
+        }
+    });
+
+    create_effect(move |_| {
+        if is_logged_in.get() {
+            let mut id_val = 0;
+            if let Some(window) = web_sys::window() {
+                if let Ok(Some(storage)) = window.local_storage() {
+                    if let Ok(Some(id_str)) = storage.get_item("user_id") {
+                        id_val = id_str.parse::<i64>().unwrap_or(0);
+                    }
+                }
+            }
+            if id_val > 0 {
+                spawn_local(async move {
+                    if let Ok(count) = crate::api::messages_api::get_unread_count(id_val).await {
+                        set_unread_count.set(count);
+                    }
+                });
+            }
+        } else {
+            set_unread_count.set(0);
         }
     });
 
@@ -51,7 +78,19 @@ pub fn App() -> impl IntoView {
                                 <A href="/login" class="btn-secondary">"Iniciar Sesión"</A>
                             }
                         >
-                            <A href="/profile" class="btn-secondary">"Perfil (" {move || user_name.get()} ")"</A>
+                            <A href="/profile" class="btn-secondary">
+                                <span style="position: relative; display: inline-flex; align-items: center;">
+                                    "Perfil (" {move || user_name.get()} ")"
+                                    {move || {
+                                        let count = unread_count.get();
+                                        if count > 0 {
+                                            view! { <span style="position: absolute; top: -12px; right: -20px; background: #ff3b30; color: white; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">{count}</span> }.into_view()
+                                        } else {
+                                            view! { <span></span> }.into_view()
+                                        }
+                                    }}
+                                </span>
+                            </A>
                             <button on:click=logout class="btn-danger" style="padding: 5px 10px; cursor: pointer;">"Salir"</button>
                         </Show>
                     </div>
@@ -68,6 +107,8 @@ pub fn App() -> impl IntoView {
                     <Route path="/profile" view=Profile/>
                     <Route path="/users/:id/products" view=UserProducts/>
                     <Route path="/favorites" view=Favorites/>
+                    <Route path="/messages" view=Messages/>
+                    <Route path="/products/:id/conversation/:other_id" view=Conversation/>
                 </Routes>
             </main>
         </Router>

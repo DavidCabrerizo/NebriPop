@@ -28,6 +28,8 @@ pub fn Profile() -> impl IntoView {
         }
     );
 
+    let unread_count = use_context::<ReadSignal<i64>>().unwrap_or_else(|| create_signal(0).0);
+
     let (is_editing, set_is_editing) = create_signal(false);
     let (edit_phone, set_edit_phone) = create_signal("".to_string());
     let (edit_location, set_edit_location) = create_signal("".to_string());
@@ -118,6 +120,19 @@ pub fn Profile() -> impl IntoView {
                                     <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
                                         <A href=format!("/users/{}/products", user.id) class="btn btn-secondary">"Ver productos publicados"</A>
                                         <A href="/favorites" class="btn btn-secondary">"Mis Favoritos"</A>
+                                        <A href="/messages" class="btn btn-secondary">
+                                            <span style="position: relative; display: inline-flex; align-items: center;">
+                                                "Mis Mensajes"
+                                                {move || {
+                                                    let count = unread_count.get();
+                                                    if count > 0 {
+                                                        view! { <span style="position: absolute; top: -12px; right: -25px; background: #ff3b30; color: white; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">{count}</span> }.into_view()
+                                                    } else {
+                                                        view! { <span></span> }.into_view()
+                                                    }
+                                                }}
+                                            </span>
+                                        </A>
                                         <button class="btn btn-primary" on:click=on_click_edit.clone()>"Editar Perfil"</button>
                                     </div>
                                 }.into_view()

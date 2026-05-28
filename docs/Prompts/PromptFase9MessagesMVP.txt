@@ -1,0 +1,878 @@
+Actúa como Agent Manager / Product Manager Agent del proyecto NebriPop.
+
+Objetivo:
+Iniciar la Fase 9 del MVP real de NebriPop.
+
+Nombre de la fase:
+Fase 9 — Mensajería básica entre usuarios
+
+Repositorio oficial:
+https://github.com/DavidCabrerizo/NebriPop/
+
+Contexto:
+Ya se han completado las fases anteriores del MVP de NebriPop:
+
+- Fase 1: estructura real del proyecto.
+- Fase 2: diseño de la base de datos SQLite.
+- Fase 3: backend base con Axum conectado a SQLite.
+- Fase 4: frontend base con Leptos conectado al backend Axum.
+- Fase 5: integración completa Frontend + Backend + SQLite.
+- Fase 5B: gestión de imágenes de productos.
+- Fase 6: sistema básico de usuarios.
+- Fase 7: búsqueda y filtros de productos.
+- Fase 8: sistema de favoritos.
+
+NebriPop es una aplicación tipo Wallapop para compraventa de productos de segunda mano de todo tipo. Ahora necesitamos implementar una mensajería básica para que un usuario pueda contactar con el vendedor de un producto.
+
+Stack tecnológico definitivo:
+- Frontend: Rust + Leptos
+- Backend: Rust + Axum
+- Base de datos: SQLite
+- Base de datos real: database/nebripop.db
+- Backend local: http://127.0.0.1:3000
+- Frontend local: http://127.0.0.1:8081
+- Control de versiones: Git + GitHub
+
+Objetivo principal de la Fase 9:
+Implementar una mensajería básica entre usuarios, permitiendo enviar mensajes relacionados con un producto, consultar conversaciones y ver mensajes recibidos o enviados.
+
+Importante:
+Esta fase debe centrarse únicamente en mensajería básica.
+
+En esta fase SÍ se permite implementar:
+- Enviar mensaje a un vendedor sobre un producto.
+- Guardar mensajes en SQLite.
+- Consultar mensajes recibidos.
+- Consultar mensajes enviados.
+- Consultar conversación relacionada con un producto.
+- Marcar mensajes como leídos, si es sencillo.
+- Mostrar mensajes en el frontend.
+- Añadir botón “Contactar” en detalle de producto.
+- Validaciones básicas.
+- Documentación, QA, seguridad y revisión.
+
+En esta fase NO se debe implementar todavía:
+- Chat en tiempo real.
+- WebSockets.
+- Notificaciones push.
+- Pagos.
+- Sistema real de compras.
+- Envío de emails.
+- Archivos adjuntos en mensajes.
+- Bloqueo de usuarios.
+- Reportes.
+- Panel de administración.
+- Reviews o valoraciones.
+
+Regla crítica de persistencia:
+Los mensajes deben guardarse siempre en SQLite.
+
+Queda prohibido guardar mensajes en archivos `.json`.
+
+No se deben usar archivos como:
+
+- messages.json
+- chat.json
+- conversations.json
+- data.json
+- mock.json
+
+SQLite debe seguir siendo la fuente de verdad.
+
+Regla obligatoria de planificación:
+Antes de implementar código, el Agent Manager debe solicitar un plan de implementación breve a RustArchitectAgent, RustBackend, RustFrontend, DatabaseAgent, QAAgent y SequrityAgent.
+
+El plan debe incluir:
+
+1. Qué archivos se van a crear o modificar.
+2. Qué cambios se harán en backend.
+3. Qué cambios se harán en frontend.
+4. Qué cambios se harán en SQLite, si son necesarios.
+5. Qué endpoints se van a crear o modificar.
+6. Cómo se relacionan usuarios, productos y mensajes.
+7. Cómo se identificará temporalmente al usuario.
+8. Qué riesgos se deben controlar.
+9. Qué pruebas se van a realizar.
+10. Qué agentes intervienen en cada paso.
+
+El Agent Manager debe revisar y aprobar el plan antes de permitir que RustBackend o RustFrontend escriban código.
+
+Agentes que deben intervenir:
+
+1. Agent Manager / Product Manager Agent
+2. RustArchitectAgent
+3. DatabaseAgent
+4. RustBackend
+5. RustFrontend
+6. UXDesigner
+7. QAAgent
+8. SequrityAgent
+9. DocumentationAgent
+10. ReviewerAgent
+11. GitHubAgent, solo si el Agent Manager autoriza commit y push al final
+
+Regla principal:
+Todos los agentes están subordinados al Agent Manager. Ningún agente puede modificar archivos fuera del alcance de la Fase 9 sin autorización explícita.
+
+Regla obligatoria sobre docs/Logs.md:
+Ningún agente puede modificar docs/Logs.md salvo DocumentationAgent.
+
+Al finalizar la Fase 9, el Agent Manager / Product Manager Agent debe autorizar automáticamente a @DocumentationAgent para actualizar docs/Logs.md.
+
+La instrucción obligatoria del Agent Manager será:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 9.”
+
+Después de esta autorización automática, @DocumentationAgent debe actualizar docs/Logs.md obligatoriamente con el resumen de la Fase 9.
+
+La Fase 9 no podrá darse por finalizada hasta que docs/Logs.md haya sido actualizado correctamente.
+
+Si ocurre un error al actualizar docs/Logs.md, DocumentationAgent debe informar del error, corregirlo si está dentro de su alcance y volver a intentar la actualización.
+
+Carpetas principales del proyecto:
+
+backend/
+frontend/
+database/
+docs/
+scripts/
+experiments/
+
+La carpeta experiments/ debe mantenerse aislada. No debe mezclarse con el código real del MVP.
+
+Archivos principales que deben revisarse antes de actuar:
+
+database/schema.sql
+database/seeds.sql
+database/nebripop.db
+database/README.md
+backend/Cargo.toml
+backend/src/
+frontend/Cargo.toml
+frontend/src/
+frontend/styles.css
+docs/API_DOCS.md
+docs/DATABASE_SCHEMA.md
+docs/PHASE_6_USERS.md
+docs/PHASE_8_FAVORITES.md
+docs/AUTH_BASIC.md
+.env.example
+.gitignore
+
+Archivos principales que pueden crearse o actualizarse:
+
+backend/src/routes/messages.rs
+backend/src/handlers/messages_handler.rs
+backend/src/repositories/message_repository.rs
+backend/src/services/message_service.rs
+backend/src/dto/message_dto.rs
+backend/src/models.rs
+backend/src/routes/mod.rs
+backend/src/handlers/mod.rs
+backend/src/repositories/mod.rs
+backend/src/services/mod.rs
+
+frontend/src/pages/messages.rs
+frontend/src/pages/conversation.rs
+frontend/src/components/message_form.rs
+frontend/src/components/message_list.rs
+frontend/src/components/conversation_card.rs
+frontend/src/components/contact_seller_button.rs
+frontend/src/pages/product_detail.rs
+frontend/src/api/messages_api.rs
+frontend/src/models/message.rs
+frontend/src/models/conversation.rs
+frontend/styles.css
+
+docs/PHASE_9_MESSAGES.md
+docs/API_DOCS.md
+docs/UI_UX_PHASE_9.md
+docs/QA_PHASE_9_MESSAGES.md
+docs/SECURITY_PHASE_9_MESSAGES.md
+docs/REVIEW_PHASE_9.md
+docs/Prompts/PromptFase9MessagesMVP.txt
+docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+
+Tareas por agente:
+
+## 1. Agent Manager / Product Manager Agent
+
+Debe coordinar toda la Fase 9.
+
+Debe definir:
+
+- Objetivo exacto de la fase.
+- Alcance permitido.
+- Agentes participantes.
+- Orden de intervención.
+- Archivos permitidos.
+- Archivos prohibidos.
+- Criterios de aceptación.
+- Condiciones para pasar a Fase 10.
+- Si GitHubAgent puede preparar commit al final de la fase.
+
+Debe controlar especialmente que:
+
+- Primero se cree y apruebe un plan de implementación.
+- No se usen archivos `.json`.
+- SQLite siga siendo la fuente de verdad.
+- RustBackend implemente endpoints de mensajes.
+- RustFrontend implemente pantallas y componentes de mensajería.
+- DatabaseAgent revise la tabla messages.
+- SequrityAgent revise riesgos de acceso entre usuarios.
+- DocumentationAgent actualice docs/Logs.md al finalizar.
+- GitHubAgent no haga commit ni push sin autorización.
+- No se implemente chat en tiempo real.
+- No se implementen funcionalidades fuera de Fase 9.
+
+## 2. RustArchitectAgent
+
+Debe crear un plan de arquitectura para mensajería básica.
+
+Debe definir:
+
+- Cómo se relacionan users, products y messages.
+- Qué endpoints debe exponer el backend.
+- Cómo se enviará un mensaje desde el detalle de producto.
+- Cómo se consultarán mensajes recibidos y enviados.
+- Cómo se consultará una conversación por producto.
+- Cómo se marcará un mensaje como leído, si se implementa.
+- Cómo mantener la lógica simple para el MVP.
+- Qué archivos deben modificarse.
+- Riesgos técnicos.
+- Recomendaciones para RustBackend y RustFrontend.
+
+Debe crear o actualizar:
+
+docs/PHASE_9_MESSAGES.md
+
+No debe implementar código.
+
+## 3. DatabaseAgent
+
+Debe revisar si la base de datos está preparada para mensajes.
+
+Debe comprobar que existe la tabla:
+
+messages
+
+Con estructura mínima:
+
+- id INTEGER PRIMARY KEY AUTOINCREMENT
+- product_id INTEGER NOT NULL
+- sender_id INTEGER NOT NULL
+- receiver_id INTEGER NOT NULL
+- content TEXT NOT NULL
+- created_at TEXT NOT NULL
+- is_read INTEGER NOT NULL DEFAULT 0
+- FOREIGN KEY (product_id) REFERENCES products(id)
+- FOREIGN KEY (sender_id) REFERENCES users(id)
+- FOREIGN KEY (receiver_id) REFERENCES users(id)
+
+Debe comprobar que existen índices útiles:
+
+- idx_messages_receiver_id
+- idx_messages_sender_id
+- idx_messages_product_id
+- idx_messages_created_at, si se considera necesario
+
+Debe comprobar:
+
+- Que product_id referencia a products.
+- Que sender_id referencia a users.
+- Que receiver_id referencia a users.
+- Que content no está vacío.
+- Que is_read tiene valor por defecto 0.
+- Que no se usan archivos JSON.
+- Que SQLite es la fuente de verdad.
+
+Puede actualizar:
+
+database/schema.sql
+docs/DATABASE_SCHEMA.md
+docs/DATABASE_DECISIONS.md
+database/README.md
+
+Solo debe modificar database/schema.sql si el Agent Manager lo autoriza.
+
+No debe modificar frontend.
+No debe modificar docs/Logs.md.
+
+## 4. RustBackend
+
+RustBackend será el agente principal de implementación backend de esta fase.
+
+Debe trabajar en:
+
+backend/
+
+Debe implementar endpoints para mensajería básica.
+
+Endpoints obligatorios:
+
+### POST /messages
+
+Debe enviar un mensaje relacionado con un producto.
+
+Body esperado:
+
+{
+  "product_id": 1,
+  "sender_id": 2,
+  "receiver_id": 1,
+  "content": "Hola, ¿sigue disponible?"
+}
+
+Validaciones:
+- product_id debe existir.
+- sender_id debe existir.
+- receiver_id debe existir.
+- sender_id y receiver_id no deberían ser iguales.
+- content no puede estar vacío.
+- content debe tener una longitud máxima razonable, por ejemplo 1000 caracteres.
+- No guardar en JSON.
+- Guardar en SQLite.
+
+Respuesta esperada:
+
+{
+  "id": 1,
+  "product_id": 1,
+  "sender_id": 2,
+  "receiver_id": 1,
+  "content": "Hola, ¿sigue disponible?",
+  "created_at": "2026-05-24T10:00:00",
+  "is_read": false
+}
+
+### GET /users/:id/messages
+
+Debe devolver mensajes recibidos por un usuario.
+
+Ejemplo:
+
+GET /users/1/messages
+
+Respuesta esperada:
+
+[
+  {
+    "id": 1,
+    "product_id": 1,
+    "sender_id": 2,
+    "receiver_id": 1,
+    "content": "Hola, ¿sigue disponible?",
+    "created_at": "2026-05-24T10:00:00",
+    "is_read": false
+  }
+]
+
+### GET /users/:id/messages/sent
+
+Debe devolver mensajes enviados por un usuario.
+
+Ejemplo:
+
+GET /users/2/messages/sent
+
+### GET /products/:product_id/messages?user_id=1
+
+Debe devolver la conversación relacionada con un producto donde participa el usuario indicado.
+
+Ejemplo:
+
+GET /products/1/messages?user_id=1
+
+Debe devolver mensajes donde:
+
+- product_id = 1
+- sender_id = user_id OR receiver_id = user_id
+
+Ordenados por created_at ascendente.
+
+### PATCH /messages/:id/read
+
+Debe marcar un mensaje como leído.
+
+Body esperado:
+
+{
+  "user_id": 1
+}
+
+Validaciones:
+- El mensaje debe existir.
+- Solo el receiver_id debería poder marcarlo como leído.
+- Si user_id no coincide con receiver_id, devolver error.
+
+Respuesta esperada:
+
+{
+  "message": "Mensaje marcado como leído",
+  "id": 1
+}
+
+Reglas backend obligatorias:
+
+- Usar SQLite.
+- No usar JSON como persistencia.
+- Usar consultas parametrizadas.
+- Validar sender_id, receiver_id y product_id.
+- Validar content.
+- No exponer password_hash.
+- No implementar WebSockets.
+- No implementar chat en tiempo real.
+- No modificar login salvo que sea imprescindible.
+- Mantener compatibilidad con productos, usuarios y favoritos.
+
+RustBackend puede modificar:
+
+backend/src/routes/messages.rs
+backend/src/handlers/messages_handler.rs
+backend/src/repositories/message_repository.rs
+backend/src/services/message_service.rs
+backend/src/dto/message_dto.rs
+backend/src/models.rs
+backend/src/routes/mod.rs
+backend/src/handlers/mod.rs
+backend/src/repositories/mod.rs
+backend/src/services/mod.rs
+docs/API_DOCS.md, si necesita actualizar endpoints
+
+RustBackend no debe implementar:
+
+- Chat en tiempo real.
+- WebSockets.
+- Pagos.
+- Notificaciones push.
+- Sistema real de compras.
+- Recomendaciones inteligentes.
+- Archivos adjuntos en mensajes.
+
+RustBackend no debe modificar docs/Logs.md.
+
+## 5. UXDesigner
+
+Debe proponer la experiencia de usuario de mensajería.
+
+Debe crear o actualizar:
+
+docs/UI_UX_PHASE_9.md
+
+Debe definir:
+
+- Dónde colocar el botón “Contactar”.
+- Cómo abrir el formulario de mensaje desde el detalle del producto.
+- Cómo mostrar mensajes recibidos.
+- Cómo mostrar mensajes enviados.
+- Cómo mostrar conversación por producto.
+- Cómo mostrar mensajes leídos y no leídos.
+- Cómo mostrar errores.
+- Cómo mostrar “No tienes mensajes todavía”.
+- Cómo mantener la interfaz simple y parecida a Wallapop.
+
+Debe mantener una interfaz sencilla, clara y de MVP.
+
+No debe implementar código salvo autorización.
+
+## 6. RustFrontend
+
+RustFrontend será el agente principal de implementación frontend de esta fase.
+
+Debe trabajar en:
+
+frontend/
+
+Debe implementar:
+
+- Botón “Contactar” en ProductDetail.
+- Formulario para enviar mensaje al vendedor.
+- Página “Mensajes”.
+- Lista de mensajes recibidos.
+- Lista de mensajes enviados, si se considera simple.
+- Página o vista de conversación por producto.
+- Mensajes de carga.
+- Mensajes de error.
+- Mensaje de éxito al enviar.
+- Estado visual para mensajes leídos/no leídos.
+- Integración con usuario logueado.
+
+Debe consumir:
+
+POST http://127.0.0.1:3000/messages
+GET http://127.0.0.1:3000/users/:id/messages
+GET http://127.0.0.1:3000/users/:id/messages/sent
+GET http://127.0.0.1:3000/products/:product_id/messages?user_id=1
+PATCH http://127.0.0.1:3000/messages/:id/read
+
+Comportamiento esperado:
+
+- Si el usuario está logueado, puede contactar con el vendedor.
+- Si el usuario no está logueado, mostrar mensaje: “Inicia sesión para enviar mensajes”.
+- No permitir enviar mensajes vacíos.
+- No permitir que un usuario se envíe mensaje a sí mismo.
+- En detalle de producto, mostrar botón “Contactar”.
+- En página de mensajes, mostrar mensajes recibidos.
+- Si no hay mensajes, mostrar “No tienes mensajes todavía”.
+- Si se abre una conversación, mostrar mensajes ordenados.
+- Si se marca como leído, actualizar estado visual.
+
+Validaciones frontend:
+
+- No llamar a mensajes si no hay user_id.
+- content no puede estar vacío.
+- content debe tener máximo razonable.
+- Mostrar error si backend falla.
+- Refrescar listado después de enviar mensaje.
+- Mantener imágenes, favoritos y navegación funcionando.
+
+RustFrontend puede modificar:
+
+frontend/src/pages/messages.rs
+frontend/src/pages/conversation.rs
+frontend/src/components/message_form.rs
+frontend/src/components/message_list.rs
+frontend/src/components/conversation_card.rs
+frontend/src/components/contact_seller_button.rs
+frontend/src/pages/product_detail.rs
+frontend/src/api/messages_api.rs
+frontend/src/models/message.rs
+frontend/src/models/conversation.rs
+frontend/styles.css
+
+RustFrontend no debe implementar:
+
+- WebSockets.
+- Chat en tiempo real.
+- Pagos.
+- Notificaciones push.
+- Compra real.
+
+RustFrontend no debe modificar docs/Logs.md.
+
+## 7. QAAgent
+
+Debe crear o actualizar:
+
+docs/QA_PHASE_9_MESSAGES.md
+
+Debe validar:
+
+Backend:
+- POST /messages crea un mensaje.
+- POST /messages rechaza content vacío.
+- POST /messages rechaza product_id inexistente.
+- POST /messages rechaza sender_id inexistente.
+- POST /messages rechaza receiver_id inexistente.
+- POST /messages rechaza sender_id igual a receiver_id.
+- GET /users/:id/messages devuelve mensajes recibidos.
+- GET /users/:id/messages/sent devuelve mensajes enviados.
+- GET /products/:product_id/messages?user_id=1 devuelve conversación.
+- PATCH /messages/:id/read marca mensaje como leído.
+- No se usan archivos JSON.
+- Los mensajes se guardan en SQLite.
+
+Frontend:
+- Botón “Contactar” aparece en detalle.
+- El formulario de mensaje funciona.
+- No se permite enviar mensaje vacío.
+- Página “Mensajes” muestra mensajes recibidos.
+- La conversación muestra mensajes ordenados.
+- Se muestra mensaje si no hay mensajes.
+- Se muestran errores si backend falla.
+- Imágenes, favoritos y productos siguen funcionando.
+
+Base de datos:
+- messages contiene product_id, sender_id, receiver_id y content.
+- is_read se actualiza correctamente.
+- Los mensajes persisten tras reiniciar backend.
+
+Comandos de prueba backend:
+
+cd backend
+cargo run
+
+Enviar mensaje:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/messages `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body '{"product_id":1,"sender_id":2,"receiver_id":1,"content":"Hola, ¿sigue disponible?"}'
+
+Mensajes recibidos:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/users/1/messages -Method GET
+
+Mensajes enviados:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/users/2/messages/sent -Method GET
+
+Conversación por producto:
+
+Invoke-RestMethod -Uri "http://127.0.0.1:3000/products/1/messages?user_id=1" -Method GET
+
+Marcar como leído:
+
+Invoke-RestMethod -Uri http://127.0.0.1:3000/messages/1/read `
+  -Method PATCH `
+  -ContentType "application/json" `
+  -Body '{"user_id":1}'
+
+QAAgent no debe modificar código salvo autorización expresa.
+QAAgent no debe modificar docs/Logs.md.
+
+## 8. SequrityAgent
+
+Debe crear o actualizar:
+
+docs/SECURITY_PHASE_9_MESSAGES.md
+
+Debe revisar:
+
+- Que sender_id, receiver_id y product_id se validan.
+- Que las consultas son parametrizadas.
+- Que no se usan JSON.
+- Que un usuario no acceda a conversaciones donde no participa.
+- Que solo receiver_id pueda marcar un mensaje como leído.
+- Que no se exponen datos sensibles.
+- Que no se devuelve password_hash.
+- Que content tiene longitud máxima.
+- Que content se muestra como texto y no como HTML ejecutable.
+- Que no se implementa autenticación falsa.
+- Que si se usa user_id del frontend, quede documentado como limitación temporal del MVP.
+
+Debe proponer mejoras futuras:
+
+- Asociar mensajes al usuario autenticado mediante JWT.
+- No aceptar sender_id desde cliente cuando haya autenticación real.
+- Sanitizar contenido de mensajes.
+- Añadir notificaciones en fase futura.
+
+SequrityAgent no debe modificar código salvo autorización.
+SequrityAgent no debe modificar docs/Logs.md.
+
+## 9. DocumentationAgent
+
+Debe documentar toda la Fase 9.
+
+Debe crear o actualizar:
+
+docs/PHASE_9_MESSAGES.md
+docs/API_DOCS.md
+docs/UI_UX_PHASE_9.md, si procede
+docs/QA_PHASE_9_MESSAGES.md, si procede
+docs/SECURITY_PHASE_9_MESSAGES.md, si procede
+frontend/README.md, si procede
+backend/README.md, si procede
+
+Debe guardar este prompt completo en:
+
+docs/Prompts/PromptFase9MessagesMVP.txt
+
+Si la carpeta docs/Prompts no existe, créala.
+
+docs/PHASE_9_MESSAGES.md debe incluir:
+
+# Fase 9 — Mensajería básica entre usuarios
+
+## 1. Objetivo de la fase
+
+## 2. Plan de implementación aprobado
+
+## 3. Funcionamiento de la mensajería
+
+## 4. Endpoints implementados
+
+## 5. Cambios en backend
+
+## 6. Cambios en frontend
+
+## 7. Cambios en SQLite
+
+## 8. Validaciones aplicadas
+
+## 9. Seguridad
+
+## 10. Pruebas realizadas
+
+## 11. Limitaciones del MVP
+
+## 12. Resultado final
+
+## 13. Próxima fase recomendada
+
+Regla obligatoria sobre docs/Logs.md:
+
+DocumentationAgent NO debe modificar docs/Logs.md durante el desarrollo de la fase por iniciativa propia.
+
+Al terminar la Fase 9, DocumentationAgent debe preparar el resumen de la fase.
+
+Después, el Agent Manager debe autorizar automáticamente la actualización de docs/Logs.md con la instrucción:
+
+“Autorizo a @DocumentationAgent a actualizar docs/Logs.md con el resumen de la Fase 9.”
+
+Una vez recibida esta autorización automática, DocumentationAgent debe actualizar docs/Logs.md obligatoriamente.
+
+La entrada en docs/Logs.md debe incluir:
+
+- Fecha.
+- Fase: Fase 9 — Mensajería básica entre usuarios.
+- Agente responsable: Agent Manager / Product Manager Agent.
+- Agentes participantes.
+- Archivos creados.
+- Archivos modificados.
+- Endpoints creados o modificados.
+- Pantallas o componentes creados.
+- Cambios en backend.
+- Cambios en frontend.
+- Cambios en SQLite, si aplica.
+- Seguridad aplicada.
+- Motivo de la fase.
+- Resultado de la fase.
+- Veredicto final.
+- Próximo paso recomendado.
+
+La Fase 9 no puede considerarse cerrada hasta que docs/Logs.md esté actualizado correctamente.
+
+## 10. ReviewerAgent
+
+Debe crear o actualizar:
+
+docs/REVIEW_PHASE_9.md
+
+Debe comprobar:
+
+- Que se hizo plan de implementación antes de codificar.
+- Que los mensajes se guardan en SQLite.
+- Que no se usan JSON.
+- Que existen endpoints de mensajes.
+- Que se puede enviar mensaje.
+- Que se pueden consultar mensajes recibidos.
+- Que se pueden consultar mensajes enviados.
+- Que se puede consultar conversación por producto.
+- Que se puede marcar mensaje como leído.
+- Que el frontend muestra botón “Contactar”.
+- Que existe página o sección de mensajes.
+- Que se muestra estado visual correcto.
+- Que no se han implementado funcionalidades fuera del alcance.
+- Que QAAgent ha documentado pruebas.
+- Que SequrityAgent ha documentado riesgos.
+- Que DocumentationAgent ha documentado la fase.
+- Que docs/Logs.md ha sido actualizado por DocumentationAgent tras autorización automática del Agent Manager.
+
+Debe emitir veredicto:
+
+- Fase 9 aprobada. Se puede pasar a Fase 10.
+- Fase 9 aprobada con ajustes menores.
+- Fase 9 no aprobada.
+
+ReviewerAgent no debe modificar docs/Logs.md.
+
+## 11. GitHubAgent
+
+Solo debe actuar si el Agent Manager lo autoriza al final de la fase.
+
+Debe revisar:
+
+- git status
+- git diff
+- git remote -v
+- archivos nuevos
+- archivos modificados
+- archivos que no deben subirse
+
+Debe revisar especialmente:
+
+- .env
+- target/
+- database/nebripop.db
+- archivos temporales
+- posibles datos personales reales
+
+Mensaje de commit sugerido:
+
+feat: añade mensajería básica entre usuarios
+
+GitHubAgent no debe modificar docs/Logs.md.
+
+Archivos permitidos:
+
+- backend/src/
+- frontend/src/
+- frontend/styles.css
+- database/schema.sql, solo si se ajusta la tabla messages o índices
+- docs/PHASE_9_MESSAGES.md
+- docs/UI_UX_PHASE_9.md
+- docs/QA_PHASE_9_MESSAGES.md
+- docs/SECURITY_PHASE_9_MESSAGES.md
+- docs/REVIEW_PHASE_9.md
+- docs/API_DOCS.md
+- docs/Prompts/PromptFase9MessagesMVP.txt
+- docs/Logs.md, únicamente por DocumentationAgent tras autorización automática del Agent Manager
+- .gitignore, si hay que ajustar reglas
+
+Archivos prohibidos:
+
+- PRD.md, salvo autorización explícita.
+- IMPLEMENTATION_PLAN.md, salvo autorización explícita.
+- Archivos .json como persistencia.
+- Chat en tiempo real.
+- WebSockets.
+- Pagos.
+- Notificaciones push.
+- Sistema real de compras.
+- Datos personales reales.
+
+Criterios de aceptación:
+
+La Fase 9 se considera válida si:
+
+1. Se crea y aprueba un plan de implementación antes de codificar.
+2. Existe o se valida la tabla messages.
+3. POST /messages funciona.
+4. GET /users/:id/messages funciona.
+5. GET /users/:id/messages/sent funciona.
+6. GET /products/:product_id/messages?user_id=1 funciona.
+7. PATCH /messages/:id/read funciona.
+8. Los mensajes se guardan en SQLite.
+9. No se usan JSON como persistencia.
+10. El frontend muestra botón “Contactar”.
+11. El usuario puede enviar un mensaje.
+12. Existe sección o página de mensajes.
+13. Se pueden ver mensajes recibidos.
+14. Se pueden ver mensajes enviados o conversación.
+15. Se muestra mensaje si no hay mensajes.
+16. Se validan mensajes vacíos.
+17. Se evita que un usuario se envíe mensajes a sí mismo.
+18. QAAgent documenta pruebas.
+19. SequrityAgent documenta riesgos.
+20. ReviewerAgent emite veredicto.
+21. DocumentationAgent documenta la fase.
+22. docs/Logs.md queda actualizado automáticamente.
+23. La fase queda lista para pasar a Fase 10.
+
+Resultado esperado:
+
+Al finalizar, devuelve:
+
+1. Estado de la Fase 9.
+2. Plan de implementación aprobado.
+3. Agentes que han intervenido.
+4. Archivos creados.
+5. Archivos modificados.
+6. Endpoints implementados.
+7. Cambios en backend.
+8. Cambios en frontend.
+9. Cambios en SQLite, si aplica.
+10. Validaciones aplicadas.
+11. Resultado de QAAgent.
+12. Resultado de SequrityAgent.
+13. Resultado de ReviewerAgent.
+14. Confirmación de actualización de docs/Logs.md.
+15. Si se recomienda activar GitHubAgent para commit y push.
+16. Si se puede pasar a Fase 10.
+17. Próximo prompt recomendado para Fase 10.
+
+Guardar este prompt completo en:
+
+docs/Prompts/PromptFase9MessagesMVP.txt
