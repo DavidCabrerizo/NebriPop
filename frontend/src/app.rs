@@ -5,6 +5,7 @@ use crate::pages::{
     create_product::CreateProduct, edit_product::EditProduct, home::Home, product_detail::ProductDetail,
     login::Login, register::Register, profile::Profile, user_products::UserProducts,
     favorites::Favorites, messages::Messages, conversation::Conversation,
+    contact::Contact,
 };
 
 #[component]
@@ -67,9 +68,14 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Router>
-            <header>
+            <div style="display: flex; flex-direction: column; min-height: 100vh;">
+                <header>
                 <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                    <A href="/" class="brand">"NebriPop"</A>
+                    <A href="/" class="brand">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="/logo.png" alt="NebriPop Logo" style="height: 40px;"/>
+                        </div>
+                    </A>
                     <div style="display: flex; gap: 15px; align-items: center;">
                         <A href="/products/new" class="btn">"+ Publicar Producto"</A>
                         <Show
@@ -84,7 +90,7 @@ pub fn App() -> impl IntoView {
                                     {move || {
                                         let count = unread_count.get();
                                         if count > 0 {
-                                            view! { <span style="position: absolute; top: -12px; right: -20px; background: #ff3b30; color: white; border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">{count}</span> }.into_view()
+                                            view! { <span style="position: absolute; top: -12px; right: -20px; background: var(--accent-color); color: var(--text-color); border-radius: 50%; min-width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">{count}</span> }.into_view()
                                         } else {
                                             view! { <span></span> }.into_view()
                                         }
@@ -96,7 +102,7 @@ pub fn App() -> impl IntoView {
                     </div>
                 </div>
             </header>
-            <main class="container">
+            <main class="container" style="flex: 1; width: 100%; box-sizing: border-box;">
                 <Routes>
                     <Route path="/" view=Home/>
                     <Route path="/products/new" view=CreateProduct/>
@@ -109,8 +115,19 @@ pub fn App() -> impl IntoView {
                     <Route path="/favorites" view=Favorites/>
                     <Route path="/messages" view=Messages/>
                     <Route path="/products/:id/conversation/:other_id" view=Conversation/>
+                    <Route path="/contact" view=Contact/>
                 </Routes>
             </main>
+            <footer style="background-color: var(--text-color); color: white; text-align: center; padding: 30px 20px; margin-top: auto;">
+                <div style="font-weight: 500; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    "NebriPop hecho con amor"
+                    <span style="color: var(--danger-color); font-size: 1.2rem;">"❤️"</span>
+                </div>
+                <div style="margin-top: 15px;">
+                    <A href="/contact" class="footer-link">"Contacto"</A>
+                </div>
+            </footer>
+            </div>
         </Router>
     }
 }
