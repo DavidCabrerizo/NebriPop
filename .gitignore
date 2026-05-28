@@ -2,7 +2,6 @@
 /dist
 **/*.rs.bk
 # Database files
-*.db
 *.sqlite
 *.sqlite3
 *.sqlite-journal
