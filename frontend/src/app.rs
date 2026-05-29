@@ -157,7 +157,7 @@ pub fn App() -> impl IntoView {
                     <Route path="/contact" view=Contact/>
                 </Routes>
             </main>
-            <footer style="background-color: var(--text-color); color: white; text-align: center; padding: 30px 20px; margin-top: auto;">
+            <footer class="site-footer">
                 <div style="font-weight: 500; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
                     "NebriPop hecho con amor"
                     <span style="color: var(--danger-color); font-size: 1.2rem;">"❤️"</span>

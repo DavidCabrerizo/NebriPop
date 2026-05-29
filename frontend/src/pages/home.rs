@@ -65,8 +65,8 @@ pub fn Home() -> impl IntoView {
     });
 
     view! {
-        <div class="home-container" style="display: flex; gap: 30px; margin-top: 20px;">
-            <aside class="sidebar" style="width: 280px; flex-shrink: 0;">
+        <div class="home-container">
+            <aside class="sidebar">
                 <ProductFilter
                     category_id=category_id
                     set_category_id=set_category_id

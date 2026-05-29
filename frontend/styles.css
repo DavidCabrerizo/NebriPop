@@ -33,12 +33,13 @@ body {
 }
 
 header {
-  background-color: white;
+  background-color: var(--card-bg);
   padding: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.2s ease;
 }
 
 .brand {
@@ -104,6 +105,17 @@ header {
   background-color: #dc2626;
   transform: translateY(-1px);
   box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+}
+
+.home-container {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
 }
 
 .grid {
@@ -336,6 +348,20 @@ header {
   color: var(--primary-hover);
 }
 
+.site-footer {
+  background-color: #333333;
+  color: #ffffff;
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: auto;
+  transition: background-color 0.2s ease;
+}
+
+[data-theme="dark"] .site-footer {
+  background-color: #0a0a0a;
+  color: #e5e7eb;
+}
+
 /* WCAG Focus Styles */
 *:focus-visible {
   outline: 3px solid var(--primary-color);
@@ -361,5 +387,14 @@ header {
   .auth-container, .profile-container, .detail-view {
     margin: 20px 10px;
     padding: 15px;
+  }
+  
+  .home-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sidebar {
+    width: 100%;
   }
 }
