@@ -7,6 +7,21 @@ pub fn Login() -> impl IntoView {
     let (email, set_email) = create_signal(String::new());
     let (password, set_password) = create_signal(String::new());
     let (error_msg, set_error_msg) = create_signal(Option::<String>::None);
+    let (show_password, set_show_password) = create_signal(false);
+    
+    let on_recover_password = move |ev: leptos::ev::MouseEvent| {
+        ev.prevent_default();
+        let e = email.get();
+        if e.is_empty() {
+            if let Some(window) = web_sys::window() {
+                let _ = window.alert_with_message("Por favor, introduce tu correo electrónico en el campo superior para recuperar la contraseña.");
+            }
+        } else {
+            if let Some(window) = web_sys::window() {
+                let _ = window.alert_with_message(&format!("(Simulación MVP) Se ha enviado un enlace de recuperación a: {}", e));
+            }
+        }
+    };
     
     let login_action = create_action(move |(e, p): &(String, String)| {
         let e = e.clone();
@@ -56,14 +71,23 @@ pub fn Login() -> impl IntoView {
                         prop:value=email 
                     />
                 </div>
-                <div class="form-group">
+                <div class="form-group password-group">
                     <label>"Contraseña"</label>
-                    <input 
-                        type="password" 
-                        required 
-                        on:input=move |ev| set_password.set(event_target_value(&ev)) 
-                        prop:value=password 
-                    />
+                    <div style="display: flex; gap: 8px;">
+                        <input 
+                            type=move || if show_password.get() { "text" } else { "password" }
+                            required 
+                            on:input=move |ev| set_password.set(event_target_value(&ev)) 
+                            prop:value=password 
+                            style="flex: 1;"
+                        />
+                        <button type="button" class="btn-secondary" style="padding: 0 10px;" on:click=move |_| set_show_password.update(|v| *v = !*v)>
+                            {move || if show_password.get() { "Ocultar" } else { "Ver" }}
+                        </button>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-bottom: 15px; font-size: 0.9em;">
+                    <a href="#" on:click=on_recover_password>"¿Has olvidado tu contraseña?"</a>
                 </div>
                 <button type="submit" class="btn-primary" disabled=move || login_action.pending().get()>"Entrar"</button>
             </form>
