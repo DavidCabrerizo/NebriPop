@@ -10,6 +10,13 @@
   --success-color: #10b981;
 }
 
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e5e7eb;
+  --card-bg: #262626;
+  --border-color: #404040;
+}
+
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
@@ -327,4 +334,32 @@ header {
 
 .footer-link:hover {
   color: var(--primary-hover);
+}
+
+/* WCAG Focus Styles */
+*:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  header .container {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .grid, .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .auth-container, .profile-container, .detail-view {
+    margin: 20px 10px;
+    padding: 15px;
+  }
 }

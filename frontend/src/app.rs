@@ -13,6 +13,37 @@ pub fn App() -> impl IntoView {
     let (user_name, set_user_name) = create_signal(String::new());
     let (is_logged_in, set_is_logged_in) = create_signal(false);
     let (unread_count, set_unread_count) = create_signal(0i64);
+    let (is_dark_mode, set_is_dark_mode) = create_signal(false);
+
+    // Load theme preference on mount
+    create_effect(move |_| {
+        if let Some(window) = web_sys::window() {
+            if let Ok(Some(storage)) = window.local_storage() {
+                if let Ok(Some(theme)) = storage.get_item("theme_preference") {
+                    set_is_dark_mode.set(theme == "dark");
+                }
+            }
+        }
+    });
+
+    // Apply theme changes to document and save preference
+    create_effect(move |_| {
+        let is_dark = is_dark_mode.get();
+        if let Some(window) = web_sys::window() {
+            if let Some(document) = window.document() {
+                if let Some(element) = document.document_element() {
+                    if is_dark {
+                        let _ = element.set_attribute("data-theme", "dark");
+                    } else {
+                        let _ = element.remove_attribute("data-theme");
+                    }
+                }
+            }
+            if let Ok(Some(storage)) = window.local_storage() {
+                let _ = storage.set_item("theme_preference", if is_dark { "dark" } else { "light" });
+            }
+        }
+    });
 
     provide_context(user_name);
     provide_context(set_user_name);
@@ -76,7 +107,15 @@ pub fn App() -> impl IntoView {
                             <img src="/logo.png?v=2" alt="NebriPop Logo" style="height: 40px;"/>
                         </div>
                     </A>
-                    <div style="display: flex; gap: 15px; align-items: center;">
+                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; justify-content: center;">
+                        <button 
+                            on:click=move |_| set_is_dark_mode.update(|d| *d = !*d) 
+                            class="btn-secondary"
+                            style="padding: 5px 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                            aria-label="Alternar modo oscuro"
+                        >
+                            {move || if is_dark_mode.get() { "☀️" } else { "🌙" }}
+                        </button>
                         <A href="/products/new" class="btn">"+ Publicar Producto"</A>
                         <Show
                             when=move || is_logged_in.get()
