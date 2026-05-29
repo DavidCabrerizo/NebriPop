@@ -73,7 +73,7 @@ pub fn App() -> impl IntoView {
                 <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                     <A href="/" class="brand">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <img src="/logo.png" alt="NebriPop Logo" style="height: 40px;"/>
+                            <img src="/logo.png?v=2" alt="NebriPop Logo" style="height: 40px;"/>
                         </div>
                     </A>
                     <div style="display: flex; gap: 15px; align-items: center;">

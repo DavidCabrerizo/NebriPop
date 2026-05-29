@@ -68,6 +68,15 @@ pub fn ProductDetail() -> impl IntoView {
                             let thumbnails = product.images.clone().unwrap_or_default();
                             let is_owner = current_user_id.get() == product.user_id;
                             let edit_url = format!("/products/{}/edit", product.id);
+                            
+                            let display_condition = match product.condition.as_str() {
+                                "new" => "Nuevo",
+                                "like_new" => "Como nuevo",
+                                "good" => "Bueno",
+                                "used" => "Usado",
+                                "damaged" => "Dañado",
+                                other => other,
+                            }.to_string();
 
                             view! {
                                 <div class="detail-view">
@@ -125,10 +134,10 @@ pub fn ProductDetail() -> impl IntoView {
                                         <h2 style="color: var(--primary-color);">{format!("{} €", product.price)}</h2>
                                         
                                         <div style="margin: 20px 0; padding: 15px; background: #f3f4f6; border-radius: 6px;">
-                                            <p><strong>"Estado: "</strong> {product.condition}</p>
+                                            <p><strong>"Estado: "</strong> {display_condition}</p>
                                             <p><strong>"Ubicación: "</strong> {product.location}</p>
                                             <p><strong>"Publicado el: "</strong> {product.created_at}</p>
-                                            <p><strong>"Publicado por: "</strong> {author_name}</p>
+                                            <p><strong>"Publicado por: "</strong> <A href=format!("/users/{}/products", product.user_id)><span style="color: var(--primary-color); text-decoration: none; font-weight: 500;">{author_name}</span></A></p>
                                         </div>
                                         
                                         <h3>"Descripción"</h3>

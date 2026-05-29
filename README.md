@@ -2,40 +2,58 @@
 
 NebriPop es una aplicación web tipo Wallapop orientada a la compraventa de productos de segunda mano entre estudiantes, profesores y miembros de la comunidad universitaria.
 
-## 🚀 Tecnologías
+## 🚀 Estado del Proyecto
+**Estado Actual:** MVP Finalizado (Fase 10 completada) ✅.
 
 Este proyecto destaca por el uso de **Rust de extremo a extremo**:
 
 *   **Backend:** [Axum](https://github.com/tokio-rs/axum) + [SQLx](https://github.com/launchbadge/sqlx) + [SQLite](https://www.sqlite.org/).
 *   **Frontend:** [Leptos](https://leptos.dev/) (Rust Full-stack).
-*   **Infraestructura:** [Docker](https://www.docker.com/) + Docker Compose.
-*   **Desarrollo:** Asistido por Inteligencia Artificial (**Antigravity** como arquitecto/PM y **OpenCode** como implementador).
+*   **Desarrollo Asistido:** Coordinado íntegramente mediante un sistema multi-agente de Inteligencia Artificial (**Antigravity**, **OpenCode**, y roles especializados).
 
 ## 📂 Estructura del Proyecto
 
-*   `backend/`: API REST desarrollada con Axum.
-*   `frontend/`: Interfaz de usuario reactiva con Leptos.
-*   `database/`: Scripts de inicialización y configuración de SQLite.
+*   `backend/`: API REST desarrollada con Axum. Revisa el [README del Backend](./backend/README.md).
+*   `frontend/`: Interfaz de usuario reactiva con Leptos. Revisa el [README del Frontend](./frontend/README.md).
+*   `database/`: Scripts de inicialización y base de datos embebida SQLite. Revisa el [README de Base de Datos](./database/README.md).
 *   `docs/`: Documentación técnica, PRD y planes de implementación.
 
-## 📜 Documentación de Gobernanza
-
+## 📜 Documentación de Gobernanza y Final
+*   [Memoria del Proyecto](./docs/MEMORIA_PROYECTO.md): Informe académico y de arquitectura final.
+*   [Manual de Usuario](./docs/USER_GUIDE.md): Guía de uso de la aplicación.
+*   [Informe MVP](./docs/FINAL_REPORT.md): Conclusiones técnicas de la Fase 10.
 *   [AGENTS.md](./AGENTS.md): Definición del equipo de agentes IA.
 *   [RULES.md](./RULES.md): Reglas obligatorias de desarrollo y seguridad.
-*   [AI_WORKFLOW.md](./AI_WORKFLOW.md): Protocolo de colaboración entre agentes.
-*   [PRD.md](./docs/PRD.md): Documento de requisitos del producto.
-*   [IMPLEMENTATION_PLAN.md](./docs/PlanImplementacion/IMPLEMENTATION_PLAN.md): Hoja de ruta técnica.
 
 ## 🛠️ Requisitos previos
 
-*   Rust (última versión estable).
-*   Docker y Docker Compose.
-*   Cargo SQLx CLI.
+*   [Rust](https://www.rust-lang.org/tools/install) (última versión estable).
+*   Trunk (`cargo install trunk`) para servir el frontend.
 
-## ⚙️ Instalación y Uso
+## ⚙️ Instalación y Uso (Modo Desarrollo)
 
-*(Próximamente... El proyecto se encuentra en Fase 0 de preparación)*
+1. **Clonar repositorio:**
+   ```bash
+   git clone https://github.com/DavidCabrerizo/NebriPop.git
+   cd NebriPop
+   ```
+2. **Configurar el entorno:**
+   Copia `.env.example` a `.env` en la raíz del proyecto.
+   ```bash
+   cp .env.example .env
+   ```
+3. **Iniciar el Backend:**
+   Abre una terminal y ejecuta:
+   ```bash
+   cd backend
+   cargo run
+   ```
+4. **Iniciar el Frontend:**
+   Abre otra terminal y ejecuta:
+   ```bash
+   cd frontend
+   trunk serve --open
+   ```
 
 ---
-
-Desarrollado con ❤️ para nuestro futuro.
+Desarrollado con ❤️ mediante Inteligencia Artificial y Rust.

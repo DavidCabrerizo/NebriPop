@@ -1,16 +1,24 @@
-# NebriPop Database (MVP)
+# NebriPop Database (SQLite)
 
-Esta carpeta contiene el diseño de la base de datos SQLite real para el MVP de NebriPop.
+Esta carpeta contiene la base de datos embebida (SQLite), sus esquemas y datos iniciales para el MVP de **NebriPop**.
 
-## Archivos
+## 📌 Estado Actual
+**MVP Finalizado (Fase 10).** La base de datos es totalmente funcional y contiene las siguientes tablas modeladas según un entorno de e-commerce real:
+- `users`: Usuarios y contraseñas (bcrypt hashes).
+- `categories`: Categorías fijas de productos académicos y generales.
+- `products`: Anuncios de compraventa, indexados por categorías, precios y ubicaciones.
+- `product_images`: URLs relativas de imágenes subidas localmente (On Delete Cascade).
+- `favorites`: Relación Mucho-a-Mucho de favoritos guardados.
+- `messages`: Tabla asíncrona de conversaciones y bandejas de entrada para la negociación de compra.
 
-- `schema.sql`: Define las tablas, relaciones (Foreign Keys) y restricciones (CHECK) para el modelo de datos inicial (Fase 2).
-- `seeds.sql`: Contiene los datos iniciales obligatorios (categorías) y algunos datos de ejemplo (usuarios y productos) para facilitar el desarrollo.
-- `nebripop.db`: Archivo SQLite generado al importar los esquemas y seeds. **No debe subirse a control de versiones si contiene datos de producción o sensibles**.
+## 📂 Archivos
+- `schema.sql`: Estructura transaccional, llaves foráneas y constraints relacionales.
+- `seeds.sql`: Datos semilla de prueba (usuarios mock y productos pre-cargados).
+- `nebripop.db`: Base de datos SQLite real. Actualmente configurada para subir a GitHub por propósitos de evaluación académica (modificado en Fase 8/9).
 
-## Cómo inicializar la base de datos
+## ⚙️ Cómo inicializar la base de datos
 
-Si la base de datos no existe o deseas recrearla desde cero, puedes usar los siguientes comandos desde la raíz del proyecto (requiere `sqlite3`):
+Si la base de datos no existe o deseas resetearla al estado inicial:
 
 **En Linux / macOS / Git Bash:**
 ```bash
@@ -24,22 +32,7 @@ Get-Content database\schema.sql | sqlite3 database\nebripop.db
 Get-Content database\seeds.sql | sqlite3 database\nebripop.db
 ```
 
-## Comandos Útiles para Interactuar (CLI)
-
-Puedes abrir la consola interactiva de la base de datos con:
-```bash
-sqlite3 database/nebripop.db
-```
-
-Dentro de la consola de `sqlite3`, prueba estos comandos:
-- `.tables` : Lista todas las tablas.
-- `.schema products` : Muestra cómo se creó la tabla de productos.
-- `.mode box` y `.header on` : Activa una vista de tablas mucho más legible.
-- `SELECT * FROM categories;` : Verifica las 14 categorías iniciales.
-- `SELECT * FROM products;` : Comprueba los datos semilla cargados.
-- `.quit` : Sale de la interfaz.
-
-## Reglas importantes
-1. **Seguridad**: No guardar contraseñas en texto plano. **Siempre** usar consultas parametrizadas en Rust (`?1`, `:name`) para evitar SQL Injection.
-2. **Integridad**: Ejecutar `PRAGMA foreign_keys = ON;` al conectar con SQLite desde Rust para garantizar las restricciones.
-3. **Rendimiento**: Se recomienda activar el modo WAL para mejorar la concurrencia en la app: `PRAGMA journal_mode = WAL;`.
+## 🛠️ Reglas Importantes de Interacción con Rust (Axum/SQLx)
+1. **Protección:** Siempre utilizamos consultas parametrizadas (ej: `bind()`) previniendo Inyecciones SQL.
+2. **Concurrencia:** SQLite está conectada utilizando un pool de conexiones con `journal_mode=WAL` configurado vía código en `main.rs`.
+3. **Casos Especiales:** El borrado de productos gatilla un ON DELETE CASCADE limpiando también `product_images` y `favorites`.

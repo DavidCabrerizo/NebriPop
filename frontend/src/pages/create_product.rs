@@ -54,14 +54,21 @@ pub fn CreateProduct() -> impl IntoView {
         let img = image_url.get();
         // Extract files from input
         let mut upload_files = Vec::new();
+        let mut has_main_file = false;
         
         // 1. Añadir primero la imagen principal (así el backend la guarda con position=0)
         if let Some(input) = main_file_input_ref.get() {
             if let Some(files) = input.files() {
                 if let Some(file) = files.item(0) {
                     upload_files.push(file);
+                    has_main_file = true;
                 }
             }
+        }
+        
+        if !has_main_file && img.is_empty() {
+             set_error_msg.set(Some("Por favor, sube al menos una imagen principal o indica una URL de imagen.".to_string()));
+             return;
         }
         
         // 2. Añadir las imágenes secundarias
@@ -206,8 +213,8 @@ pub fn CreateProduct() -> impl IntoView {
                 </div>
                 
                 <div class="form-group" style="border: 1px solid var(--border-color); padding: 15px; border-radius: 6px; background-color: #f9fafb;">
-                    <label style="color: var(--primary-color); font-weight: bold;">"Imagen Principal (Local)"</label>
-                    <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0; margin-bottom: 10px;">"Esta será la imagen de portada de tu producto."</p>
+                    <label style="color: var(--primary-color); font-weight: bold;">"Imagen Principal (Local) *"</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-top: 0; margin-bottom: 10px;">"Esta será la imagen de portada de tu producto (obligatorio)."</p>
                     <input type="file" _ref=main_file_input_ref accept="image/jpeg,image/png"/>
                 </div>
 
