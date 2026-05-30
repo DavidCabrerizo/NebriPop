@@ -137,6 +137,7 @@ header {
   color: inherit;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .card:hover {
@@ -152,6 +153,9 @@ header {
 
 .card-content {
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .card-title {
@@ -169,6 +173,8 @@ header {
 .card-meta {
   font-size: 0.85rem;
   color: #6b7280;
+  margin-top: auto;
+  padding-top: 10px;
 }
 
 .form-group {

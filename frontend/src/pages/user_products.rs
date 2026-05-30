@@ -59,6 +59,13 @@ pub fn UserProducts() -> impl IntoView {
                                     other => other,
                                 }.to_string();
 
+                                let display_status = match p.status.as_str() {
+                                    "available" => "Disponible",
+                                    "reserved" => "Reservado",
+                                    "sold" => "Vendido",
+                                    other => other,
+                                }.to_string();
+
                                 view! {
                                     <a href=format!("/products/{}", p.id) class="card" style="text-decoration: none; color: inherit;">
                                         <img src=img_src alt=p.title.clone() class="card-img"/>
@@ -66,7 +73,8 @@ pub fn UserProducts() -> impl IntoView {
                                             <h3 class="card-title">{p.title}</h3>
                                             <p class="card-price">{format!("{} €", p.price)}</p>
                                             <p class="card-meta">
-                                                <strong>"Estado: "</strong> {display_condition}
+                                                <strong>"Estado: "</strong> {display_condition} <br/>
+                                                <strong>"Disponibilidad: "</strong> {display_status}
                                             </p>
                                         </div>
                                     </a>

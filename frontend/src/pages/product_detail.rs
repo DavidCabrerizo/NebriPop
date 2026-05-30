@@ -78,6 +78,13 @@ pub fn ProductDetail() -> impl IntoView {
                                 other => other,
                             }.to_string();
 
+                            let display_status = match product.status.as_str() {
+                                "available" => "Disponible",
+                                "reserved" => "Reservado",
+                                "sold" => "Vendido",
+                                other => other,
+                            }.to_string();
+
                             view! {
                                 <div class="detail-view">
                                     <div class="detail-image-container">
@@ -135,6 +142,7 @@ pub fn ProductDetail() -> impl IntoView {
                                         
                                         <div style="margin: 20px 0; padding: 15px; background: #f3f4f6; border-radius: 6px;">
                                             <p><strong>"Estado: "</strong> {display_condition}</p>
+                                            <p><strong>"Disponibilidad: "</strong> {display_status}</p>
                                             <p><strong>"Ubicación: "</strong> {product.location}</p>
                                             <p><strong>"Publicado el: "</strong> {product.created_at}</p>
                                             <p><strong>"Publicado por: "</strong> <A href=format!("/users/{}/products", product.user_id)><span style="color: var(--primary-color); text-decoration: none; font-weight: 500;">{author_name}</span></A></p>
